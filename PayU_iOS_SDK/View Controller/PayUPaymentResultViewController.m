@@ -1,0 +1,160 @@
+//
+//  PayUPaymentResultViewController.m
+//  PayU_iOS_SDK
+//
+//  Created by Suryakant Sharma on 17/12/14.
+//  Copyright (c) 2014 PayU, India. All rights reserved.
+//
+
+#import "PayUPaymentResultViewController.h"
+#import "PayUConstant.h"
+#import "WebViewJavascriptBridge.h"
+
+@interface PayUPaymentResultViewController () <UIWebViewDelegate>
+
+@property WebViewJavascriptBridge* bridge;
+
+@property (unsafe_unretained, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *processingLbl;
+@property (unsafe_unretained, nonatomic) IBOutlet UIWebView *resultWebView;
+
+
+@end
+
+@implementation PayUPaymentResultViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    //Dissable back button
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    
+    if(_flag){
+        [self.view removeConstraints:self.view.constraints];
+        [_resultWebView removeConstraints:_resultWebView.constraints];
+        _resultWebView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+        _resultWebView.translatesAutoresizingMaskIntoConstraints = YES;
+        
+        [_activityIndicator removeConstraints:_activityIndicator.constraints];
+        _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+        _activityIndicator.translatesAutoresizingMaskIntoConstraints = YES;
+        
+        [_processingLbl removeConstraints:_processingLbl.constraints];
+        _processingLbl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+        _processingLbl.translatesAutoresizingMaskIntoConstraints = YES;
+        
+        
+        CGRect frame = [[UIScreen mainScreen] bounds];
+        frame.origin.y = 44;
+        frame.size.height = frame.size.height - 44;
+        _resultWebView.frame = frame;
+        
+        frame = _activityIndicator.frame;
+        frame.origin.x = self.view.frame.size.width/2  - frame.size.width+10;
+        frame.origin.y = self.view.frame.size.height/2 - frame.size.height-100;
+        _activityIndicator.frame = frame;
+        
+        frame = _processingLbl.frame;
+        frame.origin.x = self.view.frame.size.width/2  - frame.size.width + 60;
+        frame.origin.y = self.view.frame.size.height/2 - frame.size.height - 80;
+        _processingLbl.frame = frame;
+        
+        
+    }
+
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+
+    if (_bridge) { return; }
+    
+    [WebViewJavascriptBridge enableLogging];
+    
+    _bridge = [WebViewJavascriptBridge bridgeForWebView:_resultWebView webViewDelegate:self handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"ObjC received message from JS: %@", data);
+        responseCallback(@"Response for message from ObjC");
+    }];
+    
+    [_bridge registerHandler:@"testObjcCallback" handler:^(id data, WVJBResponseCallback responseCallback) {
+        NSLog(@"testObjcCallback called: %@", data);
+        responseCallback(@"Response from testObjcCallback");
+    }];
+    
+    [_bridge send:@"A string sent from ObjC before Webview has loaded." responseCallback:^(id responseData) {
+        NSLog(@"objc got response! %@", responseData);
+    }];
+    
+    [_bridge callHandler:@"testJavascriptHandler" data:@{ @"foo":@"before ready" }];
+    
+    [self startStopIndicator:YES];
+    _resultWebView.delegate = self;
+    [_resultWebView loadRequest:_request];
+    
+    [_bridge send:@"A string sent from ObjC after Webview has loaded."];
+    
+}
+
+
+- (void)viewDidLayoutSubviews{
+    
+}
+
+- (void)sendMessage:(id)sender {
+    [_bridge send:@"A string sent from ObjC to JS" responseCallback:^(id response) {
+        NSLog(@"sendMessage got response: %@", response);
+    }];
+}
+
+- (void)callHandler:(id)sender {
+    id data = @{ @"greetingFromObjC": @"Hi there, JS!" };
+    [_bridge callHandler:@"testJavascriptHandler" data:data responseCallback:^(id response) {
+        NSLog(@"testJavascriptHandler responded: %@", response);
+    }];
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+-(void) startStopIndicator:(BOOL) aFlag{
+    if(aFlag){
+        [self.view bringSubviewToFront:_activityIndicator];
+        [_activityIndicator startAnimating];
+    }
+    else
+        [_activityIndicator stopAnimating];
+   
+    _processingLbl.hidden = !aFlag;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView;
+{
+    [self startStopIndicator:NO];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error;
+{
+    [self startStopIndicator:NO];
+}
+
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSURL *url = request.URL;
+    NSLog(@"finallyCalled = %@",url);
+
+    if ([[url scheme] isEqualToString:@"ios"]) {
+//        [self performSelector:@selector(navigateToRootViewController) withObject:nil afterDelay:5.0];
+        return YES;
+    }
+    return YES;
+}
+
+
+
+-(void)navigateToRootViewController{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+
+@end
