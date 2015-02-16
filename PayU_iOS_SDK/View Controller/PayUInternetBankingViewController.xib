@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayUInternetBankingViewController">
             <connections>
+                <outlet property="amountLbl" destination="qvP-VM-Jxx" id="OHb-I8-cHJ"/>
                 <outlet property="containerView" destination="cSR-zS-xcv" id="EbZ-xD-Mgz"/>
                 <outlet property="payNow" destination="wvQ-gW-oPk" id="PG0-Up-eDo"/>
                 <outlet property="selectBank" destination="VN2-Kj-qxD" id="Fb4-pW-sq5"/>
@@ -37,18 +39,6 @@
                                 <action selector="payNow:" destination="-1" eventType="touchUpInside" id="4bc-bW-CLf"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VN2-Kj-qxD">
-                            <rect key="frame" x="8" y="30" width="359" height="49"/>
-                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <inset key="imageEdgeInsets" minX="200" minY="0.0" maxX="0.0" maxY="-5"/>
-                            <state key="normal" title="Select your bank">
-                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="selectBank:" destination="-1" eventType="touchUpInside" id="hZJ-VK-sca"/>
-                            </connections>
-                        </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropdown.png" translatesAutoresizingMaskIntoConstraints="NO" id="uLQ-7m-sD8">
                             <rect key="frame" x="341" y="46" width="18" height="18"/>
                             <constraints>
@@ -65,6 +55,19 @@
                             <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="VN2-Kj-qxD">
+                            <rect key="frame" x="8" y="30" width="333" height="49"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="200" minY="0.0" maxX="0.0" maxY="-5"/>
+                            <state key="normal" title="Select your bank">
+                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="selectBank:" destination="-1" eventType="touchUpInside" id="hZJ-VK-sca"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -79,16 +82,28 @@
                         <constraint firstItem="uLQ-7m-sD8" firstAttribute="top" secondItem="cSR-zS-xcv" secondAttribute="top" constant="46" id="pX3-a8-dhD"/>
                         <constraint firstItem="wvQ-gW-oPk" firstAttribute="leading" secondItem="cSR-zS-xcv" secondAttribute="leadingMargin" id="pxL-az-6Jo"/>
                         <constraint firstItem="wOX-YJ-YTk" firstAttribute="leading" secondItem="VN2-Kj-qxD" secondAttribute="leading" id="yGB-9I-WSD"/>
-                        <constraint firstItem="VN2-Kj-qxD" firstAttribute="trailing" secondItem="wOX-YJ-YTk" secondAttribute="trailing" id="yYl-Tm-h8o"/>
+                        <constraint firstItem="VN2-Kj-qxD" firstAttribute="trailing" secondItem="wOX-YJ-YTk" secondAttribute="trailing" constant="-26" id="yYl-Tm-h8o"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rs.  100.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvP-VM-Jxx">
+                    <rect key="frame" x="8" y="121" width="359" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Rj5-OS-ukf"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="cSR-zS-xcv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="192" id="1uK-RN-x0L"/>
+                <constraint firstItem="qvP-VM-Jxx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="ADg-n7-hLR"/>
+                <constraint firstAttribute="centerX" secondItem="qvP-VM-Jxx" secondAttribute="centerX" id="CPy-Jx-YA1"/>
                 <constraint firstAttribute="bottom" secondItem="cSR-zS-xcv" secondAttribute="bottom" id="TAM-rE-Nta"/>
                 <constraint firstItem="cSR-zS-xcv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="b0N-Aa-kY3"/>
                 <constraint firstAttribute="trailing" secondItem="cSR-zS-xcv" secondAttribute="trailing" id="g5p-6I-2hm"/>
+                <constraint firstItem="cSR-zS-xcv" firstAttribute="top" secondItem="qvP-VM-Jxx" secondAttribute="bottom" constant="50" id="yiM-hw-jJm"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

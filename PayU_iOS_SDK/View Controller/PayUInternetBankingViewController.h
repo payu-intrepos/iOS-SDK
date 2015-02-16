@@ -11,5 +11,8 @@
 @interface PayUInternetBankingViewController : UIViewController
 
 @property(nonatomic,strong) NSArray *bankDetails;
+@property (nonatomic,strong) NSMutableDictionary *parameterDict;
+//total amount, being pay
+@property (nonatomic,assign) float totalAmount;
 
 @end

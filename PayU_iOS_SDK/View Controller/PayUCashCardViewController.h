@@ -12,4 +12,7 @@
 
 @property(nonatomic,strong) NSArray *cashCardDetail;
 
+//total amount, being pay
+@property (nonatomic,assign) float totalAmount;
+
 @end

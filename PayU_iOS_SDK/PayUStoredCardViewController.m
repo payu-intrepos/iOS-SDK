@@ -15,10 +15,14 @@
 
 #define USER_CARD       @"user_cards"
 #define CARD_NUMBER     @"card_no"
+#define CARD_NAME       @"card_name"
+#define CARD_TOKEN      @"card_token"
 
 @interface PayUStoredCardViewController () <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIActionSheetDelegate>
 
 @property (nonatomic,strong) NSURLConnection *connection;
+@property (nonatomic,strong) NSURLConnection *connectionForDeletingCard;
+
 @property (nonatomic,strong) NSMutableData *connectionSpecificDataObject;
 @property (nonatomic,strong) NSMutableData *receivedData;
 @property (nonatomic,strong) NSMutableDictionary *allStoredCards;
@@ -33,10 +37,14 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *msgLbl;
 
 @property (nonatomic,assign) NSUInteger selectedCardNumber;
+@property (nonatomic,assign) NSUInteger cardToDelete;
 
 @property (nonatomic,unsafe_unretained) UIButton *dismissButton;
 @property (nonatomic,unsafe_unretained) UIButton *okButton;
 @property (nonatomic,strong) UITextField *cvvTextField;
+@property (unsafe_unretained, nonatomic) int cvvlength;
+
+@property (unsafe_unretained, nonatomic) IBOutlet UIButton *useNewCardBtn;
 
 -(void) getStoredCard;
 -(void) makePaymentWithSelectedStoredCard:(NSString *)cvvStr;
@@ -54,6 +62,7 @@
     _addNewCard.layer.cornerRadius = 10.0f;
     _storedCardTableView.dataSource = self;
     _storedCardTableView.delegate   = self;
+    _activityIndicator.center=self.view.center;
     [_activityIndicator startAnimating];
     
     _storedCardTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -62,6 +71,9 @@
     _storedCardTableView.layer.borderColor = [UIColor redColor].CGColor;
     
     [self getStoredCard];
+
+    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,7 +100,7 @@
     }
     _connectionSpecificDataObject = [[NSMutableData alloc] init];
     
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_TEST];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
@@ -100,9 +112,13 @@
     
     
     NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
-    [paramDict setValue:[NSString stringWithFormat:@"%@:%@",[paramDict valueForKey:PARAM_KEY],[paramDict valueForKey:PARAM_USER_CREDENTIALS]] forKey:PARAM_VAR1];
+    if(0 == paramDict.allKeys.count){
+        paramDict = _parameterDict;
+    }
+    
+    [paramDict setValue:[NSString stringWithFormat:@"%@",[paramDict valueForKey:PARAM_USER_CREDENTIALS]] forKey:PARAM_VAR1];
     [paramDict setValue:PARAM_GET_STORED_CARD forKey:PARAM_COMMAND];
-
+    
     
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
@@ -135,7 +151,7 @@
     NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
     [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
     //sha512(key|command|var1|salt)
-    NSLog(@"POST DATA = %@",postData);
+    NSLog(@"STORED CARD POST DATA = %@",postData);
     //set request content type we MUST set this value.
     [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
@@ -143,15 +159,15 @@
     [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
     // create the connection with the request
     // and start loading the data
-     _connection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-     if (_connection) {
-     _receivedData=[NSMutableData data];
-     } else {
-     // inform the user that the download could not be made
-     }
-     [_connection start];
+    _connection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    if (_connection) {
+        _receivedData=[NSMutableData data];
+    } else {
+        // inform the user that the download could not be made
+    }
+    [_connection start];
     
-
+    
 }
 
 // custom alert view for CVV.
@@ -179,7 +195,12 @@
     [_okButton setFrame:CGRectMake(150, 109, 150, 40)];
     _okButton.layer.borderColor = [UIColor whiteColor].CGColor;
     _okButton.layer.borderWidth = 0.5f;
-    _okButton.enabled = NO;
+    
+    if ([[_cardList[_selectedCardNumber] objectForKey:@"card_brand"] isEqualToString:@"MAES"]){
+            _okButton.enabled = YES;
+    } else{
+        _okButton.enabled = NO;
+    }
     
     [customAlertView addSubview:_okButton];
     
@@ -198,6 +219,17 @@
     [customAlertView addSubview:_cvvTextField];
     
     customAlertView.center = self.view.center;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        if(result.height == IPHONE_3_5)
+        {
+            CGRect frame = customAlertView.frame;
+            frame.origin.y = frame.origin.y - 50;
+            customAlertView.frame = frame;
+        }
+    }
+    
     [self.view addSubview:customAlertView];
     
     [UIView animateWithDuration:0.2f animations:^{
@@ -220,6 +252,10 @@
         NSLog(@"Pay With CVV =%@",cvvStr);
         [self makePaymentWithSelectedStoredCard:cvvStr];
     }
+    else{
+        _useNewCardBtn.enabled = YES;
+        _storedCardTableView.userInteractionEnabled = YES;
+    }
     
 }
 
@@ -230,7 +266,7 @@
     }
     _connectionSpecificDataObject = [[NSMutableData alloc] init];
     
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_TEST];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_PRODUCTION];
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
@@ -242,7 +278,7 @@
     NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
     //[paramDict setValue:@"default" forKey:PARAM_VAR1];
     [paramDict setValue:@"get_merchant_ibibo_codes" forKey:PARAM_COMMAND];
-
+    
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
         if(/*!([aKey isEqualToString:PARAM_SALT]) && */!([aKey isEqualToString:PARAM_FIRST_NAME])){
@@ -257,10 +293,10 @@
         [postData appendFormat:@"%@=%@",PARAM_PG,[selectedStoredCardDict objectForKey:@"card_type"]];
         [postData appendString:@"&"];
     }
-//    if([selectedStoredCardDict objectForKey:@"card_type"]){
-//        [postData appendFormat:@"%@=%@",PARAM_PG,[selectedStoredCardDict objectForKey:@"card_type"]];
-//        [postData appendString:@"&"];
-//    }
+    //    if([selectedStoredCardDict objectForKey:@"card_type"]){
+    //        [postData appendFormat:@"%@=%@",PARAM_PG,[selectedStoredCardDict objectForKey:@"card_type"]];
+    //        [postData appendString:@"&"];
+    //    }
     if([selectedStoredCardDict objectForKey:@"card_token"]){
         [postData appendFormat:@"%@=%@",PARAM_CARD_TOKEN,[selectedStoredCardDict objectForKey:@"card_token"]];
         [postData appendString:@"&"];
@@ -274,7 +310,7 @@
         [postData appendFormat:@"%@=%@",PARAM_CARD_CVV,cvvStr];
         [postData appendString:@"&"];
     }
-   
+    
     if([selectedStoredCardDict objectForKey:@"card_mode"]){
         [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,[selectedStoredCardDict objectForKey:@"card_mode"]];
     }
@@ -355,7 +391,7 @@
     NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
     [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
     //sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
-    NSLog(@"POST DATA = %@",postData);
+    NSLog(@"Pay with Stored card POST DATA = %@",postData);
     //set request content type we MUST set this value.
     [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
@@ -400,39 +436,118 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    PayUCardProcessViewController *cardProcessCV = nil;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
-    {
-        CGSize result = [[UIScreen mainScreen] bounds].size;
-        if(result.height == IPHONE_3_5)
+    if(2 != buttonIndex){
+        PayUCardProcessViewController *cardProcessCV = nil;
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
         {
-            cardProcessCV = [[PayUCardProcessViewController alloc] initWithNibName:@"CardProcessView" bundle:nil];
+            CGSize result = [[UIScreen mainScreen] bounds].size;
+            if(result.height == IPHONE_3_5)
+            {
+                cardProcessCV = [[PayUCardProcessViewController alloc] initWithNibName:@"CardProcessView" bundle:nil];
+            }
+            else
+            {
+                cardProcessCV = [[PayUCardProcessViewController alloc] initWithNibName:@"PayUCardProcessViewController" bundle:nil];
+            }
         }
-        else
-        {
-            cardProcessCV = [[PayUCardProcessViewController alloc] initWithNibName:@"PayUCardProcessViewController" bundle:nil];
+        if(_appTitle){
+            cardProcessCV.appTitle = _appTitle;
         }
+        
+        cardProcessCV.CCDCFlag = (int)buttonIndex+1;
+        cardProcessCV.storeThisCard = YES;
+        [self.navigationController pushViewController:cardProcessCV animated:YES];
     }
-    if(_appTitle){
-        cardProcessCV.appTitle = _appTitle;
-    }
-    if(_totalAmount){
-        cardProcessCV.totalAmount = _totalAmount;
-    }
-    cardProcessCV.CCDCFlag = (int)buttonIndex;
-    [self.navigationController pushViewController:cardProcessCV animated:YES];
 }
 
 -(void) hideShowTableView:(BOOL) aFlag{
     _storedCardTableView.hidden = !aFlag;
     _msgLbl.hidden = !aFlag;
-
+    
     if(!aFlag){
         _noCardFoundLbl = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-(120/2),((_containerView.frame.size.height/2)-35), 150, 21)];
         _noCardFoundLbl.textColor = [UIColor lightGrayColor];
         _noCardFoundLbl.text = @"No Card Found!";
         [_containerView addSubview:_noCardFoundLbl];
     }
+}
+
+- (void) deleteStoredCard :(NSInteger)cardNun{
+    if (_connectionSpecificDataObject) {
+        _connectionSpecificDataObject = nil;
+    }
+    _connectionSpecificDataObject = [[NSMutableData alloc] init];
+    
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
+    
+    // create the request
+    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
+                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                        timeoutInterval:60.0];
+    // Specify that it will be a POST request
+    theRequest.HTTPMethod = POST;
+    
+    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
+    if(0 == paramDict.allKeys.count){
+        paramDict = _parameterDict;
+    }
+    
+    [paramDict setValue:[NSString stringWithFormat:@"%@",[paramDict valueForKey:PARAM_USER_CREDENTIALS]] forKey:PARAM_VAR1];
+    [paramDict setValue:PARAM_GET_STORED_CARD forKey:PARAM_COMMAND];
+    
+    
+    NSMutableString *postData = [[NSMutableString alloc] init];
+    [postData appendFormat:@"%@=%@",PARAM_KEY,[paramDict valueForKey:PARAM_KEY]];
+    [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
+    [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_COMMAND,PARAM_DELETE_STORED_CARD];
+    [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_VAR1,[paramDict valueForKey:PARAM_VAR1]];
+    [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_VAR2,[_cardList[cardNun] objectForKey:CARD_TOKEN]];
+    [postData appendString:@"&"];
+    
+    NSMutableString *hashValue = [[NSMutableString alloc] init];
+    
+    if([paramDict valueForKey:PARAM_KEY]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_KEY]];
+        [hashValue appendString:@"|"];
+    }
+    [hashValue appendFormat:@"%@",PARAM_DELETE_STORED_CARD];
+    [hashValue appendString:@"|"];
+
+    if([paramDict valueForKey:PARAM_VAR1]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_VAR1]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_SALT]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+    }
+    
+    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
+    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+    //sha512(key|command|var1|salt)
+    NSLog(@"STORED CARD POST DATA = %@",postData);
+    //set request content type we MUST set this value.
+    [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //set post data of request
+    [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
+    // create the connection with the request
+    // and start loading the data
+    _connectionForDeletingCard = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    if (_connectionForDeletingCard) {
+        _receivedData=[NSMutableData data];
+    } else {
+        // inform the user that the download could not be made
+    }
+    [_connectionForDeletingCard start];
+
 }
 
 #pragma mark - TableView DataSource
@@ -447,26 +562,51 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         //cell.backgroundColor = [UIColor colorWithRed:240.0f green:240.0f blue:240.0f alpha:1.0f];
     }
-    cell.textLabel.text = [_cardList[indexPath.row] objectForKey:CARD_NUMBER];
-    
+    cell.textLabel.text =  [_cardList[indexPath.row] objectForKey:CARD_NUMBER];
+    cell.detailTextLabel.text = [_cardList[indexPath.row] objectForKey:CARD_NAME];
     return cell;
 }
 
 #pragma mark - TableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+    
     _selectedCardNumber = indexPath.row;
+    _useNewCardBtn.enabled = NO;
+    _storedCardTableView.userInteractionEnabled = NO;
+    if([[_cardList[indexPath.row] objectForKey:@"card_brand"] isEqualToString:@"AMEX"]){
+        _cvvlength = 4;
+    }
+    else if ([[_cardList[indexPath.row] objectForKey:@"card_brand"] isEqualToString:@"MAES"]){
+        _cvvlength = 3;
+    }
+    else{
+        _cvvlength = 3;
+    }
     [self displayCustomAlert];
 }
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor colorWithRed:240.0/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        _cardToDelete = indexPath.row;
+        [self deleteStoredCard:_cardToDelete];
+    }
+    
+    
+    [tableView reloadData];
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
 #pragma mark - NSURLConnection Delegate methods
 
 // NSURLCONNECTION Delegate methods.
@@ -484,6 +624,11 @@
             [_connectionSpecificDataObject appendData:data];
         }
     }
+    else if (connection == _connectionForDeletingCard){
+        if(data){
+            [_connectionSpecificDataObject appendData:data];
+        }
+    }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
@@ -494,7 +639,7 @@
         if(_connectionSpecificDataObject){
             NSError *errorJson=nil;
             _allStoredCards = [NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson];
-            NSLog(@"responseDict=%@",_allStoredCards);
+            NSLog(@"responseDict=%@ error = %@",_allStoredCards,errorJson);
             [self listAllStoredCard];
             if(_cardList.count > 0){
                 [self hideShowTableView:YES];
@@ -503,9 +648,22 @@
             else{
                 [self hideShowTableView:NO];
             }
-            [_activityIndicator stopAnimating];
         }
     }
+    else
+    if(connection == _connectionForDeletingCard){
+        if(_connectionSpecificDataObject){
+            NSError *errorJson=nil;
+            NSLog(@"_Coonection Deleting SpecificDataObject=%@",_connectionSpecificDataObject);
+            _allStoredCards = [NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson];
+            NSLog(@"responseDict=%@",_allStoredCards);
+            if(1 == [[_allStoredCards objectForKey:@"status"] integerValue]){
+               [_cardList removeObjectAtIndex:_cardToDelete];
+               [_storedCardTableView reloadData];
+            }
+        }
+    }
+    [_activityIndicator stopAnimating];
 }
 
 #pragma mark - UITextField Delegate methods

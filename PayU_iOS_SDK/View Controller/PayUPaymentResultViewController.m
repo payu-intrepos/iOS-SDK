@@ -8,7 +8,11 @@
 
 #import "PayUPaymentResultViewController.h"
 #import "PayUConstant.h"
+#import "Utils.h"
 #import "WebViewJavascriptBridge.h"
+#import "SharedDataManager.h"
+#import "Reachability.h"
+#import "ReachabilityManager.h"
 
 @interface PayUPaymentResultViewController () <UIWebViewDelegate>
 
@@ -45,8 +49,8 @@
         
         
         CGRect frame = [[UIScreen mainScreen] bounds];
-        frame.origin.y = 44;
-        frame.size.height = frame.size.height - 44;
+        frame.origin.y = 64;
+        frame.size.height = frame.size.height - 64;
         _resultWebView.frame = frame;
         
         frame = _activityIndicator.frame;
@@ -59,13 +63,21 @@
         frame.origin.y = self.view.frame.size.height/2 - frame.size.height - 80;
         _processingLbl.frame = frame;
         
-        
     }
+}
 
+- (void)dealloc {
+    ALog(@"");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-
+    
+    // Reachability
+    [ReachabilityManager sharedManager];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:payUReachabilityChangedNotification object:nil];
+    
+    
     if (_bridge) { return; }
     
     [WebViewJavascriptBridge enableLogging];
@@ -125,7 +137,7 @@
     }
     else
         [_activityIndicator stopAnimating];
-   
+    
     _processingLbl.hidden = !aFlag;
 }
 
@@ -142,10 +154,30 @@
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSURL *url = request.URL;
     NSLog(@"finallyCalled = %@",url);
-
+    
     if ([[url scheme] isEqualToString:@"ios"]) {
-//        [self performSelector:@selector(navigateToRootViewController) withObject:nil afterDelay:5.0];
-        return YES;
+        NSString *responseStr = [url  absoluteString];
+        NSString *search = @"success";
+        NSString *sub = [responseStr substringFromIndex:NSMaxRange([responseStr rangeOfString:search])];
+        
+        if([sub isEqualToString:@"success"]){
+            NSDictionary *InfoDict = [NSDictionary dictionaryWithObject:responseStr forKey:INFO_DICT_RESPONSE];
+            [[NSNotificationCenter defaultCenter] postNotificationName:PAYMENT_SUCCESS_NOTIFICATION object:InfoDict];
+        }
+        search = @"failure";
+        sub = [responseStr substringFromIndex:NSMaxRange([responseStr rangeOfString:search])];
+        if([sub isEqualToString:@"failure"]){
+            NSDictionary *InfoDict = [NSDictionary dictionaryWithObject:responseStr forKey:INFO_DICT_RESPONSE];;
+            [[NSNotificationCenter defaultCenter] postNotificationName:PAYMENT_FAILURE_NOTIFICATION object:InfoDict];
+            
+        }
+        search = @"cancel";
+        sub = [responseStr substringFromIndex:NSMaxRange([responseStr rangeOfString:search])];
+        
+        if([sub isEqualToString:@"cancel"]){
+            NSDictionary *InfoDict = [NSDictionary dictionaryWithObject:responseStr forKey:INFO_DICT_RESPONSE];;
+            [[NSNotificationCenter defaultCenter] postNotificationName:PAYMENT_CANCEL_NOTIFICATION object:InfoDict];
+        }
     }
     return YES;
 }
@@ -154,6 +186,18 @@
 
 -(void)navigateToRootViewController{
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+// Reachability methods
+- (void)reachabilityDidChange:(NSNotification *)notification {
+    Reachability *reach = [notification object];
+    
+    if ([reach isReachable]) {
+        
+    } else {
+        ALog(@"");
+        [Utils startPayUNotificationForKey:PAYU_ERROR intValue:PInternetNotReachable object:self];
+    }
 }
 
 

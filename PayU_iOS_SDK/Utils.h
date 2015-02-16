@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+#define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+
 @interface Utils : NSObject
 
 + (NSString *) createCheckSumString:(NSString *)input;
+
++ (void) startPayUNotificationForKey:(NSString *)key intValue:(int)value object:(id)object;
++ (void) startPayUNotificationForKey:(NSString *)key value:(id)value;
 
 @end

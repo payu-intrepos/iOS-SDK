@@ -18,10 +18,8 @@
 #import "Utils.h"
 #import "PayUCashCardViewController.h"
 
-#define NET_BANKING             @"netbanking"
 #define CASH_CARD               @"cashcard"
 
-#define BANK_TITLE              @"title"
 #define PARAM_VAR1_DEFAULT      @"default"
 #define PARAM_BANK              @"bank"
 
@@ -65,8 +63,7 @@
     SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
     dataManager.allInfoDict = [self createDictionaryWithAllParam];
     
-    if(_totalAmount)
-    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",_totalAmount];
+    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[dataManager.allInfoDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
     
     [self callAPI];
     
@@ -96,13 +93,19 @@
 
 - (void) loadAllStoredCard:(int) aFlag{
     
-    if(0 == aFlag){
-//        SharedDataManager *manager = [SharedDataManager sharedDataManager];
-//        [manager.allInfoDict setValue:[NSString stringWithFormat:@"%@:%@",[manager.allInfoDict valueForKey:PARAM_KEY],[manager.allInfoDict valueForKey:PARAM_USER_CREDENTIALS]] forKey:PARAM_VAR1];
-//        [manager.allInfoDict setValue:PARAM_GET_STORED_CARD forKey:PARAM_COMMAND];
-        //NSLog(@"ALL INFO DICT = %@",manager.allInfoDict);
+    PayUStoredCardViewController *storedCard = nil;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        if(result.height == IPHONE_3_5)
+        {
+            storedCard = [[PayUStoredCardViewController alloc] initWithNibName:@"StoredCard" bundle:nil];
+        }
+        else
+        {
+            storedCard = [[PayUStoredCardViewController alloc] initWithNibName:@"PayUStoredCardViewController" bundle:nil];
+        }
     }
-    PayUStoredCardViewController *storedCard = [[PayUStoredCardViewController alloc] initWithNibName:@"PayUStoredCardViewController" bundle:nil];
     storedCard.appTitle = _appTitle;
     storedCard.totalAmount = _totalAmount;
     [self.navigationController pushViewController:storedCard animated:YES];
@@ -124,7 +127,6 @@
         }
     }
     cardProcessCV.appTitle = _appTitle;
-    cardProcessCV.totalAmount = _totalAmount;
     cardProcessCV.CCDCFlag = cardFlag;
     [self.navigationController pushViewController:cardProcessCV animated:YES];
 }
@@ -156,12 +158,12 @@
             emiOprionVC = [[PayUEMIOptionViewController alloc] initWithNibName:@"PayUEMIOptionViewController" bundle:nil];
         }
     }
-
+    
     
     emiOprionVC.emiDetails = listOfBankAvailableForEMI;
     emiOprionVC.paymentCategory = @"EMI";
     [self.navigationController pushViewController:emiOprionVC animated:YES];
-
+    
 }
 
 -(void) loadAllInternetBankingOption{
@@ -177,15 +179,16 @@
         }
     }
     NSArray *listOfBankAvailableForNetBanking = [allInternetBankingOptions sortedArrayUsingComparator:^(NSDictionary *item1, NSDictionary *item2) {
-        return [item1[PARAM_BANK_CODE] compare:item2[PARAM_BANK_CODE] options:NSNumericSearch];
+        return [item1[BANK_TITLE] compare:item2[BANK_TITLE] options:NSCaseInsensitiveSearch];
     }];
-    NSLog(@"Sorted Bank = %@",listOfBankAvailableForNetBanking);
+    NSLog(@"Sorted Bank by default = %@",listOfBankAvailableForNetBanking);
+    //    NSLog(@"Sorted Bank bt sorted selector = %@",[listOfBankAvailableForNetBanking sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]);
     
     PayUInternetBankingViewController *internetBankingVC = [[PayUInternetBankingViewController alloc] initWithNibName:@"PayUInternetBankingViewController" bundle:nil];
     internetBankingVC.bankDetails = listOfBankAvailableForNetBanking;
     
     [self.navigationController pushViewController:internetBankingVC animated:YES];
-
+    
 }
 
 -(void) loadAllCashCardOption{
@@ -206,7 +209,7 @@
     }];
     
     PayUCashCardViewController *cashCardVC = nil;
-
+    
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         CGSize result = [[UIScreen mainScreen] bounds].size;
@@ -219,14 +222,14 @@
             cashCardVC = [[PayUCashCardViewController alloc] initWithNibName:@"PayUCashCardViewController" bundle:nil];
         }
     }
-
+    
     
     
     cashCardVC.cashCardDetail = listOfBankAvailableCashCardPayment;
     listOfBankAvailableCashCardPayment = nil;
     
     [self.navigationController pushViewController:cashCardVC animated:YES];
-
+    
 }
 
 -(NSDictionary *) createDictionaryWithAllParam{
@@ -256,133 +259,14 @@
     }
     if([[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_COMMAND]){
         _command = [[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_COMMAND];
-        [allParamDict setValue:_command forKey:PARAM_COMMAND];
+        //[allParamDict setValue:_command forKey:PARAM_COMMAND];
     }
     else{
         exeption = [[NSException alloc] initWithName:@"Required Param missing" reason:@"KEY is not provided, this is one of required parameters." userInfo:nil];
         [exeption raise];
     }
-
-    if(_transactionID){
-        [allParamDict setValue:_transactionID forKey:PARAM_TXID];
-    }
-    if(_totalAmount){
-        [allParamDict setValue:[NSNumber numberWithFloat:_totalAmount] forKey:PARAM_TOTAL_AMOUNT];
-    }
-    if(_productInfo){
-        [allParamDict setValue:_productInfo forKey:PARAM_PRODUCT_INFO];
-    }
-    if(_firstName){
-        [allParamDict setValue:_firstName forKey:PARAM_FIRST_NAME];
-    }
-    if(_lastName){
-        [allParamDict setValue:_lastName forKey:PARAM_LAST_NAME];
-    }
-    if(_email){
-        [allParamDict setValue:_email forKey:PARAM_EMAIL];
-    }
-    if(_phoneNumber){
-        [allParamDict setValue:_phoneNumber forKey:PARAM_PHONE];
-    }
-    if(_address1){
-        [allParamDict setValue:_address1 forKey:PARAM_ADDRESS_1];
-    }
-    if(_address2){
-        [allParamDict setValue:_address2 forKey:PARAM_ADDRESS_2];
-    }
-    if(_city){
-        [allParamDict setValue:_city forKey:PARAM_CITY];
-    }
-    if(_state){
-        [allParamDict setValue:_state forKey:PARAM_STATE];
-    }
-    if(_country){
-        [allParamDict setValue:_country forKey:PARAM_COUNTRY];
-    }
-    if(_zipcode){
-        [allParamDict setValue:_zipcode forKey:PARAM_ZIPCODE];
-    }
-    if(_udf1){
-        [allParamDict setValue:_udf1 forKey:PARAM_UDF_1];
-    }
-    if(_udf2){
-        [allParamDict setValue:_udf2 forKey:PARAM_UDF_2];
-    }
-    if(_udf3){
-        [allParamDict setValue:_udf3 forKey:PARAM_UDF_3];
-    }
-    if(_udf4){
-        [allParamDict setValue:_udf4 forKey:PARAM_UDF_4];
-    }
-    if(_udf5){
-        [allParamDict setValue:_udf5 forKey:PARAM_UDF_5];
-    }
-    if(_surl){
-        [allParamDict setValue:_surl forKey:PARAM_SURL];
-    }
-    if(_curl){
-        [allParamDict setValue:_curl forKey:PARAM_CURL];
-    }
-    if(_furl){
-        [allParamDict setValue:_furl forKey:PARAM_FURL];
-    }
-    if(_hashKey){
-        [allParamDict setValue:_hashKey forKey:PARAM_HASH];
-    }
-    if(_paymentCategory){
-        [allParamDict setValue:_paymentCategory forKey:PARAM_PG];
-    }
-    if(_codeURL){
-        [allParamDict setValue:_codeURL forKey:PARAM_CODURL];
-    }
-    if(_dropCategory){
-        [allParamDict setValue:_dropCategory forKey:PARAM_DROP_CATEGORY];
-    }
-    if(_enforcePaymethod){
-        [allParamDict setValue:_enforcePaymethod forKey:PARAM_ENFORCE_PAYMENT_HOD];
-    }
-    if(_customNote){
-        [allParamDict setValue:_customNote forKey:PARAM_CUSTOM_NOTE];
-    }
-    if(_noteCategory){
-        [allParamDict setValue:_noteCategory forKey:PARAM_NOTE_CATEGORY];
-    }
-    if(_shippingFirstName){
-        [allParamDict setValue:_shippingFirstName forKey:PARAM_SHIPPING_FIRSTNAME];
-    }
-    if(_shippingLastName){
-        [allParamDict setValue:_shippingLastName forKey:PARAM_SHIPPING_LASTNAME];
-    }
-    if(_shippingAddress1){
-        [allParamDict setValue:_shippingAddress1 forKey:PARAM_ADDRESS_1];
-    }
-    if(_shippingAddress2){
-        [allParamDict setValue:_shippingAddress2 forKey:PARAM_ADDRESS_2];
-    }
-    if(_shippingCity){
-        [allParamDict setValue:_shippingCity forKey:PARAM_CITY];
-    }
-    if(_shippingState){
-        [allParamDict setValue:_shippingState forKey:PARAM_STATE];
-    }
-    if(_shippingCountry){
-        [allParamDict setValue:_shippingCountry forKey:PARAM_ADDRESS_2];
-    }
-    if(_shippingZipcode){
-        [allParamDict setValue:_shippingZipcode forKey:PARAM_SHIPPING_ZIPCODE];
-    }
-    if(_shippingPhoneNumber){
-        [allParamDict setValue:_shippingPhoneNumber forKey:PARAM_SHIPPING_PHONE];
-    }
-    if(_offerKey){
-        [allParamDict setValue:_offerKey forKey:PARAM_OFFER_KEY];
-    }
     
-    // user credentails
-    if(_userCredentials){
-        [allParamDict setValue:_userCredentials forKey:PARAM_USER_CREDENTIALS];
-    }
-    
+    [allParamDict addEntriesFromDictionary:_parameterDict];
     
     
     NSLog(@"ALL PARAM DICT =%@",allParamDict);
@@ -466,11 +350,11 @@
             [self loadAllStoredCard:(int)indexPath.row];
             break;
         case 1:
-            //Debit Card.
+            //Credit Card.
             [self loadCCDCView:(int)indexPath.row];
             break;
         case 2:
-            //Credit Card.
+            //Debit Card.
             [self loadCCDCView:(int)indexPath.row];
             break;
         case 3:
@@ -494,7 +378,7 @@
 #pragma mark - Web Services call by NSURLConnection
 // Connection Request.
 -(void) callAPI{
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_TEST];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
     
     
     // create the request
@@ -504,7 +388,7 @@
     // Specify that it will be a POST request
     theRequest.HTTPMethod = @"POST";
     
-    NSString *postData = [NSString stringWithFormat:@"key=%@&var1=%@&command=%@&hash=%@&drop_category=%@",_key,_var1,_command,[Utils createCheckSumString:[NSString stringWithFormat:@"%@|%@|%@|%@",_key,_command,_var1,_salt]],@"DC|CC"];
+    NSString *postData = [NSString stringWithFormat:@"key=%@&var1=%@&command=%@&hash=%@",[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_KEY],[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_VAR1],_command,[Utils createCheckSumString:[NSString stringWithFormat:@"%@|%@|%@|%@",[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_KEY],_command,[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_VAR1],[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_SALT]]]];
     
     //set request content type we MUST set this value.
     [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
@@ -562,7 +446,7 @@
             _activityIndicator.hidden = YES;
             [_activityIndicator stopAnimating];
         }
-
+        
     }
 }
 

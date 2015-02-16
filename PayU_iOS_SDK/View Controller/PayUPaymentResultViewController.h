@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface PayUPaymentResultViewController : UIViewController
 
-@property (nonatomic,copy) NSMutableURLRequest *request;
+@property (nonatomic,strong) NSURLRequest *request;
 @property (assign, nonatomic) BOOL flag;
+
 
 @end

@@ -13,8 +13,9 @@
 #import "PayUConstant.h"
 #import "CardValidation.h"
 
-#define BANK_TABLEVIEW_TAG 100;
-#define EMI_TABLEVIEW_TAG  200;
+#define BANK_TABLEVIEW_TAG 100
+#define EMI_TABLEVIEW_TAG  200
+#define TABLEVIEW_CELL_HEIGHT 44
 
 #define EMI_BUTTON_TITLE @"Select EMI time"
 
@@ -124,9 +125,7 @@
     _nameOnCard.delegate = self;
     _cardCVV.delegate = self;
     
-    if(_totalAmount)
-        _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",_totalAmount];
-   
+    
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
         CGSize result = [[UIScreen mainScreen] bounds].size;
@@ -137,12 +136,15 @@
         else
         {
             _payNow.layer.cornerRadius = 10.0f;
-
+            
         }
     }
-
+    
     
     [self extractAllBankAndEMIOptions];
+    
+    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -157,7 +159,7 @@
     }
     _connectionSpecificDataObject = [[NSMutableData alloc] init];
     
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_TEST];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_PRODUCTION];
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
@@ -197,12 +199,12 @@
         [postData appendFormat:@"%@=%ld",PARAM_CARD_EXPIRY_YEAR,(long)_expYear];
         [postData appendString:@"&"];
     }
-//    if([_cardType isEqualToString:@"DC"]){
-//        [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,@"VISA"];
-//    }
-//    else{
-        [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,@"CC"];
-//    }
+    //    if([_cardType isEqualToString:@"DC"]){
+    //        [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,@"VISA"];
+    //    }
+    //    else{
+    [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,@"CC"];
+    //    }
     [postData appendString:@"&"];
     [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
     [postData appendString:@"&"];
@@ -334,12 +336,13 @@
             }
         }
         else{
-                [_bankEmiOption setValue:aDict1 forKey:[dict objectForKey:@"bank"]];
+            [_bankEmiOption setValue:aDict1 forKey:[dict objectForKey:@"bank"]];
         }
     }
     NSLog(@"aDict == %@",_bankEmiOption);
     _emiBank = nil;
-    _emiBank = [[NSMutableArray alloc] initWithArray:[_bankEmiOption allKeys]];
+    _emiBank = [[NSMutableArray alloc] initWithArray:[_bankEmiOption.allKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
+    
 }
 
 - (void) extractEmiMonthsForBank{
@@ -352,6 +355,9 @@
             NSLog(@"Month Key : %@ AND VALUE = %@",akey,[[_bankEmiOption objectForKey:bankName] objectForKey:akey]);
         }
     }
+    _emiMonths = [[NSMutableArray alloc] initWithArray:[_emiMonths sortedArrayUsingComparator:^(NSString *str1, NSString *str2) {
+        return [str1 compare:str2 options:NSNumericSearch];
+    }]];
     NSLog(@"Months Key for selected Bank: %@",_emiMonths);
 }
 
@@ -435,7 +441,7 @@
     }
     
     if(nil == _listOfEMIBank){
-        _listOfEMIBank = [[UITableView alloc] initWithFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, sender.frame.size.width, sender.frame.size.height*(_numberOfRow+1)) style:UITableViewStylePlain];
+        _listOfEMIBank = [[UITableView alloc] initWithFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, sender.frame.size.width, TABLEVIEW_CELL_HEIGHT*(_numberOfRow )) style:UITableViewStylePlain];
         
         _listOfEMIBank.backgroundColor = [UIColor colorWithRed:240.0/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
         
@@ -443,7 +449,7 @@
         _listOfEMIBank.delegate   = self;
         _listOfEMIBank.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     }
-
+    
     
     [_listOfEMIBank reloadData];
     _listOfEMIBank.alpha = 0.0f;
@@ -481,12 +487,13 @@
     _cardExpiryDate.enabled = YES;
     [self resignAllFromFirstRespon];
     
-    [self removeDatePickerAndSetDate];
+//    [self removeDatePickerAndSetDate];
     [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         _listOfEMIBank.alpha = 0.0f;
     } completion:^(BOOL finished) {
         _isBankTableOnScreen = NO;
         [_listOfEMIBank removeFromSuperview];
+        _listOfEMIBank = nil;
     }];
     
 }
@@ -564,11 +571,11 @@
             }
             else if(1 == cardBrand){
                 _ccImageView.image = [UIImage imageNamed:@"master.png"];
-                 _cvvLength = 3;
+                _cvvLength = 3;
             }
             else if(2 == cardBrand){
                 _ccImageView.image = [UIImage imageNamed:@"diner.png"];
-                 _cvvLength = 3;
+                _cvvLength = 3;
             }
             else if(3 == cardBrand){
                 _ccImageView.image = [UIImage imageNamed:@"amex.png"];
@@ -576,11 +583,11 @@
             }
             else if(4 == cardBrand){
                 _ccImageView.image = [UIImage imageNamed:@"discover.png"];
-                 _cvvLength = 3;
+                _cvvLength = 3;
             }
             else if(5 == cardBrand){
                 _ccImageView.image = [UIImage imageNamed:@"maestro.png"];
-                 _cvvLength = 3;
+                _cvvLength = 3;
             }
             _ccImageView.alpha = ALPHA_FULL;
         }
@@ -602,7 +609,7 @@
             _isNameOnCardValid = NO;
         }
         _userImageView.image = [UIImage imageNamed:@"user.png"];
-
+        
     }
     else if([textField isEqual:_cardCVV]){
         _cvvNum = textStr;
@@ -615,7 +622,7 @@
             _isCvvNumberValid = NO;
         }
         _cvvImageView.image = [UIImage imageNamed:@"lock.png"];
-
+        
     }
     
 }
@@ -730,7 +737,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     if(_isBankTableOnScreen)
-    cell.textLabel.text = [_emiBank objectAtIndex:indexPath.row];
+        cell.textLabel.text = [_emiBank objectAtIndex:indexPath.row];
     else{
         cell.textLabel.text = [_emiMonths objectAtIndex:indexPath.row];
     }
@@ -762,6 +769,7 @@
         }
         
         [_listOfEMIBank removeFromSuperview];
+        _listOfEMIBank = nil;
     }];
     
     [self enableDisablePayNowButton];
@@ -791,7 +799,7 @@
     
     
     if(textField.text.length > 0)
-    [self toggleCardDetailsImages:textField withString:nil];
+        [self toggleCardDetailsImages:textField withString:nil];
     [self enableDisablePayNowButton];
     
     return YES;
@@ -826,7 +834,7 @@
         return NO;
     
     if(textField.text.length > 0)
-    [self toggleCardDetailsImages:textField withString:string];
+        [self toggleCardDetailsImages:textField withString:string];
     [self enableDisablePayNowButton];
     return YES;
 }

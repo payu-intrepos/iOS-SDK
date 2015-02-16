@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PayUPaymentResultViewController.h"
 
 @interface SharedDataManager : NSObject
 

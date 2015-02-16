@@ -1,0 +1,859 @@
+//
+//  PayUConnectionHandlerController.m
+//  PayU_iOS_SDK
+//
+//  Created by Suryakant Sharma on 14/02/15.
+//  Copyright (c) 2015 PayU, India. All rights reserved.
+//
+
+#import "PayUConnectionHandlerController.h"
+#import "PayUConstant.h"
+#import "SharedDataManager.h"
+#import "Utils.h"
+#import "Reachability.h"
+#import "ReachabilityManager.h"
+
+#define PARAM_VAR1_DEFAULT      @"default"
+#define PG_TYPE @"NB"
+#define BANK_CODE @"bankcode"
+
+@interface PayUConnectionHandlerController() <NSURLConnectionDelegate>
+
+@property (nonatomic,strong) NSMutableDictionary *parameterDict;
+
+@property (nonatomic,strong) NSURLConnection *connectionGettingStoredCard;
+@property (nonatomic,strong) NSURLConnection *connectionForDeletingCard;
+@property (nonatomic,strong) NSURLConnection *connectionForNetBanking;
+
+
+@property (nonatomic,strong) NSMutableData *connectionSpecificDataObject;
+@property (nonatomic,strong) NSMutableData *receivedData;
+@property (nonatomic,strong) NSMutableDictionary *allStoredCards;
+
+@property (nonatomic,strong) NSString *var1;
+@property (nonatomic,strong) NSString *command;
+
+@end
+
+@implementation PayUConnectionHandlerController
+
+
+- (instancetype) init:(NSDictionary *) requiredParam;
+{
+    if (self = [super init])
+    {
+        _parameterDict = [requiredParam mutableCopy];
+        SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
+        dataManager.allInfoDict = [self createDictionaryWithAllParam];
+        
+        // Reachability
+        [ReachabilityManager sharedManager];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:payUReachabilityChangedNotification object:nil];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    ALog(@"");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void) listOfStoredCard {
+    
+    if (_connectionSpecificDataObject) {
+        _connectionSpecificDataObject = nil;
+    }
+    _connectionSpecificDataObject = [[NSMutableData alloc] init];
+    
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
+    
+    // create the request
+    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
+                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                        timeoutInterval:60.0];
+    // Specify that it will be a POST request
+    theRequest.HTTPMethod = POST;
+    
+    
+    
+    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
+    if(0 == paramDict.allKeys.count){
+        paramDict = _parameterDict;
+    }
+    
+    [paramDict setValue:[NSString stringWithFormat:@"%@",[paramDict valueForKey:PARAM_USER_CREDENTIALS]] forKey:PARAM_VAR1];
+    [paramDict setValue:PARAM_GET_STORED_CARD forKey:PARAM_COMMAND];
+    [paramDict setValue:[paramDict valueForKey:PARAM_USER_CREDENTIALS] forKey:PARAM_VAR1];
+    
+    NSMutableString *postData = [[NSMutableString alloc] init];
+    for(NSString *aKey in [paramDict allKeys]){
+        if(![aKey isEqualToString:@"SALT"]){
+            [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
+            [postData appendString:@"&"];
+        }
+    }
+    
+    [postData appendString:@"&"];
+    [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
+    [postData appendString:@"&"];
+    
+    NSMutableString *hashValue = [[NSMutableString alloc] init];
+    if([paramDict valueForKey:PARAM_KEY]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_COMMAND]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_COMMAND]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_VAR1]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_VAR1]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_SALT]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+        //[hashValue appendString:@"|"];
+    }
+    
+    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
+    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+    
+    //sha512(key|command|var1|salt)
+    NSLog(@"STORED CARD POST DATA = %@",postData);
+    
+    //set request content type we MUST set this value.
+    [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //set post data of request
+    [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    // create the connection with the request
+    // and start loading the data
+    _connectionGettingStoredCard = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    if (_connectionGettingStoredCard) {
+        _receivedData=[NSMutableData data];
+    } else {
+        // inform the user that the download could not be made
+    }
+    [_connectionGettingStoredCard start];
+    
+}
+
+// Connection Request.
+-(void) listOfInternetBankingOption {
+    
+    if (_connectionSpecificDataObject) {
+        _connectionSpecificDataObject = nil;
+    }
+    _connectionSpecificDataObject = [[NSMutableData alloc] init];
+    
+    NSException *exeption = nil;
+    
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
+    
+    // create the request
+    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
+                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                        timeoutInterval:60.0];
+    // Specify that it will be a POST request
+    theRequest.HTTPMethod = @"POST";
+    NSString *command = nil;
+    
+    if([[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_COMMAND]){
+        command = [[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_COMMAND];
+    }
+    else{
+        exeption = [[NSException alloc] initWithName:@"Required Param missing" reason:@"KEY is not provided, this is one of required parameters." userInfo:nil];
+        [exeption raise];
+    }
+    
+    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
+    if(0 == paramDict.allKeys.count){
+        paramDict = _parameterDict;
+    }
+    
+    NSString *postData = [NSString stringWithFormat:@"key=%@&var1=%@&command=%@&hash=%@",[paramDict objectForKey:PARAM_KEY],[paramDict objectForKey:PARAM_VAR1],command,[Utils createCheckSumString:[NSString stringWithFormat:@"%@|%@|%@|%@",[paramDict objectForKey:PARAM_KEY],command,[paramDict objectForKey:PARAM_VAR1],[paramDict objectForKey:PARAM_SALT]]]];
+    
+    //set request content type we MUST set this value.
+    [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //set post data of request
+    [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    
+    // create the connection with the request
+    // and start loading the data
+    _connectionForNetBanking = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    if (_connectionForNetBanking) {
+        _receivedData=[NSMutableData data];
+    } else {
+        // inform the user that the download could not be made
+    }
+    [_connectionForNetBanking start];
+    
+}
+
+
+- (void) deleteStoredCardWithCardToken :(NSNumber*)cardToken{
+    if (_connectionSpecificDataObject) {
+        _connectionSpecificDataObject = nil;
+    }
+    _connectionSpecificDataObject = [[NSMutableData alloc] init];
+    
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
+    
+    // create the request
+    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
+                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                        timeoutInterval:60.0];
+    // Specify that it will be a POST request
+    theRequest.HTTPMethod = POST;
+    
+    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
+    if(0 == paramDict.allKeys.count){
+        paramDict = _parameterDict;
+    }
+    
+    [paramDict setValue:[NSString stringWithFormat:@"%@",[paramDict valueForKey:PARAM_USER_CREDENTIALS]] forKey:PARAM_VAR1];
+    [paramDict setValue:PARAM_GET_STORED_CARD forKey:PARAM_COMMAND];
+    
+    
+    NSMutableString *postData = [[NSMutableString alloc] init];
+    [postData appendFormat:@"%@=%@",PARAM_KEY,[paramDict valueForKey:PARAM_KEY]];
+    [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
+    [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_COMMAND,PARAM_DELETE_STORED_CARD];
+    [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_VAR1,[paramDict valueForKey:PARAM_VAR1]];
+    [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_VAR2,cardToken];
+    [postData appendString:@"&"];
+    
+    NSMutableString *hashValue = [[NSMutableString alloc] init];
+    
+    if([paramDict valueForKey:PARAM_KEY]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_KEY]];
+        [hashValue appendString:@"|"];
+    }
+    [hashValue appendFormat:@"%@",PARAM_DELETE_STORED_CARD];
+    [hashValue appendString:@"|"];
+    
+    if([paramDict valueForKey:PARAM_VAR1]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_VAR1]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_SALT]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+    }
+    
+    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
+    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+    //sha512(key|command|var1|salt)
+    NSLog(@"DELETE CARD POST DATA = %@",postData);
+    //set request content type we MUST set this value.
+    [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //set post data of request
+    [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
+    // create the connection with the request
+    // and start loading the data
+    _connectionForDeletingCard = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    if (_connectionForDeletingCard) {
+        _receivedData=[NSMutableData data];
+    } else {
+        // inform the user that the download could not be made
+    }
+    [_connectionForDeletingCard start];
+    
+}
+
+- (NSURLRequest *) URLRequestForPaymentWithStoredCard:(NSDictionary *)selectedStoredCardDict{
+    
+    if (_connectionSpecificDataObject) {
+        _connectionSpecificDataObject = nil;
+    }
+    _connectionSpecificDataObject = [[NSMutableData alloc] init];
+    
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_PRODUCTION];
+    
+    // create the request
+    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
+                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                        timeoutInterval:60.0];
+    // Specify that it will be a POST request
+    theRequest.HTTPMethod = @"POST";
+    
+    NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
+    //[paramDict setValue:@"default" forKey:PARAM_VAR1];
+    [paramDict setValue:@"get_merchant_ibibo_codes" forKey:PARAM_COMMAND];
+    
+    NSMutableString *postData = [[NSMutableString alloc] init];
+    for(NSString *aKey in [paramDict allKeys]){
+        if(/*!([aKey isEqualToString:PARAM_SALT]) && */!([aKey isEqualToString:PARAM_FIRST_NAME])){
+            [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
+            [postData appendString:@"&"];
+        }
+    }
+    
+    if([selectedStoredCardDict objectForKey:@"card_type"]){
+        [postData appendFormat:@"%@=%@",PARAM_PG,[selectedStoredCardDict objectForKey:@"card_type"]];
+        [postData appendString:@"&"];
+    }
+    
+    if([selectedStoredCardDict objectForKey:@"card_token"]){
+        [postData appendFormat:@"%@=%@",PARAM_CARD_TOKEN,[selectedStoredCardDict objectForKey:@"card_token"]];
+        [postData appendString:@"&"];
+    }
+    //user_credentials name_on_card
+    if([selectedStoredCardDict objectForKey:@"name_on_card"]){
+        [postData appendFormat:@"%@=%@",PARAM_FIRST_NAME,[selectedStoredCardDict objectForKey:@"name_on_card"]];
+        [postData appendString:@"&"];
+    }
+    if([selectedStoredCardDict objectForKey:PARAM_CARD_CVV]){
+        [postData appendFormat:@"%@=%@",PARAM_CARD_CVV,[selectedStoredCardDict objectForKey:PARAM_CARD_CVV]];
+        [postData appendString:@"&"];
+    }
+    
+    if([selectedStoredCardDict objectForKey:@"card_mode"]){
+        [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,[selectedStoredCardDict objectForKey:@"card_mode"]];
+    }
+    [postData appendString:@"&"];
+    [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
+    [postData appendString:@"&"];
+    
+    
+    
+    //checksum calculation.
+    
+    NSMutableString *hashValue = [[NSMutableString alloc] init];
+    if([paramDict valueForKey:PARAM_KEY]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_TXID]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TXID]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_TOTAL_AMOUNT]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TOTAL_AMOUNT]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_PRODUCT_INFO]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_PRODUCT_INFO]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_FIRST_NAME]){
+        // name, we will provide the one that is stored along with card info.
+        [hashValue appendFormat:@"%@",[selectedStoredCardDict objectForKey:@"name_on_card"]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_EMAIL]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_EMAIL]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_1]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_1]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_2]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_2]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_3]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_3]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_4]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_4]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_5]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_5]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    [hashValue appendString:@"|||||"];
+    if([paramDict valueForKey:PARAM_SALT]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+    }
+    
+    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
+    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+    //sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
+    NSLog(@"Pay with Stored card POST DATA = %@",postData);
+    //set request content type we MUST set this value.
+    [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //set post data of request
+    [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    return theRequest;
+    
+}
+
+
+- (NSMutableURLRequest *) URLRequestForInternetBankingWithBankCode:(NSString *)bankCode{
+    
+    NSLog(@"Bank code = %@",bankCode);
+    if (_connectionSpecificDataObject) {
+        _connectionSpecificDataObject = nil;
+    }
+    _connectionSpecificDataObject = [[NSMutableData alloc] init];
+    
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_PRODUCTION];
+    
+    // create the request
+    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
+                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                        timeoutInterval:60.0];
+    // Specify that it will be a POST request
+    theRequest.HTTPMethod = @"POST";
+    
+    NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
+    NSMutableString *postData = [[NSMutableString alloc] init];
+    //    for(NSString *aKey in [paramDict allKeys]){
+    //        [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
+    //        [postData appendString:@"&"];
+    //    }
+    
+    NSLog(@"ParamDict = %@",paramDict);
+    
+    if([paramDict objectForKey:PARAM_TOTAL_AMOUNT]){
+        [postData appendFormat:@"%@=%@",PARAM_TOTAL_AMOUNT,[paramDict objectForKey:PARAM_TOTAL_AMOUNT]];
+        [postData appendString:@"&"];
+        
+    }
+    [postData appendFormat:@"%@=%@",PARAM_PG,PG_TYPE];
+    [postData appendString:@"&"];
+    
+    if([paramDict objectForKey:PARAM_TXID]){
+        [postData appendFormat:@"%@=%@",PARAM_TXID,[paramDict objectForKey:PARAM_TXID]];
+        [postData appendString:@"&"];
+    }
+    
+    if(bankCode){
+        [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,bankCode];
+        [postData appendString:@"&"];
+    }
+    [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
+    [postData appendString:@"&"];
+    
+    if([paramDict objectForKey:PARAM_SURL]){
+        [postData appendFormat:@"%@=%@",PARAM_SURL,[paramDict objectForKey:PARAM_SURL]];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_FURL]){
+        [postData appendFormat:@"%@=%@",PARAM_FURL,[paramDict objectForKey:PARAM_FURL]];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_KEY]){
+        [postData appendFormat:@"%@=%@",PARAM_KEY,[paramDict objectForKey:PARAM_KEY]];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_PRODUCT_INFO]){
+        [postData appendFormat:@"%@=%@",PARAM_PRODUCT_INFO,[paramDict objectForKey:PARAM_PRODUCT_INFO]];
+        [postData appendString:@"&"];
+    }
+    
+    //checksum calculation.
+    
+    NSMutableString *hashValue = [[NSMutableString alloc] init];
+    if([paramDict valueForKey:PARAM_KEY]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_TXID]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TXID]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_TOTAL_AMOUNT]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TOTAL_AMOUNT]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_PRODUCT_INFO]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_PRODUCT_INFO]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_FIRST_NAME]){
+        //[hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_FIRST_NAME]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_EMAIL]){
+        //[hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_EMAIL]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_1]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_1]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_2]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_2]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_3]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_3]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_4]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_4]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_5]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_5]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    [hashValue appendString:@"|||||"];
+    if([paramDict valueForKey:PARAM_SALT]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+    }
+    
+    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
+    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+    //sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
+    NSLog(@"POST DATA = %@",postData);
+    //set request content type we MUST set this value.
+    [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //set post data of request
+    [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    return theRequest;
+}
+
+-(NSDictionary *) createDictionaryWithAllParam{
+    
+    NSMutableDictionary *allParamDict = [[NSMutableDictionary alloc] init];
+    NSException *exeption = nil;
+    if([[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_VAR1]){
+        _var1  = PARAM_VAR1_DEFAULT;
+    }
+    
+    if([[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_SALT]){
+        [allParamDict setValue:[[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_SALT] forKey:PARAM_SALT];
+    }
+    else{
+        exeption = [[NSException alloc] initWithName:@"Required Param missing" reason:@"SALT is not provided, this is one of required parameters." userInfo:nil];
+        [exeption raise];
+    }
+    
+    if([[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_KEY]){
+        [allParamDict setValue:[[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_KEY] forKey:PARAM_KEY];
+    }
+    else{
+        exeption = [[NSException alloc] initWithName:@"Required Param missing" reason:@"KEY is not provided, this is one of required parameters." userInfo:nil];
+        [exeption raise];
+    }
+    if([[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_COMMAND]){
+        _command = [[NSBundle mainBundle] objectForInfoDictionaryKey:PARAM_COMMAND];
+        //[allParamDict setValue:_command forKey:PARAM_COMMAND];
+    }
+    else{
+        exeption = [[NSException alloc] initWithName:@"Required Param missing" reason:@"KEY is not provided, this is one of required parameters." userInfo:nil];
+        [exeption raise];
+    }
+    
+    [allParamDict addEntriesFromDictionary:_parameterDict];
+    
+    
+    NSLog(@"ALL PARAM DICT =%@",allParamDict);
+    return allParamDict;
+}
+
+-(NSURLRequest *) URLRequestForCardPayment:(NSDictionary *) detailsDict{
+    
+    if (_connectionSpecificDataObject) {
+        _connectionSpecificDataObject = nil;
+    }
+    _connectionSpecificDataObject = [[NSMutableData alloc] init];
+    
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_PRODUCTION];
+    
+    // create the request
+    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
+                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                        timeoutInterval:60.0];
+    // Specify that it will be a POST request
+    theRequest.HTTPMethod = @"POST";
+    
+    NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
+    
+    NSMutableString *postData = [[NSMutableString alloc] init];
+    for(NSString *aKey in [paramDict allKeys]){
+        [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
+        [postData appendString:@"&"];
+    }
+    NSLog(@"Data after loop : %@",postData);
+    if([detailsDict valueForKey:@"store_card"] && [paramDict valueForKey:PARAM_USER_CREDENTIALS]){
+        [postData appendFormat:@"%@=%@",PARAM_STORE_YOUR_CARD,[NSNumber numberWithInt:1]];
+        [postData appendString:@"&"];
+        if([detailsDict valueForKey:@"card_name"]){
+            [postData appendFormat:@"%@=%@",PARAM_STORE_CARD_NAME,[detailsDict valueForKey:@"card_name"]];
+            [postData appendString:@"&"];
+        }
+    }
+    NSLog(@"Data after loop : %@",postData);
+
+    if([detailsDict valueForKey:PARAM_PG]){
+        [postData appendFormat:@"%@=%@",PARAM_PG,[detailsDict objectForKey:PARAM_PG]];
+        [postData appendString:@"&"];
+    }
+    if([detailsDict valueForKey:PARAM_CARD_NUMBER]){
+        [postData appendFormat:@"%@=%@",PARAM_CARD_NUMBER,[detailsDict objectForKey:PARAM_CARD_NUMBER]];
+        [postData appendString:@"&"];
+    }
+    if([detailsDict valueForKey:PARAM_CARD_NAME]){
+        [postData appendFormat:@"%@=%@",PARAM_CARD_NAME,[detailsDict objectForKey:PARAM_CARD_NAME]];
+        [postData appendString:@"&"];
+    }
+
+    if([detailsDict valueForKey:PARAM_CARD_EXPIRY_MONTH]){
+        [postData appendFormat:@"%@=%ld",PARAM_CARD_EXPIRY_MONTH,(long)[[detailsDict objectForKey:PARAM_CARD_EXPIRY_MONTH] integerValue]];
+        [postData appendString:@"&"];
+    }
+    if([detailsDict valueForKey:PARAM_CARD_EXPIRY_YEAR]){
+        [postData appendFormat:@"%@=%ld",PARAM_CARD_EXPIRY_YEAR,(long)[[detailsDict objectForKey:PARAM_CARD_EXPIRY_YEAR] integerValue]];
+        [postData appendString:@"&"];
+    }
+    
+    if( [[detailsDict valueForKey:PARAM_BANK_CODE] caseInsensitiveCompare:@"VISA"] == NSOrderedSame){
+        [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,@"VISA"];
+        [postData appendString:@"&"];
+
+        NSLog(@"if case Post =%@",postData);
+
+    }
+    else{
+        [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,@"CC"];
+        [postData appendString:@"&"];
+    }
+    if([detailsDict valueForKey:PARAM_CARD_CVV]){
+        [postData appendFormat:@"%@=%@",PARAM_CARD_CVV,[detailsDict objectForKey:PARAM_CARD_CVV]];
+        [postData appendString:@"&"];
+    }
+    else{
+        [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,@"MAES"];
+        [postData appendString:@"&"];
+    }
+    
+    [postData appendString:@"&"];
+    [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
+    [postData appendString:@"&"];
+    
+    NSLog(@"Post =%@",postData);
+    
+    //checksum calculation.
+    
+    NSMutableString *hashValue = [[NSMutableString alloc] init];
+    if([paramDict valueForKey:PARAM_KEY]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_TXID]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TXID]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_TOTAL_AMOUNT]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TOTAL_AMOUNT]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_PRODUCT_INFO]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_PRODUCT_INFO]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_FIRST_NAME]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_FIRST_NAME]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_EMAIL]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_EMAIL]];
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_1]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_1]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_2]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_2]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_3]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_3]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_4]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_4]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    if([paramDict valueForKey:PARAM_UDF_5]){
+        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_5]];
+        [hashValue appendString:@"|"];
+    }
+    else{
+        [hashValue appendString:@"|"];
+    }
+    [hashValue appendString:@"|||||"];
+    if([paramDict valueForKey:PARAM_SALT]){
+        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+    }
+    
+    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
+    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+    //sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
+    NSLog(@"POST DATA = %@",postData);
+    //set request content type we MUST set this value.
+    [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //set post data of request
+    [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
+    return theRequest;
+}
+
+
+#pragma mark - NSURLConnection Delegate methods
+
+// NSURLCONNECTION Delegate methods.
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    
+}
+
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    if (connection == _connectionGettingStoredCard)
+    {
+        // do something with the data object.
+        if(data){
+            [_connectionSpecificDataObject appendData:data];
+        }
+    }
+    else if (connection == _connectionForNetBanking){
+        if(data){
+            [_connectionSpecificDataObject appendData:data];
+        }
+    }
+    else if (connection == _connectionForDeletingCard){
+        if(data){
+            [_connectionSpecificDataObject appendData:data];
+        }
+    }
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    if ([connection isEqual:_connectionGettingStoredCard])
+    {
+        NSLog(@"connectionDidFinishLoading");
+        if(_connectionSpecificDataObject){
+            NSError *errorJson=nil;
+            _allStoredCards = [[NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson] mutableCopy];
+            NSLog(@"responseDict=%@ error = %@",_allStoredCards,errorJson);
+            if(0 != _allStoredCards.allKeys.count){
+                if([_delegate respondsToSelector:@selector(successResponse:)]){
+                    
+                    [_allStoredCards setValue:@"SC" forKey:@"paymenttype"];
+                    [_delegate performSelector:@selector(successResponse:) withObject:_allStoredCards];
+                }
+            }
+            
+        }
+    } else if([connection isEqual:_connectionForDeletingCard]){
+        if(_connectionSpecificDataObject){
+            NSError *errorJson=nil;
+            _allStoredCards = [[NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson] mutableCopy];
+            NSLog(@"responseDict=%@",_allStoredCards);
+            if(1 == [[_allStoredCards objectForKey:@"status"] integerValue]){
+                if([_delegate respondsToSelector:@selector(successResponse:)]){
+                    [_allStoredCards setValue:@"DELETESC" forKey:@"paymenttype"];
+                    [_delegate performSelector:@selector(successResponse:) withObject:_allStoredCards];
+                }
+            }
+            else if([_delegate respondsToSelector:@selector(failureResponse:)]){
+                [_delegate performSelector:@selector(failureResponse:) withObject:_allStoredCards];
+            }
+        }
+    }
+    else if ([connection isEqual:_connectionForNetBanking]){
+        if(_connectionSpecificDataObject){
+            NSError *errorJson=nil;
+            _allStoredCards = [[NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson] mutableCopy];
+            NSLog(@"responseDict=%@",_allStoredCards);
+            if(0 != _allStoredCards.allKeys.count){
+                if([_delegate respondsToSelector:@selector(successResponse:)]){
+                    [_allStoredCards setValue:@"NB" forKey:@"paymenttype"];
+                    [_delegate performSelector:@selector(successResponse:) withObject:_allStoredCards];
+                }
+            }
+            else if([_delegate respondsToSelector:@selector(failureResponse:)]){
+                [_delegate performSelector:@selector(failureResponse:) withObject:_allStoredCards];
+            }
+        }
+    }
+}
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+    
+    if([_delegate respondsToSelector:@selector(failureResponse:)]){
+        [_delegate performSelector:@selector(failureResponse:) withObject:error];
+    }
+}
+
+// Reachability methods
+- (void)reachabilityDidChange:(NSNotification *)notification {
+    Reachability *reach = [notification object];
+    
+    if ([reach isReachable]) {
+        
+    } else {
+        ALog(@"");
+        [Utils startPayUNotificationForKey:PAYU_ERROR intValue:PInternetNotReachable object:self];
+    }
+}
+
+
+@end

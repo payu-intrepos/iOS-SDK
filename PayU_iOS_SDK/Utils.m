@@ -7,6 +7,7 @@
 //
 
 #import "Utils.h"
+#import "PayUConstant.h"
 #import <CommonCrypto/CommonDigest.h>
 
 @implementation Utils
@@ -28,6 +29,16 @@
         [output appendFormat:@"%02x", digest[i]];
     }
     return output;
+}
+
++ (void) startPayUNotificationForKey:(NSString *)key value:(id)value {
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:value forKey:key];
+    [[NSNotificationCenter defaultCenter] postNotificationName:PAYU_NOTIFICATION  object:nil userInfo:userInfo];
+}
+
++ (void) startPayUNotificationForKey:(NSString *)key intValue:(int)value object:(id)object {
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:value] forKey:key];
+    [[NSNotificationCenter defaultCenter] postNotificationName:PAYU_NOTIFICATION  object:object userInfo:userInfo];
 }
 
 

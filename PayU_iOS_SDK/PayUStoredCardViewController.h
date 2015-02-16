@@ -16,4 +16,7 @@
 //App titile, if you want to set in navigation Bar.
 @property (nonatomic,copy) NSString *appTitle;
 
+@property (nonatomic,strong) NSMutableDictionary *parameterDict;
+
+
 @end

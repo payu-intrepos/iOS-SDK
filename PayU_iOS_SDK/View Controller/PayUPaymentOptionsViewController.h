@@ -13,6 +13,7 @@
 @property (nonatomic, copy) NSString *command;
 @property (nonatomic, copy) NSString *var1;
 
+@property (nonatomic,strong) NSMutableDictionary *parameterDict;
 
 /*
  from key to curl number are mandatory params
@@ -78,7 +79,7 @@
 
 /*
  Parameters has to used in case of COD (Cash on Delivery) Only
-*/
+ */
 @property (nonatomic, copy) NSString *shippingFirstName;
 @property (nonatomic, copy) NSString *shippingLastName;
 @property (nonatomic, copy) NSString *shippingAddress1;
@@ -100,7 +101,8 @@
 //App title
 @property (nonatomic, copy) NSString *appTitle;
 
-
+// this object would receive call back on Transaction success, failure and cancel.
+@property (nonatomic,strong) id callBackDelegate;
 
 
 @end

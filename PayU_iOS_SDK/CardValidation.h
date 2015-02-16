@@ -22,7 +22,9 @@ typedef NS_ENUM(NSInteger, CreditCardBrand) {
 
 @interface CardValidation : NSObject
 
++ (NSString *) removeEmptyCharsFromString: (NSString *)str;
 + (BOOL) luhnCheck:(NSString *)cardNumber;
++ (BOOL) checkCardLengthWithNumber:(NSString *)cardNumber ForBrand:(CreditCardBrand) cardType;
 + (CreditCardBrand)checkCardBrandWithNumber:(NSString *)cardNumber;
 
 @end

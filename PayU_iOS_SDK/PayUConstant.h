@@ -9,6 +9,20 @@
 #ifndef PayU_iOS_SDK_PayUConstant_h
 #define PayU_iOS_SDK_PayUConstant_h
 
+#import "PayUErrorConstant.h"
+#import "PayUNotificationConstant.h"
+
+/*#ifdef DEBUG
+
+// Something to log your sensitive data here
+
+#else
+
+//
+
+#endif*/
+
+
 // Test URL
 #define PAYU_PAYMENT_BASE_URL_TEST @"https://test.payu.in/_payment"
 #define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_TEST  @"https://test.payu.in/merchant/postservice?form=2"
@@ -25,6 +39,8 @@
 #define     PARAM_HASH                      @"hash"
 #define     PARAM_SALT                      @"salt"
 #define     PARAM_VAR1                      @"var1"
+#define     PARAM_VAR2                      @"var2"
+
 #define     PARAM_TXID                      @"txnid"
 #define     PARAM_TOTAL_AMOUNT              @"amount"
 #define     PARAM_PRODUCT_INFO              @"productinfo"
@@ -73,12 +89,16 @@
 #define     PARAM_CARD_EXPIRY_MONTH         @"ccexpmon"
 #define     PARAM_CARD_EXPIRY_YEAR          @"ccexpyr"
 
-#define     PARAM_CARD_TOKEN                @"card_token"
+#define     PARAM_CARD_TOKEN                @"store_card_token"
+
+#define     PARAM_STORE_YOUR_CARD           @"store_card"
+#define     PARAM_STORE_CARD_NAME           @"card_name"
 
 
 // Stored Card operations
 
 #define  PARAM_GET_STORED_CARD              @"get_user_cards"
+#define  PARAM_DELETE_STORED_CARD           @"delete_user_card"
 
 //IOS Identifier
 #define     IOS_SDK                         @"2"
@@ -96,14 +116,27 @@
 #define     PARAM_CASH_ON_DILEVERY          @"cod"
 
 
-#define     IPHONE_3_5   480
+#define BANK_TITLE              @"title"
+#define NET_BANKING             @"netbanking"
+
+#define INFO_DICT_RESPONSE      @"response"
+
+
+
+
+
+
+#define     IPHONE_3_5    480
+#define     IPHONE_4     568
+#define     IPHONE_4_7   667
+#define     IPHONE_5_5   736
 
 /*#ifdef DEBUG
-#    define DLog(...) NSLog(__VA_ARGS__)
-#else
-#    define DLog(...)
-#endif
-#define ALog(...) NSLog(__VA_ARGS__)*/
+ #    define DLog(...) NSLog(__VA_ARGS__)
+ #else
+ #    define DLog(...)
+ #endif
+ #define ALog(...) NSLog(__VA_ARGS__)*/
 
 
 //HTTP methods

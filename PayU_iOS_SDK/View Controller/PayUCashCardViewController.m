@@ -28,6 +28,8 @@
 @property (nonatomic,strong) NSMutableData *receivedData;
 
 @property (nonatomic,assign) NSUInteger selectedBankIndex;
+@property (nonatomic,strong) IBOutlet UILabel *amountLbl;
+
 
 - (IBAction) payNow :(UIButton *)sender;
 
@@ -54,6 +56,8 @@
         }
     }
     _selectedBankIndex = -1;
+    
+    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,7 +91,7 @@
     }
     _connectionSpecificDataObject = [[NSMutableData alloc] init];
     
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_TEST];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_PRODUCTION];
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
@@ -98,7 +102,7 @@
     
     NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
     NSMutableString *postData = [[NSMutableString alloc] init];
-
+    
     if([paramDict objectForKey:PARAM_TOTAL_AMOUNT]){
         [postData appendFormat:@"%@=%@",PARAM_TOTAL_AMOUNT,[paramDict objectForKey:PARAM_TOTAL_AMOUNT]];
         [postData appendString:@"&"];
