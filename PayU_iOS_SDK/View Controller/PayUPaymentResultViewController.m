@@ -22,6 +22,7 @@
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *processingLbl;
 @property (unsafe_unretained, nonatomic) IBOutlet UIWebView *resultWebView;
 
+@property (nonatomic,assign) float y;
 
 @end
 
@@ -30,8 +31,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //Dissable back button
-    [self.navigationItem setHidesBackButton:YES animated:YES];
+    if(_isBackOrDoneNeeded){
+        
+        if(64 != _y){
+            
+            
+        }
+        else{
+            //Dissable back button
+            [self.navigationItem setHidesBackButton:YES animated:YES];
+        }
+    }
     
     if(_flag){
         [self.view removeConstraints:self.view.constraints];
@@ -49,8 +59,8 @@
         
         
         CGRect frame = [[UIScreen mainScreen] bounds];
-        frame.origin.y = 64;
-        frame.size.height = frame.size.height - 64;
+        frame.origin.y = _y;
+        frame.size.height = frame.size.height - _y;
         _resultWebView.frame = frame;
         
         frame = _activityIndicator.frame;
@@ -73,12 +83,23 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
+    _y = 0.0;
+    if ([self isBeingPresented]) {
+        // being presented
+        _y = 20;
+        
+    } else if ([self isMovingToParentViewController]) {
+        // being pushed
+        _y = 64;
+    }
+    
+    
     // Reachability
     [ReachabilityManager sharedManager];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:payUReachabilityChangedNotification object:nil];
     
     
-    if (_bridge) { return; }
+   /* if (_bridge) { return; }
     
     [WebViewJavascriptBridge enableLogging];
     
@@ -97,12 +118,13 @@
     }];
     
     [_bridge callHandler:@"testJavascriptHandler" data:@{ @"foo":@"before ready" }];
+    [_bridge send:@"A string sent from ObjC after Webview has loaded."];*/
+
     
     [self startStopIndicator:YES];
     _resultWebView.delegate = self;
     [_resultWebView loadRequest:_request];
     
-    [_bridge send:@"A string sent from ObjC after Webview has loaded."];
     
 }
 
@@ -158,25 +180,27 @@
     if ([[url scheme] isEqualToString:@"ios"]) {
         NSString *responseStr = [url  absoluteString];
         NSString *search = @"success";
-        NSString *sub = [responseStr substringFromIndex:NSMaxRange([responseStr rangeOfString:search])];
         
-        if([sub isEqualToString:@"success"]){
+        if([responseStr localizedCaseInsensitiveContainsString:search]){
             NSDictionary *InfoDict = [NSDictionary dictionaryWithObject:responseStr forKey:INFO_DICT_RESPONSE];
             [[NSNotificationCenter defaultCenter] postNotificationName:PAYMENT_SUCCESS_NOTIFICATION object:InfoDict];
+            NSLog(@"success block with infoDict = %@",InfoDict);
+
         }
         search = @"failure";
-        sub = [responseStr substringFromIndex:NSMaxRange([responseStr rangeOfString:search])];
-        if([sub isEqualToString:@"failure"]){
+        if([responseStr localizedCaseInsensitiveContainsString:search]){
             NSDictionary *InfoDict = [NSDictionary dictionaryWithObject:responseStr forKey:INFO_DICT_RESPONSE];;
             [[NSNotificationCenter defaultCenter] postNotificationName:PAYMENT_FAILURE_NOTIFICATION object:InfoDict];
-            
+            NSLog(@"failure block with infoDict = %@",InfoDict);
+
         }
         search = @"cancel";
-        sub = [responseStr substringFromIndex:NSMaxRange([responseStr rangeOfString:search])];
         
-        if([sub isEqualToString:@"cancel"]){
+        if([responseStr localizedCaseInsensitiveContainsString:search]){
             NSDictionary *InfoDict = [NSDictionary dictionaryWithObject:responseStr forKey:INFO_DICT_RESPONSE];;
             [[NSNotificationCenter defaultCenter] postNotificationName:PAYMENT_CANCEL_NOTIFICATION object:InfoDict];
+            NSLog(@"cancel block with infoDict = %@",InfoDict);
+
         }
     }
     return YES;

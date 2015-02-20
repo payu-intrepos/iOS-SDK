@@ -20,6 +20,7 @@
 @interface PayUConnectionHandlerController() <NSURLConnectionDelegate>
 
 @property (nonatomic,strong) NSMutableDictionary *parameterDict;
+@property (nonatomic,strong) NSOperationQueue *networkQueue;
 
 @property (nonatomic,strong) NSURLConnection *connectionGettingStoredCard;
 @property (nonatomic,strong) NSURLConnection *connectionForDeletingCard;
@@ -38,6 +39,13 @@
 @implementation PayUConnectionHandlerController
 
 
+void(^serverResponseForUrlCallback)(BOOL success, NSDictionary *response, NSError *error);
+void(^serverResponseForNetworkUrlForStoredCardCallback)(NSURLResponse *response, NSData *data, NSError *connectionError);
+void(^serverResponseForNetworkUrlForNetBankingCallback)(NSURLResponse *response, NSData *data, NSError *connectionError);
+void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *response, NSData *data, NSError *connectionError);
+
+
+
 - (instancetype) init:(NSDictionary *) requiredParam;
 {
     if (self = [super init])
@@ -52,14 +60,13 @@
     }
     return self;
 }
-
 - (void)dealloc {
     ALog(@"");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
--(void) listOfStoredCard {
+- (void)listOfStoredCardWithCallback:(urlRequestCompletionBlock) completionBlock {
     
+    serverResponseForNetworkUrlForStoredCardCallback = completionBlock;
     if (_connectionSpecificDataObject) {
         _connectionSpecificDataObject = nil;
     }
@@ -87,7 +94,7 @@
     
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
-        if(![aKey isEqualToString:@"SALT"]){
+        if(![aKey isEqualToString:PARAM_SALT]){
             [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
             [postData appendString:@"&"];
         }
@@ -127,21 +134,17 @@
     //set post data of request
     [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
     
-    // create the connection with the request
-    // and start loading the data
-    _connectionGettingStoredCard = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    if (_connectionGettingStoredCard) {
-        _receivedData=[NSMutableData data];
-    } else {
-        // inform the user that the download could not be made
-    }
-    [_connectionGettingStoredCard start];
-    
+    //Create a queue
+    _networkQueue = [[NSOperationQueue alloc] init];
+
+    [NSURLConnection sendAsynchronousRequest:theRequest queue:_networkQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        serverResponseForNetworkUrlForStoredCardCallback(response,data,connectionError);
+    }];
 }
 
-// Connection Request.
--(void) listOfInternetBankingOption {
+- (void)listOfInternetBankingOptionCallback:(urlRequestCompletionBlock) completionBlock {
     
+    serverResponseForNetworkUrlForNetBankingCallback = completionBlock;
     if (_connectionSpecificDataObject) {
         _connectionSpecificDataObject = nil;
     }
@@ -180,25 +183,20 @@
     //set post data of request
     [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
     
-    
-    // create the connection with the request
-    // and start loading the data
-    _connectionForNetBanking = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    if (_connectionForNetBanking) {
-        _receivedData=[NSMutableData data];
-    } else {
-        // inform the user that the download could not be made
-    }
-    [_connectionForNetBanking start];
-    
+    _networkQueue = [[NSOperationQueue alloc] init];
+    // We just have 1 thread for this work, that way canceling is easy
+    //_networkQueue.maxConcurrentOperationCount = 1;
+    [NSURLConnection sendAsynchronousRequest:theRequest queue:_networkQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSLog(@"responseDict=%@",_allStoredCards);
+        serverResponseForNetworkUrlForNetBankingCallback(response,data,connectionError);
+    }];
+
+
 }
 
-
-- (void) deleteStoredCardWithCardToken :(NSNumber*)cardToken{
-    if (_connectionSpecificDataObject) {
-        _connectionSpecificDataObject = nil;
-    }
-    _connectionSpecificDataObject = [[NSMutableData alloc] init];
+- (void) deleteStoredCardWithCardToken:(NSNumber*)cardToken withCompletionBlock:(urlRequestCompletionBlock)completionBlock {
+    
+    serverResponseForNetworkUrlForDeleteStoredCardCallback = completionBlock;
     
     NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
     
@@ -260,17 +258,15 @@
     
     //set post data of request
     [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
-    // create the connection with the request
-    // and start loading the data
-    _connectionForDeletingCard = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    if (_connectionForDeletingCard) {
-        _receivedData=[NSMutableData data];
-    } else {
-        // inform the user that the download could not be made
-    }
-    [_connectionForDeletingCard start];
     
+    _networkQueue = [[NSOperationQueue alloc] init];
+    // We just have 1 thread for this work, that way canceling is easy
+    //_networkQueue.maxConcurrentOperationCount = 1;
+    [NSURLConnection sendAsynchronousRequest:theRequest queue:_networkQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        serverResponseForNetworkUrlForDeleteStoredCardCallback(response,data,connectionError);
+    }];
 }
+
 
 - (NSURLRequest *) URLRequestForPaymentWithStoredCard:(NSDictionary *)selectedStoredCardDict{
     
@@ -294,7 +290,7 @@
     
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
-        if(/*!([aKey isEqualToString:PARAM_SALT]) && */!([aKey isEqualToString:PARAM_FIRST_NAME])){
+        if(!([aKey isEqualToString:PARAM_SALT]) && !([aKey isEqualToString:PARAM_FIRST_NAME])){
             [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
             [postData appendString:@"&"];
         }
@@ -430,10 +426,7 @@
     
     NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
     NSMutableString *postData = [[NSMutableString alloc] init];
-    //    for(NSString *aKey in [paramDict allKeys]){
-    //        [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
-    //        [postData appendString:@"&"];
-    //    }
+
     
     NSLog(@"ParamDict = %@",paramDict);
     
@@ -613,8 +606,10 @@
     
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
-        [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
-        [postData appendString:@"&"];
+        if(![aKey isEqualToString:PARAM_SALT]){
+            [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
+            [postData appendString:@"&"];
+        }
     }
     NSLog(@"Data after loop : %@",postData);
     if([detailsDict valueForKey:@"store_card"] && [paramDict valueForKey:PARAM_USER_CREDENTIALS]){
@@ -755,94 +750,6 @@
 }
 
 
-#pragma mark - NSURLConnection Delegate methods
-
-// NSURLCONNECTION Delegate methods.
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    
-}
-
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    if (connection == _connectionGettingStoredCard)
-    {
-        // do something with the data object.
-        if(data){
-            [_connectionSpecificDataObject appendData:data];
-        }
-    }
-    else if (connection == _connectionForNetBanking){
-        if(data){
-            [_connectionSpecificDataObject appendData:data];
-        }
-    }
-    else if (connection == _connectionForDeletingCard){
-        if(data){
-            [_connectionSpecificDataObject appendData:data];
-        }
-    }
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    if ([connection isEqual:_connectionGettingStoredCard])
-    {
-        NSLog(@"connectionDidFinishLoading");
-        if(_connectionSpecificDataObject){
-            NSError *errorJson=nil;
-            _allStoredCards = [[NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson] mutableCopy];
-            NSLog(@"responseDict=%@ error = %@",_allStoredCards,errorJson);
-            if(0 != _allStoredCards.allKeys.count){
-                if([_delegate respondsToSelector:@selector(successResponse:)]){
-                    
-                    [_allStoredCards setValue:@"SC" forKey:@"paymenttype"];
-                    [_delegate performSelector:@selector(successResponse:) withObject:_allStoredCards];
-                }
-            }
-            
-        }
-    } else if([connection isEqual:_connectionForDeletingCard]){
-        if(_connectionSpecificDataObject){
-            NSError *errorJson=nil;
-            _allStoredCards = [[NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson] mutableCopy];
-            NSLog(@"responseDict=%@",_allStoredCards);
-            if(1 == [[_allStoredCards objectForKey:@"status"] integerValue]){
-                if([_delegate respondsToSelector:@selector(successResponse:)]){
-                    [_allStoredCards setValue:@"DELETESC" forKey:@"paymenttype"];
-                    [_delegate performSelector:@selector(successResponse:) withObject:_allStoredCards];
-                }
-            }
-            else if([_delegate respondsToSelector:@selector(failureResponse:)]){
-                [_delegate performSelector:@selector(failureResponse:) withObject:_allStoredCards];
-            }
-        }
-    }
-    else if ([connection isEqual:_connectionForNetBanking]){
-        if(_connectionSpecificDataObject){
-            NSError *errorJson=nil;
-            _allStoredCards = [[NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson] mutableCopy];
-            NSLog(@"responseDict=%@",_allStoredCards);
-            if(0 != _allStoredCards.allKeys.count){
-                if([_delegate respondsToSelector:@selector(successResponse:)]){
-                    [_allStoredCards setValue:@"NB" forKey:@"paymenttype"];
-                    [_delegate performSelector:@selector(successResponse:) withObject:_allStoredCards];
-                }
-            }
-            else if([_delegate respondsToSelector:@selector(failureResponse:)]){
-                [_delegate performSelector:@selector(failureResponse:) withObject:_allStoredCards];
-            }
-        }
-    }
-}
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    
-    if([_delegate respondsToSelector:@selector(failureResponse:)]){
-        [_delegate performSelector:@selector(failureResponse:) withObject:error];
-    }
-}
-
 // Reachability methods
 - (void)reachabilityDidChange:(NSNotification *)notification {
     Reachability *reach = [notification object];
@@ -854,6 +761,5 @@
         [Utils startPayUNotificationForKey:PAYU_ERROR intValue:PInternetNotReachable object:self];
     }
 }
-
 
 @end

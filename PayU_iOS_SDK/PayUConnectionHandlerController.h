@@ -23,12 +23,18 @@
 
 @interface PayUConnectionHandlerController : NSObject
 
+typedef void (^urlRequestCompletionBlock)(NSURLResponse *response, NSData *data, NSError *connectionError);
+
+
 @property(nonatomic,weak) id <PayUConnectionHandlerControllerDelegate> delegate;
 
 - (instancetype) init:(NSDictionary *) requiredParam;
-- (void) deleteStoredCardWithCardToken :(NSNumber* )cardToken;
-- (void) listOfStoredCard;
-- (void) listOfInternetBankingOption;
+
+- (void) listOfStoredCardWithCallback:(urlRequestCompletionBlock) completionBlock;
+- (void) listOfInternetBankingOptionCallback:(urlRequestCompletionBlock) completionBlock;
+- (void) deleteStoredCardWithCardToken:(NSNumber*)cardToken withCompletionBlock:(urlRequestCompletionBlock) completionBlock;
+
+
 - (NSMutableURLRequest *) URLRequestForInternetBankingWithBankCode:(NSString *)bankCode;
 - (NSURLRequest *) URLRequestForPaymentWithStoredCard:(NSDictionary *)selectedStoredCardDict;
 - (NSURLRequest *) URLRequestForCardPayment:(NSDictionary *) detailsDict;

@@ -13,6 +13,6 @@
 
 @property (nonatomic,strong) NSURLRequest *request;
 @property (assign, nonatomic) BOOL flag;
-
+@property (assign, nonatomic) BOOL isBackOrDoneNeeded;
 
 @end
