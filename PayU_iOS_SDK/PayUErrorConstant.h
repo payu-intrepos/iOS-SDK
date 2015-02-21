@@ -13,7 +13,8 @@
 
 typedef NS_ENUM(NSInteger, PayUErrors) {
     PInternetNotReachable = 0,
-    PInternetReachableViaWWAN = 1
+    PInternetReachableViaWWAN = 1,
+    PBackButtonPressed = 2
 };
 
 #endif
