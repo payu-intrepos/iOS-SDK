@@ -39,7 +39,7 @@
         }
         else{
             //Dissable back button
-            [self.navigationItem setHidesBackButton:YES animated:YES];
+//            [self.navigationItem setHidesBackButton:YES animated:YES];
         }
     }
     
