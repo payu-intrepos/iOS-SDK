@@ -119,6 +119,8 @@
     _isExpiryDateValid = NO;
     _isNameOnCardValid = NO;
     _isCardSBIMestro   = NO;
+    
+    _checkBoxSelected  = NO;
 //    _isDateSelected    = NO;
     
     payBtnFrame = _payNowBtn.frame;
@@ -186,7 +188,7 @@
     }
     _connectionSpecificDataObject = [[NSMutableData alloc] init];
     
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_PRODUCTION];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL];
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
@@ -203,7 +205,7 @@
         [postData appendString:@"&"];
     }
     
-    if(_storeThisCard || [paramDict objectForKey:PARAM_USER_CREDENTIALS]){
+    if(_checkBoxSelected){
         [postData appendFormat:@"%@=%@",PARAM_STORE_YOUR_CARD,[NSNumber numberWithInt:1]];
         [postData appendString:@"&"];
         if(![_storedCardMsg.text isEqualToString:@""]){
@@ -224,7 +226,7 @@
         [postData appendFormat:@"%@=%@",PARAM_CARD_NAME,_nameOnCard.text];
         [postData appendString:@"&"];
     }
-    if(_cardCVV.text){
+    if(![_cardCVV.text isEqualToString:@""]){
         [postData appendFormat:@"%@=%@",PARAM_CARD_CVV,_cardCVV.text];
         [postData appendString:@"&"];
     }
@@ -714,7 +716,6 @@
     }
 }
 
-//TODO: Display Card store Option
 -(void) displayStoreCardOption{
     
     CGSize result = [[UIScreen mainScreen] bounds].size;

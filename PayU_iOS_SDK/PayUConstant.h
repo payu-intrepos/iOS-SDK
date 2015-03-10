@@ -31,6 +31,15 @@
 #define PAYU_PAYMENT_BASE_URL_PRODUCTION @"https://secure.payu.in/_payment"
 #define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION  @"https://info.payu.in/merchant/postservice.php?form=2"
 
+#define PRODUCTION_OR_TEST_MODE 0
+
+#if  PRODUCTION_OR_TEST_MODE
+#define PAYU_PAYMENT_BASE_URL                          PAYU_PAYMENT_BASE_URL_TEST
+#define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION      PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_TEST
+#else
+#define PAYU_PAYMENT_BASE_URL                          PAYU_PAYMENT_BASE_URL_PRODUCTION
+#define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION      PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION
+#endif
 
 
 //All Required or option Param defines
@@ -79,6 +88,8 @@
 #define     PARAM_SHIPPING_PHONE            @"shipping_phone"
 #define     PARAM_OFFER_KEY                 @"offer_key"
 #define     PARAM_DEVICE_TYPE               @"device_type"
+#define     PARAM_INSTRUMENT_TYPE           @"instrument_type"
+#define     PARAM_INSTRUMENT_ID             @"instrument_id"
 
 
 #define     PARAM_PG                        @"pg"
@@ -111,9 +122,11 @@
 #define     PARAM_EMI                       @"emi"
 #define     PARAM_REWARD                    @"rewards"
 #define     PARAM_CASH_CARD                 @"cashcard"
-#define     PARAM_PAYU_MONEY                @"payumobey"
 #define     PARAM_STORE_CARD                @"storedcards"
 #define     PARAM_CASH_ON_DILEVERY          @"cod"
+#define     PARAM_PAYU_MONEY                @"PayU Money"
+#define     PARAM_PG_WALLET                 @"wallet"
+
 
 
 #define BANK_TITLE              @"title"
@@ -121,9 +134,9 @@
 
 #define INFO_DICT_RESPONSE      @"response"
 
+#define INSTRUMENT_TYPE         @"iOS"
 
-
-
+#define PARAM_PRODUCTION_OR_TEST_MODE  @"production"
 
 
 #define     IPHONE_3_5    480
@@ -131,12 +144,23 @@
 #define     IPHONE_4_7   667
 #define     IPHONE_5_5   736
 
-/*#ifdef DEBUG
+/*
+ #ifdef DEBUG
  #    define DLog(...) NSLog(__VA_ARGS__)
  #else
  #    define DLog(...)
  #endif
- #define ALog(...) NSLog(__VA_ARGS__)*/
+ #define ALog(...) NSLog(__VA_ARGS__)
+ */
+
+
+
+
+#ifdef DEBUG
+#   define NSLog(...) NSLog(__VA_ARGS__)
+#else
+#   define NSLog(...)
+#endif
 
 
 //HTTP methods

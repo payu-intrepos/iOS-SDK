@@ -17,6 +17,7 @@
 #import "PayUEMIOptionViewController.h"
 #import "Utils.h"
 #import "PayUCashCardViewController.h"
+#import "PayUConnectionHandlerController.h"
 
 #define CASH_CARD               @"cashcard"
 
@@ -26,6 +27,7 @@
 
 
 @interface PayUPaymentOptionsViewController () <UITableViewDataSource,UITableViewDelegate>
+
 
 @property (nonatomic,strong) NSURLConnection *connection;
 @property (nonatomic,strong) NSMutableData *connectionSpecificDataObject;
@@ -57,13 +59,18 @@
     //setting up preferred Payment option tableView
     _preferredPaymentTable.delegate = self;
     _preferredPaymentTable.dataSource = self;
-    
+    _preferredPaymentTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
     _activityIndicator.hidden = NO;
     [_activityIndicator startAnimating];
     SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
     dataManager.allInfoDict = [self createDictionaryWithAllParam];
     
     _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[dataManager.allInfoDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
+    
+    NSLog(@"Shared Dict Param = %@ ARGUMENT DICT = %@",dataManager.allInfoDict,_parameterDict);
+    NSLog(@"Server API = %@ and ALL Option API = %@",PAYU_PAYMENT_BASE_URL,PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION);
+
     
     [self callAPI];
     
@@ -78,7 +85,7 @@
 - (void) sortBankOptionArray:(NSArray *)bankOption{
     _allPaymentMethodNameArray = [[NSMutableArray alloc] init];
     
-    NSArray *names = [[NSArray alloc] initWithObjects:PARAM_STORE_CARD,PARAM_CREDIT_CARD,PARAM_DEBIT_CARD,PARAM_NET_BANKING,PARAM_EMI,PARAM_CASH_CARD, PARAM_CASH_ON_DILEVERY,PARAM_PAYU_MONEY,PARAM_REWARD,nil];
+    NSArray *names = [[NSArray alloc] initWithObjects:PARAM_STORE_CARD,PARAM_CREDIT_CARD,PARAM_DEBIT_CARD,PARAM_NET_BANKING,PARAM_EMI,PARAM_CASH_CARD,PARAM_PAYU_MONEY,nil];
     
     for (NSString * name in names) {
         for (NSString *str in bankOption) {
@@ -88,6 +95,7 @@
         }
     }
     [_allPaymentMethodNameArray insertObject:PARAM_STORE_CARD atIndex:0];
+    [_allPaymentMethodNameArray addObject:PARAM_PAYU_MONEY];
     NSLog(@"All Key = %@ Sorted option = %@", bankOption, _allPaymentMethodNameArray);
 }
 
@@ -223,13 +231,35 @@
         }
     }
     
-    
-    
     cashCardVC.cashCardDetail = listOfBankAvailableCashCardPayment;
     listOfBankAvailableCashCardPayment = nil;
     
     [self.navigationController pushViewController:cashCardVC animated:YES];
     
+}
+
+- (void) payWithPayUMoney{
+    
+    PayUConnectionHandlerController *connectionHandler = [[PayUConnectionHandlerController alloc] init:nil];
+    
+    PayUPaymentResultViewController *resultViewController = [[PayUPaymentResultViewController alloc] initWithNibName:@"PayUPaymentResultViewController" bundle:nil];
+    resultViewController.request = [connectionHandler URLRequestForPayWithPayUMoney];;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        if(result.height == IPHONE_3_5)
+        {
+            resultViewController.flag = YES;
+            
+        }
+        else{
+            resultViewController.flag = NO;
+        }
+        
+    }
+    
+    [self.navigationController pushViewController:resultViewController animated:YES];
+
 }
 
 -(NSDictionary *) createDictionaryWithAllParam{
@@ -267,7 +297,8 @@
     }
     
     [allParamDict addEntriesFromDictionary:_parameterDict];
-    
+    NSLog(@"ARGUMENT PARAM DICT =%@",_parameterDict);
+
     
     NSLog(@"ALL PARAM DICT =%@",allParamDict);
     return allParamDict;
@@ -332,6 +363,10 @@
         cell.preferredPaymentOption.text = @"Cash on delivery";
         cell.paymentImage.image = [UIImage imageNamed:@"store_card.png"];
     }
+    else if ([keyName caseInsensitiveCompare:PARAM_PAYU_MONEY] == NSOrderedSame){
+        cell.preferredPaymentOption.text = PARAM_PAYU_MONEY;
+        cell.paymentImage.image = [UIImage imageNamed:@"payu_money.png"];
+    }
     else{
         cell.preferredPaymentOption.text = keyName;
         cell.paymentImage.image = [UIImage imageNamed:@"card.png"];
@@ -367,8 +402,12 @@
             [self loadAllCashCardOption];
             break;
         case 6:
-            [self loadCCDCView:(int)indexPath.row];
+            [self payWithPayUMoney];
             break;
+        case 7:
+            [self payWithPayUMoney];
+            break;
+            
         default:
             break;
     }
@@ -378,7 +417,7 @@
 #pragma mark - Web Services call by NSURLConnection
 // Connection Request.
 -(void) callAPI{
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION];
     
     
     // create the request

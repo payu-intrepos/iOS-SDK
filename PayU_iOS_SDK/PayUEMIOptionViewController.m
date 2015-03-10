@@ -159,7 +159,7 @@
     }
     _connectionSpecificDataObject = [[NSMutableData alloc] init];
     
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_PRODUCTION];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL];
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL

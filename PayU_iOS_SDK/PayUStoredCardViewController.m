@@ -100,7 +100,7 @@
     }
     _connectionSpecificDataObject = [[NSMutableData alloc] init];
     
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION];
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
@@ -266,7 +266,7 @@
     }
     _connectionSpecificDataObject = [[NSMutableData alloc] init];
     
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL_PRODUCTION];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_BASE_URL];
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
@@ -478,7 +478,7 @@
     }
     _connectionSpecificDataObject = [[NSMutableData alloc] init];
     
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION];
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION];
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL

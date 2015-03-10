@@ -38,5 +38,6 @@ typedef void (^urlRequestCompletionBlock)(NSURLResponse *response, NSData *data,
 - (NSMutableURLRequest *) URLRequestForInternetBankingWithBankCode:(NSString *)bankCode;
 - (NSURLRequest *) URLRequestForPaymentWithStoredCard:(NSDictionary *)selectedStoredCardDict;
 - (NSURLRequest *) URLRequestForCardPayment:(NSDictionary *) detailsDict;
+- (NSURLRequest *) URLRequestForPayWithPayUMoney;
 
 @end

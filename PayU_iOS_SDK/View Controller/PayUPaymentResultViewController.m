@@ -39,7 +39,8 @@
         }
         else{
             //Dissable back button
-//            [self.navigationItem setHidesBackButton:YES animated:YES];
+            //[self.navigationItem setHidesBackButton:YES animated:YES];
+
         }
     }
     
@@ -121,7 +122,6 @@
     [_bridge send:@"A string sent from ObjC after Webview has loaded."];*/
 
     
-    [self startStopIndicator:YES];
     _resultWebView.delegate = self;
     [_resultWebView loadRequest:_request];
     
@@ -171,6 +171,8 @@
     _processingLbl.hidden = !aFlag;
 }
 
+
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView;
 {
     [self startStopIndicator:NO];
@@ -182,6 +184,9 @@
 }
 
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    
+    [self startStopIndicator:YES];
+
     NSURL *url = request.URL;
     NSLog(@"finallyCalled = %@",url);
     
