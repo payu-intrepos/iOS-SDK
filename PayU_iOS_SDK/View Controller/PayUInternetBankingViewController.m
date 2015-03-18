@@ -258,6 +258,7 @@
 }
 -(void) extractAllInternetBankingOption{
     NSDictionary *allInternetBankingOptionsDict = [_allPaymentOption objectForKey:NET_BANKING];
+    NSLog(@"allInternetBankingOptionsDict = %@",allInternetBankingOptionsDict);
     NSMutableArray *allInternetBankingOptions = nil;
     if(allInternetBankingOptionsDict.allKeys.count)
     {

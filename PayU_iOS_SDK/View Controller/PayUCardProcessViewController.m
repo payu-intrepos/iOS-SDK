@@ -99,7 +99,7 @@
 
 -(void) enableDisablePayNowButton;
 
--(void) toggleCardDetailsImages:(UITextField *)textField withString:(NSString *)str;
+//-(void) toggleCardDetailsImages:(UITextField *)textField withString:(NSString *)str;
 
 -(IBAction) payNow:(UIButton *)btn;
 

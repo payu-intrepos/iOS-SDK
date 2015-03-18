@@ -78,7 +78,7 @@
 }
 
 - (void)dealloc {
-    ALog(@"");
+//    ALog(@"");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -232,7 +232,7 @@
     if ([reach isReachable]) {
         
     } else {
-        ALog(@"");
+//        ALog(@"");
         [Utils startPayUNotificationForKey:PAYU_ERROR intValue:PInternetNotReachable object:self];
     }
 }

@@ -24,7 +24,8 @@
 #define PARAM_VAR1_DEFAULT      @"default"
 #define PARAM_BANK              @"bank"
 
-
+#define RESPONSE_DICT_KEY_1     @"ibiboCodes"
+#define RESPONSE_DICT_KEY_2     @"userCards"
 
 @interface PayUPaymentOptionsViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -66,6 +67,7 @@
     SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
     dataManager.allInfoDict = [self createDictionaryWithAllParam];
     
+    NSLog(@"AllInfoDict = %f",[[dataManager.allInfoDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]);
     _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[dataManager.allInfoDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
     
     NSLog(@"Shared Dict Param = %@ ARGUMENT DICT = %@",dataManager.allInfoDict,_parameterDict);
@@ -94,7 +96,12 @@
             }
         }
     }
-    [_allPaymentMethodNameArray insertObject:PARAM_STORE_CARD atIndex:0];
+//    [_allPaymentMethodNameArray insertObject:PARAM_STORE_CARD atIndex:0];
+//    [_allPaymentMethodNameArray addObject:PARAM_PAYU_MONEY];
+//    NSLog(@"All Key = %@ Sorted option = %@", bankOption, _allPaymentMethodNameArray);
+    SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
+    if ([dataManager.allInfoDict valueForKey:PARAM_USER_CREDENTIALS])
+        [_allPaymentMethodNameArray insertObject:PARAM_STORE_CARD atIndex:0];
     [_allPaymentMethodNameArray addObject:PARAM_PAYU_MONEY];
     NSLog(@"All Key = %@ Sorted option = %@", bankOption, _allPaymentMethodNameArray);
 }
@@ -140,7 +147,7 @@
 }
 
 -(void) loadAllEMIOption{
-    NSDictionary *allEMIOptionsDict = [_allPaymentOption objectForKey:PARAM_EMI];
+    NSDictionary *allEMIOptionsDict = [[_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1]objectForKey:PARAM_EMI];
     NSMutableArray *allEMIOptions = nil;
     if(allEMIOptionsDict.allKeys.count){
         allEMIOptions =  [[NSMutableArray alloc] init];
@@ -175,7 +182,7 @@
 }
 
 -(void) loadAllInternetBankingOption{
-    NSDictionary *allInternetBankingOptionsDict = [_allPaymentOption objectForKey:NET_BANKING];
+    NSDictionary *allInternetBankingOptionsDict = [[_allPaymentOption valueForKey:@"ibiboCodes"]valueForKey:NET_BANKING];
     NSMutableArray *allInternetBankingOptions = nil;
     if(allInternetBankingOptionsDict.allKeys.count)
     {
@@ -201,7 +208,7 @@
 
 -(void) loadAllCashCardOption{
     
-    NSDictionary *allCashCardOptionsDict = [_allPaymentOption objectForKey:CASH_CARD];
+    NSDictionary *allCashCardOptionsDict = [[_allPaymentOption valueForKey:@"ibiboCodes"] objectForKey:CASH_CARD];
     NSMutableArray *allInternetBankingOptions = nil;
     if(allCashCardOptionsDict.allKeys.count)
     {
@@ -378,19 +385,23 @@
 #pragma mark - TableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    switch (indexPath.row) {
+    NSInteger selection = indexPath.row;
+    SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
+    if (![dataManager.allInfoDict valueForKey:PARAM_USER_CREDENTIALS]) {
+        selection = selection + 1;
+    }
+    switch (selection) {
         case 0:
             //Stored Card.
-            [self loadAllStoredCard:(int)indexPath.row];
+            [self loadAllStoredCard:(int)selection];
             break;
         case 1:
             //Credit Card.
-            [self loadCCDCView:(int)indexPath.row];
+            [self loadCCDCView:(int)selection];
             break;
         case 2:
             //Debit Card.
-            [self loadCCDCView:(int)indexPath.row];
+            [self loadCCDCView:(int)selection];
             break;
         case 3:
             [self loadAllInternetBankingOption];
@@ -470,23 +481,35 @@
 {
     if (connection == _connection)
     {
-        NSLog(@"connectionDidFinishLoading");
-        if(_connectionSpecificDataObject){
-            NSError *errorJson=nil;
-            _allPaymentOption = [NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson];
-            SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
-            dataManager.allPaymentOptionDict = _allPaymentOption;
-            NSLog(@"responseDict=%@",_allPaymentOption);
-            
-            //sort available payment methods.
-            [self sortBankOptionArray:_allPaymentOption.allKeys];
-            
-            [_preferredPaymentTable reloadData];
-            _activityIndicator.hidden = YES;
-            [_activityIndicator stopAnimating];
-        }
         
-    }
-}
+        NSError *errorJson=nil;
+        
+        _allPaymentOption = [NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson];
+        
+        SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
+        
+        NSLog(@"First API Call response = %@",[_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1]);
+        
+        dataManager.allPaymentOptionDict = [_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1];
+        
+        //dataManager.storedCard = [_allPaymentOption valueForKey:RESPONSE_DICT_KEY_2];
+        
+        NSLog(@"responseDict=%@",_allPaymentOption);
+        
+        
+        
+        //sort available payment methods.
+        
+        [self sortBankOptionArray:[[_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1] allKeys]];
+        
+        
+        
+        [_preferredPaymentTable reloadData];
+        
+        _activityIndicator.hidden = YES;
+        
+        [_activityIndicator stopAnimating];
+        
+    }}
 
 @end

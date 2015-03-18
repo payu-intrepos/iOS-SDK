@@ -24,16 +24,17 @@
 
 
 // Test URL
-#define PAYU_PAYMENT_BASE_URL_TEST @"https://test.payu.in/_payment"
-#define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_TEST  @"https://test.payu.in/merchant/postservice?form=2"
+#define PAYU_PAYMENT_BASE_URL_TEST @"https://mobiletest.payu.in/_payment"
+#define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_TEST  @"https://mobiletest.payu.in/merchant/postservice?form=2"
 
 // Production
 #define PAYU_PAYMENT_BASE_URL_PRODUCTION @"https://secure.payu.in/_payment"
 #define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION  @"https://info.payu.in/merchant/postservice.php?form=2"
 
-#define PRODUCTION_OR_TEST_MODE 0
+// 0 if pointing to payu production server, 1 for test server
+#define TEST_SERVER 1
 
-#if  PRODUCTION_OR_TEST_MODE
+#if  TEST_SERVER
 #define PAYU_PAYMENT_BASE_URL                          PAYU_PAYMENT_BASE_URL_TEST
 #define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION      PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_TEST
 #else

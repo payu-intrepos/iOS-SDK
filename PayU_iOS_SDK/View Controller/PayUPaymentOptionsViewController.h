@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PayUErrorConstant.h"
+#import "PayUNotificationConstant.h"
 
 @interface PayUPaymentOptionsViewController : UIViewController
 
