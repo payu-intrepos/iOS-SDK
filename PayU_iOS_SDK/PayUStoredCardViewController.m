@@ -39,8 +39,8 @@
 @property (nonatomic,assign) NSUInteger selectedCardNumber;
 @property (nonatomic,assign) NSUInteger cardToDelete;
 
-@property (nonatomic,unsafe_unretained) UIButton *dismissButton;
-@property (nonatomic,unsafe_unretained) UIButton *okButton;
+@property (nonatomic,strong) UIButton *dismissButton;
+@property (nonatomic,strong) UIButton *okButton;
 @property (nonatomic,strong) UITextField *cvvTextField;
 @property (unsafe_unretained, nonatomic) int cvvlength;
 
@@ -62,15 +62,33 @@
     _addNewCard.layer.cornerRadius = 10.0f;
     _storedCardTableView.dataSource = self;
     _storedCardTableView.delegate   = self;
-    _activityIndicator.center=self.view.center;
-    [_activityIndicator startAnimating];
+    
     
     _storedCardTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     _storedCardTableView.backgroundView = nil;
     
     _storedCardTableView.layer.borderColor = [UIColor redColor].CGColor;
     
-    [self getStoredCard];
+    SharedDataManager *sharedManager = [SharedDataManager sharedDataManager];
+    
+    if(sharedManager.storedCard)
+    {
+        _allStoredCards = [NSMutableDictionary dictionaryWithDictionary:sharedManager.storedCard];
+        
+        [self listAllStoredCard];
+        if(_cardList.count > 0){
+            [self hideShowTableView:YES];
+            [_storedCardTableView reloadData];
+        }
+        else{
+            [self hideShowTableView:NO];
+        }
+        
+    }else{
+        _activityIndicator.center=self.view.center;
+        [_activityIndicator startAnimating];
+        [self getStoredCard];
+    }
 
     _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
 
@@ -196,7 +214,7 @@
     _okButton.layer.borderColor = [UIColor whiteColor].CGColor;
     _okButton.layer.borderWidth = 0.5f;
     
-    if ([[_cardList[_selectedCardNumber] objectForKey:@"card_brand"] isEqualToString:@"MAES"]){
+    if ([[_cardList[_selectedCardNumber] objectForKey:@"card_brand"] isEqualToString:@"MAESTRO"]){
             _okButton.enabled = YES;
     } else{
         _okButton.enabled = NO;
@@ -249,6 +267,10 @@
     
     if([sender isEqual:_okButton]){
         NSString *cvvStr = _cvvTextField.text;
+        if([[_cardList[_selectedCardNumber] objectForKey:@"card_brand"] isEqualToString:@"MAESTRO"])
+        {
+            cvvStr = @"999";
+        }
         NSLog(@"Pay With CVV =%@",cvvStr);
         [self makePaymentWithSelectedStoredCard:cvvStr];
     }
@@ -261,6 +283,7 @@
 
 -(void) makePaymentWithSelectedStoredCard:(NSString *)cvvStr {
     
+    _storedCardTableView.userInteractionEnabled = YES;
     if (_connectionSpecificDataObject) {
         _connectionSpecificDataObject = nil;
     }
@@ -427,10 +450,24 @@
 
 -(IBAction) makePaymentWIthNewCard :(UIButton *) newCardBtn{
     
-    UIActionSheet *cardTypeActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Card type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Credit Card",@"Debit Card", nil];
-    
-    cardTypeActionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    [cardTypeActionSheet showInView:self.view];
+    PayUCardProcessViewController *cardProcessCV = nil;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        CGSize result = [[UIScreen mainScreen] bounds].size;
+        if(result.height == IPHONE_3_5)
+        {
+            cardProcessCV = [[PayUCardProcessViewController alloc] initWithNibName:@"CardProcessView" bundle:nil];
+        }
+        else
+        {
+            cardProcessCV = [[PayUCardProcessViewController alloc] initWithNibName:@"PayUCardProcessViewController" bundle:nil];
+        }
+    }
+    if(_appTitle){
+        cardProcessCV.appTitle = _appTitle;
+    }
+    cardProcessCV.storeThisCard = YES;
+    [self.navigationController pushViewController:cardProcessCV animated:YES];
 }
 
 
@@ -581,7 +618,11 @@
     if([[_cardList[indexPath.row] objectForKey:@"card_brand"] isEqualToString:@"AMEX"]){
         _cvvlength = 4;
     }
-    else if ([[_cardList[indexPath.row] objectForKey:@"card_brand"] isEqualToString:@"MAES"]){
+    else if ([[_cardList[indexPath.row] objectForKey:@"card_brand"] isEqualToString:@"MAESTRO"]){
+        
+        _cvvlength = 3;
+        if([[SharedDataManager sharedDataManager] isSBIMaestro:[_cardList[indexPath.row] objectForKey:@"card_bin"]])
+            NSLog(@"It is SBI Maestro with no CVV");
         _cvvlength = 3;
     }
     else{
@@ -670,16 +711,25 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    if (textField.text.length > 2 && ![string isEqualToString:@""])
+    BOOL shouldChangeCharacters = YES;
+    if (textField.text.length == _cvvlength && ![string isEqualToString:@""])
         return NO;
     
-    NSString *cvv = [NSString stringWithFormat:@"%@%@",textField.text,string];
-    if(3 == cvv.length && ![string isEqualToString:@""]){
+    //NSString *cvv = [NSString stringWithFormat:@"%@%@",textField.text,string];
+    NSString *cvv = nil;
+    if([string isEqualToString:@""]){
+        cvv = [textField.text substringToIndex:textField.text.length-1];
+    }
+    else{
+        cvv  = [NSString stringWithFormat:@"%@%@",textField.text,string];
+    }
+    NSLog(@"CVV code = %@",cvv);
+    if(_cvvlength == cvv.length && ![string isEqualToString:@""]){
         _okButton.enabled = YES;
     }
     else if([string isEqualToString:@""]){
         _okButton.enabled = NO;
     }
-    return YES;
+    return shouldChangeCharacters;
 }
 @end

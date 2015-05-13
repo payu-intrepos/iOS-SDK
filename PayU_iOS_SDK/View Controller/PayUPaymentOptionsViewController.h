@@ -107,4 +107,6 @@
 @property (nonatomic,strong) id callBackDelegate;
 
 
+@property (nonatomic,strong) NSDictionary *allHashDict;
+
 @end

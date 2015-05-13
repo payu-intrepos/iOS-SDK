@@ -42,6 +42,14 @@
 #define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION      PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION
 #endif
 
+/*
+  0 = SDK will calculate Hash
+  1 = Merchant will provide hash
+  2 = PayU server provide hash, use only external.
+ */
+
+#define HASH_KEY_GENERATION_FROM_SERVER 0
+
 
 //All Required or option Param defines
 #define     PARAM_KEY                       @"key"
@@ -112,6 +120,11 @@
 #define  PARAM_GET_STORED_CARD              @"get_user_cards"
 #define  PARAM_DELETE_STORED_CARD           @"delete_user_card"
 
+
+#define PARAM_VAS_COMMAND_VALUE             @"vas_for_mobile_sdk"
+
+#define PARAM_SERVER_HASH_GENERATION_COMMAND @"mobileHashTestWs"
+
 //IOS Identifier
 #define     IOS_SDK                         @"2"
 #define     PARAM_USER_CREDENTIALS          @"user_credentials"
@@ -128,7 +141,7 @@
 #define     PARAM_PAYU_MONEY                @"PayU Money"
 #define     PARAM_PG_WALLET                 @"wallet"
 
-
+#define     PARAM_CREDIT_DEBIT_CARD         @"Credit/Debit card"
 
 #define BANK_TITLE              @"title"
 #define NET_BANKING             @"netbanking"

@@ -19,6 +19,7 @@
 #define WALLET_BANK_CODE      @"payuw"
 
 
+
 @interface PayUConnectionHandlerController() <NSURLConnectionDelegate>
 
 @property (nonatomic,strong) NSMutableDictionary *parameterDict;
@@ -46,6 +47,7 @@ void(^serverResponseForNetworkUrlForStoredCardCallback)(NSURLResponse *response,
 void(^serverResponseForNetworkUrlForNetBankingCallback)(NSURLResponse *response, NSData *data, NSError *connectionError);
 void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *response, NSData *data, NSError *connectionError);
 
+void(^serverResponseForHashGenerationCallback)(NSURLResponse *response, NSData *data, NSError *error);
 
 
 - (instancetype) init:(NSDictionary *) requiredParam;
@@ -55,9 +57,12 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
         SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
         NSLog(@"Shared Data = %@",dataManager.allInfoDict);
         //if(0 != dataManager.allInfoDict.allKeys.count){
-             if(nil != requiredParam)
+        if(nil != requiredParam){
             _parameterDict = [requiredParam mutableCopy];
-            dataManager.allInfoDict = [self createDictionaryWithAllParam];
+            dataManager.allInfoDict = nil;
+        }
+        dataManager.allInfoDict = [self createDictionaryWithAllParam];
+
        // }
         NSLog(@"Shared Data = %@",dataManager.allInfoDict);
 
@@ -68,7 +73,6 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     return self;
 }
 - (void)dealloc {
-    ALog(@"");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)listOfStoredCardWithCallback:(urlRequestCompletionBlock) completionBlock {
@@ -100,14 +104,16 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     [paramDict setValue:[paramDict valueForKey:PARAM_USER_CREDENTIALS] forKey:PARAM_VAR1];
     
     NSMutableString *postData = [[NSMutableString alloc] init];
-    for(NSString *aKey in [paramDict allKeys]){
-        if(![aKey isEqualToString:PARAM_SALT]){
-            [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
-            [postData appendString:@"&"];
-        }
-    }
-    
+
+    [postData appendFormat:@"%@=%@",PARAM_KEY,[paramDict valueForKey:PARAM_KEY]];
     [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_VAR1,[paramDict valueForKey:PARAM_USER_CREDENTIALS]];
+    [postData appendString:@"&"];
+    
+    [postData appendFormat:@"%@=%@",PARAM_COMMAND,PARAM_GET_STORED_CARD];
+    [postData appendString:@"&"];
+    
     [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
     [postData appendString:@"&"];
     
@@ -275,7 +281,7 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
 }
 
 
-- (NSURLRequest *) URLRequestForPaymentWithStoredCard:(NSDictionary *)selectedStoredCardDict{
+- (NSURLRequest *) URLRequestForPaymentWithStoredCard:(NSDictionary *)selectedStoredCardDict andTransactionID:(NSString *)txtId{
     
     if (_connectionSpecificDataObject) {
         _connectionSpecificDataObject = nil;
@@ -294,6 +300,9 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     NSMutableDictionary *paramDict = [[NSMutableDictionary alloc] initWithDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
     //[paramDict setValue:@"default" forKey:PARAM_VAR1];
     [paramDict setValue:@"get_merchant_ibibo_codes" forKey:PARAM_COMMAND];
+    
+    //setting new txtID.
+    [paramDict setValue:txtId forKey:PARAM_TXID];
     
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
@@ -414,7 +423,7 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
 }
 
 
-- (NSMutableURLRequest *) URLRequestForInternetBankingWithBankCode:(NSString *)bankCode{
+- (NSMutableURLRequest *) URLRequestForInternetBankingWithBankCode:(NSString *)bankCode andTransactionID:(NSString *)txtId{
     
     NSLog(@"Bank code = %@",bankCode);
     if (_connectionSpecificDataObject) {
@@ -432,6 +441,10 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     theRequest.HTTPMethod = @"POST";
     
     NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
+    
+    //setting new txtID.
+    [paramDict setValue:txtId forKey:PARAM_TXID];
+    
     NSMutableString *postData = [[NSMutableString alloc] init];
 
     
@@ -587,9 +600,8 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     }
     
     if(0 != _parameterDict.allKeys.count){
-        [allParamDict addEntriesFromDictionary:_parameterDict];
         [allParamDict addEntriesFromDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
-
+        [allParamDict addEntriesFromDictionary:_parameterDict];
     }
     else{
         [allParamDict addEntriesFromDictionary:[[SharedDataManager sharedDataManager] allInfoDict]];
@@ -600,7 +612,7 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     return allParamDict;
 }
 
--(NSURLRequest *) URLRequestForCardPayment:(NSDictionary *) detailsDict{
+-(NSURLRequest *) URLRequestForCardPayment:(NSDictionary *) detailsDict andTransactionID:(NSString *)txtId{
     
     if (_connectionSpecificDataObject) {
         _connectionSpecificDataObject = nil;
@@ -617,6 +629,8 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     theRequest.HTTPMethod = @"POST";
     
     NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
+    //setting new txtID.
+    [paramDict setValue:txtId forKey:PARAM_TXID];
     
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
@@ -798,7 +812,7 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     
     NSString *deviceId;
     #if TARGET_IPHONE_SIMULATOR
-    deviceId = @"TARGET_IPHONE_SIMULATOR";
+    deviceId = @"12345678";
     #else
     deviceId = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     #endif
@@ -908,6 +922,49 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     return theRequest;
 }
 
++ (void) generateHashFromServer:(NSDictionary *) paramDict withCompletionBlock:(urlRequestCompletionBlock)completionBlock{
+    
+    void(^serverResponseForHashGenerationCallback)(NSURLResponse *response, NSData *data, NSError *error) = completionBlock;
+ 
+    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION];
+    
+    // create the request
+    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
+                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                        timeoutInterval:60.0];
+    // Specify that it will be a POST request
+    theRequest.HTTPMethod = @"POST";
+    /*
+     Sending value of user_credentials as var1 according to new UI
+     */
+    NSString *postData = [NSString stringWithFormat:@"command=%@&key=%@&var1=%@&var2=%@&var3=%@&var4=%@&hash=%@",PARAM_SERVER_HASH_GENERATION_COMMAND,[paramDict objectForKey:PARAM_KEY],[paramDict objectForKey:PARAM_TXID],[paramDict objectForKey:PARAM_TOTAL_AMOUNT],[paramDict objectForKey:PARAM_PRODUCT_INFO],[paramDict objectForKey:PARAM_USER_CREDENTIALS],@"PAYU"];
+    
+    NSLog(@"Hash generation Post Param %@",postData);
+    
+    //set request content type we MUST set this value.
+    [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    //set post data of request
+    [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSOperationQueue *networkQueue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:theRequest queue:networkQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        NSError *errorJson = nil;
+        NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&errorJson];
+        NSLog(@"Hash API response : %@",responseDict);
+        [[SharedDataManager sharedDataManager] setHashDict:responseDict];
+        serverResponseForHashGenerationCallback(response, data,connectionError);
+
+    }];
+
+   /* NSURLResponse *urlResponce = nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:nil error:nil];
+    NSError *errorJson = nil;
+    NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&errorJson];
+    NSLog(@"Hash API response : %@",responseDict);
+    [[SharedDataManager sharedDataManager] setHashDict:responseDict];*/
+}
+
 
 // Reachability methods
 - (void)reachabilityDidChange:(NSNotification *)notification {
@@ -916,7 +973,6 @@ void(^serverResponseForNetworkUrlForDeleteStoredCardCallback)(NSURLResponse *res
     if ([reach isReachable]) {
         
     } else {
-        ALog(@"");
         [Utils startPayUNotificationForKey:PAYU_ERROR intValue:PInternetNotReachable object:self];
     }
 }

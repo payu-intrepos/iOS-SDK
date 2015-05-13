@@ -15,4 +15,9 @@
 //total amount, being pay
 @property (nonatomic,assign) float totalAmount;
 
+
+//App tittle
+@property (nonatomic,copy) NSString *appTitle;
+
+
 @end

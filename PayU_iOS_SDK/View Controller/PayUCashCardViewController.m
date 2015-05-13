@@ -11,6 +11,7 @@
 #import "SharedDataManager.h"
 #import "PayUPaymentResultViewController.h"
 #import "Utils.h"
+#import "PayUCardProcessViewController.h"
 
 #define PG_TYPE @"CASH"
 
@@ -269,12 +270,31 @@
     _payNow.enabled = YES;
     _payNow.backgroundColor = [UIColor colorWithRed:89.0/255.0 green:193/255.0 blue:0 alpha:1];
     _selectedBankIndex = indexPath.row;
-    NSLog(@"didSelectRowAtIndexPath");
     [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         _listOfBank.alpha = 0.0f;
         [_selectCashCard setTitle:[[_cashCardDetail objectAtIndex:indexPath.row] valueForKey:@"title"] forState:UIControlStateNormal];
     } completion:^(BOOL finished) {
         [_listOfBank removeFromSuperview];
+        
+        // In case of Citi reward points launch credit card payment option.
+        if([[[_cashCardDetail objectAtIndex:indexPath.row] valueForKey:@"title"] isEqualToString:@"Citibank Reward Points"]){
+            PayUCardProcessViewController *cardProcessCV = nil;
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            {
+                CGSize result = [[UIScreen mainScreen] bounds].size;
+                if(result.height == IPHONE_3_5)
+                {
+                    cardProcessCV = [[PayUCardProcessViewController alloc] initWithNibName:@"CardProcessView" bundle:nil];
+                }
+                else
+                {
+                    cardProcessCV = [[PayUCardProcessViewController alloc] initWithNibName:@"PayUCardProcessViewController" bundle:nil];
+                }
+            }
+            cardProcessCV.isPaymentBeingDoneByRewardPoints = YES;
+            cardProcessCV.appTitle = _appTitle;
+            [self.navigationController pushViewController:cardProcessCV animated:YES];
+        }
     }];
     
 }

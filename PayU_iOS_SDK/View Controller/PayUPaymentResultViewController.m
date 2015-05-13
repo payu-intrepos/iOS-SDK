@@ -45,14 +45,13 @@
     }
     
     if(_flag){
+        
+        //_y = 64;
+        NSLog(@"UI SHould be according to 3_5 inch");
         [self.view removeConstraints:self.view.constraints];
         [_resultWebView removeConstraints:_resultWebView.constraints];
         _resultWebView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
         _resultWebView.translatesAutoresizingMaskIntoConstraints = YES;
-        
-        [_activityIndicator removeConstraints:_activityIndicator.constraints];
-        _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
-        _activityIndicator.translatesAutoresizingMaskIntoConstraints = YES;
         
         [_processingLbl removeConstraints:_processingLbl.constraints];
         _processingLbl.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
@@ -64,10 +63,10 @@
         frame.size.height = frame.size.height - _y;
         _resultWebView.frame = frame;
         
-        frame = _activityIndicator.frame;
+        /*frame = _activityIndicator.frame;
         frame.origin.x = self.view.frame.size.width/2  - frame.size.width+10;
         frame.origin.y = self.view.frame.size.height/2 - frame.size.height-100;
-        _activityIndicator.frame = frame;
+        _activityIndicator.frame = frame;*/
         
         frame = _processingLbl.frame;
         frame.origin.x = self.view.frame.size.width/2  - frame.size.width + 60;
@@ -75,10 +74,20 @@
         _processingLbl.frame = frame;
         
     }
+    [_activityIndicator removeConstraints:_activityIndicator.constraints];
+    _activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin;
+    _activityIndicator.translatesAutoresizingMaskIntoConstraints = YES;
+    //_activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _activityIndicator.center=self.view.center;
+    _activityIndicator.hidden = NO;
+
+    _activityIndicator.center=self.view.center;
+
+    [self startStopIndicator:YES];
+
 }
 
 - (void)dealloc {
-//    ALog(@"");
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -94,33 +103,11 @@
         _y = 64;
     }
     
-    
+    [self startStopIndicator:YES];
+
     // Reachability
     [ReachabilityManager sharedManager];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:payUReachabilityChangedNotification object:nil];
-    
-    
-   /* if (_bridge) { return; }
-    
-    [WebViewJavascriptBridge enableLogging];
-    
-    _bridge = [WebViewJavascriptBridge bridgeForWebView:_resultWebView webViewDelegate:self handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"ObjC received message from JS: %@", data);
-        responseCallback(@"Response for message from ObjC");
-    }];
-    
-    [_bridge registerHandler:@"testObjcCallback" handler:^(id data, WVJBResponseCallback responseCallback) {
-        NSLog(@"testObjcCallback called: %@", data);
-        responseCallback(@"Response from testObjcCallback");
-    }];
-    
-    [_bridge send:@"A string sent from ObjC before Webview has loaded." responseCallback:^(id responseData) {
-        NSLog(@"objc got response! %@", responseData);
-    }];
-    
-    [_bridge callHandler:@"testJavascriptHandler" data:@{ @"foo":@"before ready" }];
-    [_bridge send:@"A string sent from ObjC after Webview has loaded."];*/
-
     
     _resultWebView.delegate = self;
     [_resultWebView loadRequest:_request];
@@ -172,6 +159,7 @@
 }
 
 
+#pragma mark - WebView delegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView;
 {
@@ -191,6 +179,8 @@
     NSLog(@"finallyCalled = %@",url);
     
     if ([[url scheme] isEqualToString:@"ios"]) {
+        [self startStopIndicator:NO];
+
         NSString *responseStr = [url  absoluteString];
         NSString *search = @"success";
         
@@ -200,6 +190,7 @@
             NSLog(@"success block with infoDict = %@",InfoDict);
 
         }
+        
         search = @"failure";
         if([responseStr localizedCaseInsensitiveContainsString:search]){
             NSDictionary *InfoDict = [NSDictionary dictionaryWithObject:responseStr forKey:INFO_DICT_RESPONSE];;
@@ -232,7 +223,6 @@
     if ([reach isReachable]) {
         
     } else {
-//        ALog(@"");
         [Utils startPayUNotificationForKey:PAYU_ERROR intValue:PInternetNotReachable object:self];
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -30,7 +30,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UMi-1u-lVJ">
-                    <rect key="frame" x="0.0" y="207" width="375" height="262"/>
+                    <rect key="frame" x="0.0" y="187" width="375" height="262"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder=" Card Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ug2-Nz-49P">
                             <rect key="frame" x="8" y="54" width="359" height="50"/>
@@ -56,7 +56,7 @@
                                 <action selector="displayDatePicketView:" destination="-1" eventType="touchUpInside" id="Z1H-K5-RSw"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user.png" translatesAutoresizingMaskIntoConstraints="NO" id="kzA-pk-Fdj">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user.png" translatesAutoresizingMaskIntoConstraints="NO" id="kzA-pk-Fdj">
                             <rect key="frame" x="322" y="107" width="45" height="45"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="45" id="f5N-AF-so3"/>
@@ -83,7 +83,7 @@
                         <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lock.png" translatesAutoresizingMaskIntoConstraints="NO" id="bVg-Q9-wAn">
                             <rect key="frame" x="322" y="209" width="45" height="45"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter credit card details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBH-wt-ved">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your card details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CBH-wt-ved">
                             <rect key="frame" x="8" y="21" width="359" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -147,11 +147,11 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ImP-M7-tZu">
-                    <rect key="frame" x="0.0" y="469" width="375" height="198"/>
+                    <rect key="frame" x="0.0" y="449" width="375" height="218"/>
                     <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eX5-in-v6b">
-                    <rect key="frame" x="8" y="499" width="359" height="43"/>
+                    <rect key="frame" x="8" y="484" width="359" height="43"/>
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="43" id="xmn-B2-X9H"/>
@@ -177,16 +177,16 @@
                 <constraint firstItem="ImP-M7-tZu" firstAttribute="leading" secondItem="UMi-1u-lVJ" secondAttribute="leading" id="I98-rc-s0N"/>
                 <constraint firstAttribute="bottom" secondItem="ImP-M7-tZu" secondAttribute="bottom" id="Khu-Rm-Jol"/>
                 <constraint firstItem="eX5-in-v6b" firstAttribute="trailing" secondItem="BIh-Xd-oT5" secondAttribute="trailing" id="OfI-tx-SD3"/>
-                <constraint firstItem="eX5-in-v6b" firstAttribute="top" secondItem="UMi-1u-lVJ" secondAttribute="bottom" constant="30" id="Qr8-Pj-bt7"/>
-                <constraint firstItem="UMi-1u-lVJ" firstAttribute="top" secondItem="BIh-Xd-oT5" secondAttribute="bottom" constant="70" id="Wqd-ox-fHS"/>
+                <constraint firstItem="eX5-in-v6b" firstAttribute="top" secondItem="UMi-1u-lVJ" secondAttribute="bottom" constant="35" id="Qr8-Pj-bt7"/>
+                <constraint firstItem="UMi-1u-lVJ" firstAttribute="top" secondItem="BIh-Xd-oT5" secondAttribute="bottom" constant="50" id="Wqd-ox-fHS"/>
                 <constraint firstItem="ImP-M7-tZu" firstAttribute="centerX" secondItem="eX5-in-v6b" secondAttribute="centerX" id="adx-7l-VmY"/>
                 <constraint firstItem="UMi-1u-lVJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cC2-wU-Iif"/>
-                <constraint firstItem="eX5-in-v6b" firstAttribute="top" secondItem="ImP-M7-tZu" secondAttribute="top" constant="30" id="dkO-Au-L1I"/>
+                <constraint firstItem="eX5-in-v6b" firstAttribute="top" secondItem="ImP-M7-tZu" secondAttribute="top" constant="35" id="dkO-Au-L1I"/>
                 <constraint firstItem="eX5-in-v6b" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="hc0-I4-bWU"/>
                 <constraint firstAttribute="trailing" secondItem="eX5-in-v6b" secondAttribute="trailing" constant="8" id="lhO-gy-khK"/>
                 <constraint firstItem="BIh-Xd-oT5" firstAttribute="leading" secondItem="eX5-in-v6b" secondAttribute="leading" id="mHh-dX-JR0"/>
                 <constraint firstAttribute="trailing" secondItem="ImP-M7-tZu" secondAttribute="trailing" id="mWg-PX-qs6"/>
-                <constraint firstItem="ImP-M7-tZu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="469" id="yuc-me-O3g"/>
+                <constraint firstItem="ImP-M7-tZu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="449" id="yuc-me-O3g"/>
             </constraints>
             <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

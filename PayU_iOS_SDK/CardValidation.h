@@ -9,15 +9,22 @@
 #import <Foundation/Foundation.h>
 
 
+
 typedef NS_ENUM(NSInteger, CreditCardBrand) {
-    CreditCardBrandVisa,
-    CreditCardBrandMasterCard,
-    CreditCardBrandDinersClub,
-    CreditCardBrandAmex,
-    CreditCardBrandDiscover,
-    CreditCardBrandMaestro,
-    CreditCardBrandUnknown
+    CreditCardBrandVisa,        //0
+    CreditCardBrandMasterCard,  //1
+    CreditCardBrandDinersClub,  //2
+    CreditCardBrandAmex,        //3
+    CreditCardBrandDiscover,    //4
+    CreditCardBrandJCB,         //5
+    CreditCardBrandLaser,       //6
+    CreditCardBrandMaestro,     //7
+    CreditCardBrandMaestroType1,//8
+    CreditCardBrandMaestroType2,//9
+    CreditCardBrandMaestroType3,//10
+    CreditCardBrandUnknown      //11
 };
+
 
 
 @interface CardValidation : NSObject

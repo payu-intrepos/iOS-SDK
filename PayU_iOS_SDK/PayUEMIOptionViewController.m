@@ -17,7 +17,7 @@
 #define EMI_TABLEVIEW_TAG  200
 #define TABLEVIEW_CELL_HEIGHT 44
 
-#define EMI_BUTTON_TITLE @"Select EMI time"
+#define EMI_BUTTON_TITLE @"Select EMI Duration"
 
 #define DEBIT_CARD   @"Please enter debit card details"
 #define CREDIT_CARD  @"Please enter credit card details"
@@ -28,7 +28,7 @@
 #define CARD_TYPE_CC @"CC"
 #define CARD_TYPE_DC @"DC"
 
-#define MAX_DIGIT_CARD_NUMBER 18
+#define MAX_DIGIT_CARD_NUMBER 19
 #define MAX_CHAR_CARD_NAME 29
 
 
@@ -82,6 +82,13 @@
 @property (nonatomic,assign) BOOL isCvvNumberValid;
 @property (nonatomic,assign) BOOL isBankSelected;
 @property (nonatomic,assign) BOOL isEMIPeriodSelected;
+@property (nonatomic,assign) BOOL isCardBrandDetected;
+
+@property (nonatomic,assign) BOOL isCardSBIMestro;
+
+@property (strong, nonatomic) UILabel *msgLbl;
+@property (strong, nonatomic) UIButton *button;
+
 
 //Card details
 @property (unsafe_unretained, nonatomic) IBOutlet UITextField *cardNumber;
@@ -118,6 +125,16 @@
     
     _cvvLength = 3;
     _selectEMITime.enabled = NO;
+    _months = nil;
+    _years  = nil;
+    
+    _isCardNumberValid = NO;
+    _isCvvNumberValid  = NO;
+    _isExpiryDateValid = NO;
+    _isNameOnCardValid = YES;
+    _isCardSBIMestro   = NO;
+    _isCardBrandDetected = NO;
+    
     
     _originalCenter = self.view.center;
     
@@ -171,8 +188,12 @@
     NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
-        [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
-        [postData appendString:@"&"];
+        
+        if(![aKey isEqualToString:PARAM_SALT]){
+            [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
+            [postData appendString:@"&"];
+        }
+
     }
     
     if(_paymentCategory){
@@ -183,28 +204,43 @@
         [postData appendFormat:@"%@=%@",PARAM_CARD_NUMBER,_cardNumber.text];
         [postData appendString:@"&"];
     }
-    if(_nameOnCard.text){
+    if(0 != _nameOnCard.text.length){
         [postData appendFormat:@"%@=%@",PARAM_CARD_NAME,_nameOnCard.text];
+        [postData appendString:@"&"];
+    }
+    else{
+        [postData appendFormat:@"%@=%@",PARAM_CARD_NAME,@"PAYU"];
         [postData appendString:@"&"];
     }
     if(_cardCVV.text){
         [postData appendFormat:@"%@=%@",PARAM_CARD_CVV,_cardCVV.text];
+        [postData appendString:@"&"];
+    } else{
+        [postData appendFormat:@"%@=%@",PARAM_CARD_CVV,@"999"];
         [postData appendString:@"&"];
     }
     if(_expMonth){
         [postData appendFormat:@"%@=%ld",PARAM_CARD_EXPIRY_MONTH,(long)_expMonth];
         [postData appendString:@"&"];
     }
+    else{
+        /*
+         sending some value in case of maestro card, that doen't have CVV and expiry no.
+         */
+        [postData appendFormat:@"%@=%@",PARAM_CARD_EXPIRY_MONTH,@"05"];
+        [postData appendString:@"&"];
+    }
     if(_expYear){
         [postData appendFormat:@"%@=%ld",PARAM_CARD_EXPIRY_YEAR,(long)_expYear];
         [postData appendString:@"&"];
     }
-    //    if([_cardType isEqualToString:@"DC"]){
-    //        [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,@"VISA"];
-    //    }
-    //    else{
+    else{
+        [postData appendFormat:@"%@=%@",PARAM_CARD_EXPIRY_YEAR,@"2027"];
+        [postData appendString:@"&"];
+    }
+
+
     [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,@"CC"];
-    //    }
     [postData appendString:@"&"];
     [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
     [postData appendString:@"&"];
@@ -536,10 +572,10 @@
         }
         _ccImageView.alpha = ALPHA_FULL;
     }
-    else if([textField isEqual:_nameOnCard] && textField.text.length < 2){
-        _userImageView.image = [UIImage imageNamed:@"error_icon.png"];
-        _userImageView.alpha = ALPHA_FULL;
-    }
+//    else if([textField isEqual:_nameOnCard] && textField.text.length < 2){
+//        _userImageView.image = [UIImage imageNamed:@"error_icon.png"];
+//        _userImageView.alpha = ALPHA_FULL;
+//    }
     else if([textField isEqual:_cardCVV]){
         _cvvNum = textField.text;
         if(_cvvLength != [_cvvNum length]){
@@ -633,12 +669,229 @@
         _payNow.enabled = YES;
         [_payNow setBackgroundColor:[UIColor colorWithRed:89.0/255.0 green:193/255.0 blue:0 alpha:1]];
     }
+    else if (_isCardNumberValid && _isNameOnCardValid && _isCardSBIMestro && _isBankSelected && _isEMIPeriodSelected) {
+        _payNow.userInteractionEnabled = YES;
+        _payNow.exclusiveTouch = YES;
+        _payNow.enabled = YES;
+        [_payNow setBackgroundColor:[UIColor colorWithRed:89.0/255.0 green:193/255.0 blue:0 alpha:1]];
+    }
     else{
+        NSLog(@"Something CardNum = %@ or Card Name = %@ is not valid , payNow button is disable _isCardNumberValid = %d, _isNameOnCardValid = %d _isCardSBIMestro = %d",_cardNum,_cardName,_isCardNumberValid,_isNameOnCardValid,_isCardSBIMestro);
         _payNow.userInteractionEnabled = YES;
         _payNow.exclusiveTouch = YES;
         _payNow.enabled = NO;
         [_payNow setBackgroundColor:[UIColor lightGrayColor]];
     }
+}
+
+- (void) findCardBrand:(NSString *) cardNumber {
+    
+    int cardBrand = 100;
+    cardBrand = [CardValidation checkCardBrandWithNumber:cardNumber];
+    
+    if(0 <= cardBrand && 7 >= cardBrand){
+        _isCardBrandDetected = YES;
+    }
+    else{
+        _isCardBrandDetected = NO;
+    }
+    
+    if(0 == cardBrand){
+        _ccImageView.image = [UIImage imageNamed:@"visa.png"];
+        _cvvLength = 3;
+    }
+    else if(1 == cardBrand){
+        _ccImageView.image = [UIImage imageNamed:@"master.png"];
+        _cvvLength = 3;
+    }
+    else if(2 == cardBrand){
+        _ccImageView.image = [UIImage imageNamed:@"diner.png"];
+        _cvvLength = 3;
+    }
+    else if(3 == cardBrand){
+        _ccImageView.image = [UIImage imageNamed:@"amex.png"];
+        _cvvLength = 4;
+    }
+    else if(4 == cardBrand){
+        _ccImageView.image = [UIImage imageNamed:@"discover.png"];
+        _cvvLength = 3;
+    }
+    else if(5 == cardBrand){
+        _ccImageView.image = [UIImage imageNamed:@"jcb.png"];
+        _cvvLength = 3;
+    }
+    else if(6 == cardBrand){
+        _ccImageView.image = [UIImage imageNamed:@"laser.png"];
+        _cvvLength = 3;
+    }
+    else if(7 == cardBrand){
+        _ccImageView.image = [UIImage imageNamed:@"maestro.png"];
+        _cvvLength = 3;
+        
+        if([[SharedDataManager sharedDataManager] isSBIMaestro:cardNumber]) {
+            // cvv and expiry not needed for maestro
+            _cvvLength = 0;
+            _isCvvNumberValid = YES;
+            _isExpiryDateValid = YES;
+            _isCardSBIMestro = YES;
+            [self hideAndShowView:YES];
+            [self hideAndShowClickButton:YES];
+            
+        }
+    }
+    else {
+        _cvvLength = 3;
+        _ccImageView.image = [UIImage imageNamed:@"card.png"];
+    }
+    _ccImageView.alpha = ALPHA_FULL;
+}
+
+// for checkEnteredInfo
+- (void) updateVarsForTextField:(UITextField *)textField withString:(NSString *)str {
+    NSString *trimmedText = nil;
+    if ([textField isEqual:_cardNumber]) {
+        trimmedText = textField.text;
+    } else {
+        trimmedText= [CardValidation removeEmptyCharsFromString:textField.text];
+    }
+    
+    NSString *textStr = nil;
+    if (str == nil) {
+        textStr = trimmedText;
+    } else if ([str isEqualToString:@""]){
+        textStr = [trimmedText substringToIndex:trimmedText.length -1];
+    } else {
+        textStr = [NSString stringWithFormat:@"%@%@",trimmedText,str];
+    }
+    
+    
+    if([textField isEqual:_cardNumber]){
+        _cardNum = textStr;
+    } else if ([textField isEqual:_nameOnCard]) {
+        _cardName = textStr;
+    } else if ([textField isEqual:_cardCVV]) {
+        _cvvNum = textStr;
+    }
+    ALog(@"_cardNum: %@, _cardName: %@, _cvvNum:%@", _cardNum, _cardName, _cvvNum);
+}
+
+-(void) checkEnteredInfo :(UITextField *)textField isFocused:(BOOL)bIsFocused{
+    if([textField isEqual:_cardNumber]){
+        
+        //_isCardSBIMestro = NO;
+        _isCardNumberValid = NO;
+        
+        if (_cardNum.length == 0) {
+            
+            _ccImageView.image = [UIImage imageNamed:@"card.png"];
+            _ccImageView.alpha = ALPHA_HALF;
+            _cvvLength = 3;
+        } else {
+            _isCardNumberValid = [CardValidation luhnCheck:_cardNum];
+            
+            if (_isCardNumberValid) {
+                                
+                
+            }
+            else {
+                _isCardBrandDetected = NO;
+                _ccImageView.alpha = ALPHA_FULL;
+                if (bIsFocused) {
+                    _ccImageView.image = [UIImage imageNamed:@"card.png"];
+                } else {
+                    _ccImageView.image = [UIImage imageNamed:@"error_icon.png"];
+                }
+            }
+        }
+    }
+    else if([textField isEqual:_nameOnCard]) {
+        /*if(1 < [_cardName length]){
+            _userImageView.image = [UIImage imageNamed:@"user.png"];
+            _userImageView.alpha = ALPHA_FULL;
+            _isNameOnCardValid = YES;
+        } else {
+            // in case of 0
+            _isNameOnCardValid = NO;
+            if (bIsFocused) {
+                _userImageView.image = [UIImage imageNamed:@"user.png"];
+                _userImageView.alpha = ALPHA_HALF;
+            } else {
+                _userImageView.image = [UIImage imageNamed:@"error_icon.png"];
+                _userImageView.alpha = ALPHA_FULL;
+            }
+        }*/
+        
+    }
+    else if([textField isEqual:_cardCVV]){
+        ALog(@"cvvNum %@, cvvLength %ld", _cvvNum, (long)_cvvLength);
+        if (_cardNum == nil) {
+            _cvvLength = 3;
+        }
+        
+        if(_cvvLength != [_cvvNum length]){
+            _cvvImageView.alpha = ALPHA_HALF;
+            _isCvvNumberValid = NO;
+            if (bIsFocused) {
+                _cvvImageView.image = [UIImage imageNamed:@"lock.png"];
+            } else {
+                _cvvImageView.image = [UIImage imageNamed:@"error_icon.png"];
+            }
+        } else {
+            _isCvvNumberValid = YES;
+            _cvvImageView.image = [UIImage imageNamed:@"lock.png"];
+            _cvvImageView.alpha = ALPHA_FULL;
+        }
+    }
+}
+
+-(void) hideAndShowView:(BOOL) aFlag{
+    
+    _cardExpiryDate.hidden = aFlag;
+    _calenderImageView.hidden = aFlag;
+    _cardCVV.hidden = aFlag;
+    _cvvImageView.hidden = aFlag;
+}
+
+-(void) hideAndShowClickButton :(BOOL) aFlag{
+    
+    if(nil == _msgLbl){
+        UIFont * fontSize = [UIFont systemFontOfSize:12.0]; //custom font
+        _msgLbl = [[UILabel alloc]initWithFrame:CGRectMake(_nameOnCard.frame.origin.x, _nameOnCard.frame.origin.y + _nameOnCard.frame.size.height + 8, 200, 21)];
+        _msgLbl.text = @"if you have CVV and Epiry date, Click";
+        _msgLbl.font = fontSize;
+        _msgLbl.numberOfLines = 1;
+        _msgLbl.baselineAdjustment = UIBaselineAdjustmentAlignBaselines;
+        _msgLbl.adjustsFontSizeToFitWidth = YES;
+        _msgLbl.adjustsLetterSpacingToFitWidth = YES;
+        _msgLbl.minimumScaleFactor = 10.0f/12.0f;
+        _msgLbl.clipsToBounds = YES;
+        _msgLbl.backgroundColor = [UIColor clearColor];
+        _msgLbl.textColor = [UIColor blackColor];
+        _msgLbl.textAlignment = NSTextAlignmentLeft;
+    }
+    
+    if(nil == _button){
+        _button= [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        [_button addTarget:self
+                    action:@selector(buttonClicked:)
+          forControlEvents:UIControlEventTouchUpInside];
+        [_button setTitle:@"here" forState:UIControlStateNormal];
+        _button.frame = CGRectMake(_nameOnCard.frame.origin.x + 200, _nameOnCard.frame.origin.y + _nameOnCard.frame.size.height + 8, 40.0, 21.0);
+    }
+    [_containerView addSubview:_msgLbl];
+    [_containerView addSubview:_button];
+}
+
+- (void) buttonClicked :(UIButton *) aButton{
+    [self hideAndShowView:NO];
+    _cvvLength = 3;
+    _msgLbl.hidden = YES;
+    _button.hidden = YES;
+    _button.enabled = NO;
+
+    _cardCVV.enabled = YES;
+    _msgLbl = nil;
+    _button = nil;
 }
 
 
@@ -755,6 +1008,7 @@
         if(_isBankTableOnScreen){
             [_selectBank setTitle:[_emiBank objectAtIndex:indexPath.row] forState:UIControlStateNormal];
             _isBankSelected = YES;
+            
         }
         else{
             [_selectEMITime setTitle:[_emiMonths objectAtIndex:indexPath.row] forState:UIControlStateNormal];
@@ -766,6 +1020,9 @@
             _numberOfRow = _emiMonths.count;
             _isBankTableOnScreen = NO;
             _selectEMITime.enabled = YES;
+            [_selectEMITime setTitle:[_emiMonths objectAtIndex:_emiMonths.count-1] forState:UIControlStateNormal];
+            _isEMIPeriodSelected = YES;
+            [self enableDisablePayNowButton];
         }
         
         [_listOfEMIBank removeFromSuperview];
@@ -783,9 +1040,13 @@
 #pragma mark - UITextField Delegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    [self toggleCardDetailsImages:textField withString:nil];
+    /*[self toggleCardDetailsImages:textField withString:nil];
     [self checkEnteredInfo:textField];
+    [self enableDisablePayNowButton];*/
+    [self updateVarsForTextField:textField withString:nil];
+    [self checkEnteredInfo:textField isFocused:NO];
     [self enableDisablePayNowButton];
+
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
@@ -797,18 +1058,49 @@
     if((![textField isEqual:_cardNumber]) || (result.height == IPHONE_3_5))
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
+    if(result.height == IPHONE_4)
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
     
-    if(textField.text.length > 0)
-        [self toggleCardDetailsImages:textField withString:nil];
-    [self enableDisablePayNowButton];
+    /// add toolbar for keyboard.
+    UIToolbar *toolbar = [[UIToolbar alloc] init];
+    [toolbar setBarStyle:UIBarStyleDefault];
+    [toolbar sizeToFit];
+    
+    UIButton *nextButton = [[UIButton alloc] init];
+    nextButton.titleLabel.text = @"next";
+    [nextButton setImage:[UIImage imageNamed:@"next.png"] forState:UIControlStateNormal];
+    [nextButton addTarget:self action:@selector(nextButtonClicked:)
+         forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *nextBarButton =[[UIBarButtonItem alloc] initWithCustomView:nextButton];
+    
+    UIButton *prevButton = [[UIButton alloc] init];
+    prevButton.titleLabel.text = @"Prev";
+    [prevButton setImage:[UIImage imageNamed:@"prev.png"] forState:UIControlStateNormal];
+    [prevButton addTarget:self action:@selector(previousButtonClicked:)
+         forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *prevBarButton =[[UIBarButtonItem alloc] initWithCustomView:prevButton];
+    prevButton.titleLabel.text = @"Prev";
+    UIBarButtonItem *flexButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *doneButton =[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(resignKeyboard:)];
+    
+    [toolbar setItems:[NSArray arrayWithObjects:prevBarButton,nextBarButton,flexButton, doneButton, nil]];
+    
+    [textField setInputAccessoryView:toolbar];
+    
+    flexButton = nil;
+    doneButton = nil;
+    nextBarButton = nil;
+    prevButton = nil;
+    prevBarButton = nil;
+    nextButton = nil;
     
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    [self toggleCardDetailsImages:textField withString:nil];
-    [self enableDisablePayNowButton];
-    
+    //[self toggleCardDetailsImages:textField withString:nil];
+    //[self enableDisablePayNowButton];
+    [textField resignFirstResponder];
     return YES;
 }
 
@@ -816,41 +1108,105 @@
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
-    [self toggleCardDetailsImages:textField withString:nil];
+    /*[self toggleCardDetailsImages:textField withString:nil];
     [self checkEnteredInfo:textField];
-    [self enableDisablePayNowButton];
+    [self enableDisablePayNowButton];*/
     return YES;
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
-    if (textField.text.length > _cvvLength-1 && [textField isEqual:_cardCVV] && ![string isEqualToString:@""])
-        return NO;
+    NSString *trimmedText = [CardValidation removeEmptyCharsFromString:textField.text];
+    BOOL isValid = YES;
     
-    if (textField.text.length > MAX_DIGIT_CARD_NUMBER && [textField isEqual:_cardNumber] && ![string isEqualToString:@""])
-        return NO;
+    if([string isEqualToString:@""]){
+        trimmedText = [textField.text substringToIndex:textField.text.length-1];
+    }
+    else{
+        trimmedText  = [NSString stringWithFormat:@"%@%@",textField.text,string];
+    }
+
     
-    if (textField.text.length > MAX_CHAR_CARD_NAME && [textField isEqual:_nameOnCard] && ![string isEqualToString:@""])
-        return NO;
+    if (trimmedText.length > _cvvLength && [textField isEqual:_cardCVV] && ![string isEqualToString:@""])
+        isValid = NO;
     
-    if(textField.text.length > 0)
-        [self toggleCardDetailsImages:textField withString:string];
-    [self enableDisablePayNowButton];
-    return YES;
+    if (trimmedText.length > MAX_DIGIT_CARD_NUMBER && [textField isEqual:_cardNumber] && ![string isEqualToString:@""])
+        isValid = NO;
+    
+    if (trimmedText.length > MAX_CHAR_CARD_NAME && [textField isEqual:_nameOnCard] && ![string isEqualToString:@""])
+        isValid = NO;
+    
+    NSString *cardNumStr = nil;
+    if([string isEqualToString:@""]){
+        cardNumStr = [textField.text substringToIndex:textField.text.length-1];
+    }
+    else{
+        cardNumStr  = [NSString stringWithFormat:@"%@%@",textField.text,string];
+    }
+    
+    if(6 > cardNumStr.length && [textField isEqual:_cardNumber]){
+        _isCardBrandDetected = NO;
+        _cvvLength = 3;
+        _ccImageView.image = [UIImage imageNamed:@"card.png"];
+        _ccImageView.alpha = ALPHA_HALF;
+    }
+    
+    if([textField isEqual:_cardNumber] && cardNumStr.length < 19 && !_isCardBrandDetected && cardNumStr.length > 5){
+        [self findCardBrand:cardNumStr];
+    }
+
+    if (isValid) {
+        if ([textField isEqual:_cardNumber]) {
+            // checks for removing existing cvv in case of card change
+            _cardCVV.text = @"";
+            _isCvvNumberValid = NO;
+        }
+        if(![textField isEqual:_cardNumber]){
+            [self updateVarsForTextField:textField withString:string];
+            [self checkEnteredInfo:textField isFocused:true];
+        }
+        
+        [self enableDisablePayNowButton];
+    }
+    
+    if([textField isEqual:_cardCVV])
+        NSLog(@"String in field = %@ _cvvlength = %ld isValid = %d trimmedText = %@",cardNumStr,(long)_cvvLength,isValid,trimmedText);
+
+    
+    return isValid;
 }
 
 
 #pragma mark - UIView movement on KB appearance
 - (void)keyboardDidShow:(NSNotification *)notification
 {
+    __block float sizeToDiscreaseFromCenter = 0.0;
+    CGSize result = [[UIScreen mainScreen] bounds].size;
+
+    if(result.height == IPHONE_3_5)
+    {
+        sizeToDiscreaseFromCenter = 200.0f;
+    }
+    else if(IPHONE_4 == result.height)
+    {
+            sizeToDiscreaseFromCenter = 170.0f;
+    }
+    else if(IPHONE_4_7 == result.height){
+        sizeToDiscreaseFromCenter = 150.0f;
+    }
+    else{
+        sizeToDiscreaseFromCenter = 130.0f;
+    }
     // Assign new center to your view
     [UIView animateWithDuration:0.2
                           delay:0
                         options: UIViewAnimationOptionCurveEaseIn
                      animations:^{
-                         self.view.center = CGPointMake(_originalCenter.x, _originalCenter.y - 150);
+                         self.view.center = CGPointMake(_originalCenter.x, _originalCenter.y - sizeToDiscreaseFromCenter);
                      }
-                     completion:nil];
+                     completion:^(BOOL finished) {
+                         sizeToDiscreaseFromCenter = 0.0f;
+                     }];
     
 }
 
@@ -866,6 +1222,24 @@
                      completion:nil];
 }
 
+- (void) resignKeyboard :(UITextField *) textField{
+    [self.view endEditing:YES];
+}
+
+-(void) nextButtonClicked :(UITextField *) textField{
+    if (textField == _cardNumber) {
+        [_nameOnCard becomeFirstResponder];
+    }
+    else if (textField == _nameOnCard) {
+        [_cardCVV becomeFirstResponder];
+    }
+    else if (textField == _cardCVV) {
+        [textField resignFirstResponder];
+    }
+}
+-(void) previousButtonClicked :(UITextField *) textField{
+    NSLog(@"previousButtonClicked");
+}
 
 
 @end

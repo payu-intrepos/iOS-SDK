@@ -14,6 +14,7 @@
 
 #define PG_TYPE @"NB"
 #define BANK_CODE @"bankcode"
+#define DOWN_TIME_MESSAGE @" Oops! %@ seems to be down. We recommend you to pay using any other means of payment."
 
 @interface PayUInternetBankingViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -21,6 +22,9 @@
 @property(nonatomic,unsafe_unretained) IBOutlet UIButton *payNow;
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicator;
 @property (nonatomic,strong) IBOutlet UILabel *amountLbl;
+
+//down time message will be displays here in this UILabel
+@property (nonatomic,strong) UILabel *downTimeMsgLbl;
 
 
 @property(nonatomic,unsafe_unretained) IBOutlet UIView *containerView;
@@ -47,6 +51,8 @@
     _payNow.layer.cornerRadius = 10.0f;
     _selectedBankIndex = -1;
     
+    _selectBank.titleLabel.textAlignment = NSTextAlignmentCenter;
+    
     SharedDataManager *manager = [SharedDataManager sharedDataManager];
     // Stored card option will be dislpayed if user_credentials has been provided.
     NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
@@ -54,6 +60,11 @@
         manager.allInfoDict = [self createDictionaryWithAllParam];
     }
     _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[paramDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
+    
+    if(!manager.listOfDownInternetBanking){
+        [manager makeVasApiCall];
+    }
+    NSLog(@"list of all down banks : %@",manager.listOfDownInternetBanking);
     
     CGSize result = [[UIScreen mainScreen] bounds].size;
     if(result.height == IPHONE_3_5)
@@ -258,7 +269,7 @@
 }
 -(void) extractAllInternetBankingOption{
     NSDictionary *allInternetBankingOptionsDict = [_allPaymentOption objectForKey:NET_BANKING];
-    NSLog(@"allInternetBankingOptionsDict = %@",allInternetBankingOptionsDict);
+    NSLog(@"Test internet options allInternetBankingOptionsDict = %@",allInternetBankingOptionsDict);
     NSMutableArray *allInternetBankingOptions = nil;
     if(allInternetBankingOptionsDict.allKeys.count)
     {
@@ -277,6 +288,20 @@
     
     _bankDetails = listOfBankAvailableForNetBanking;
     
+}
+
+-(BOOL) isBankDown :(NSString *)bankName{
+    BOOL isBankDown = NO;
+    
+    SharedDataManager *manager = [SharedDataManager sharedDataManager];
+    NSArray *listOfDownBank = manager.listOfDownInternetBanking;
+    
+    for(NSString *aBankName in listOfDownBank){
+        if([aBankName isEqualToString:bankName]){
+            return YES;
+        }
+    }
+    return isBankDown;
 }
 
 -(NSDictionary *) createDictionaryWithAllParam{
@@ -449,6 +474,7 @@
 #pragma mark - TableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [_downTimeMsgLbl removeFromSuperview];
     _payNow.enabled = YES;
     _payNow.backgroundColor = [UIColor colorWithRed:89.0/255.0 green:193/255.0 blue:0 alpha:1];
     _selectedBankIndex = indexPath.row;
@@ -457,7 +483,15 @@
         _listOfBank.alpha = 0.0f;
         [_selectBank setTitle:[[_bankDetails objectAtIndex:indexPath.row] valueForKey:@"title"] forState:UIControlStateNormal];
     } completion:^(BOOL finished) {
+        NSLog(@"list of all down banks in did select : %@",[[SharedDataManager sharedDataManager] listOfDownInternetBanking]);
         [_listOfBank removeFromSuperview];
+        if([self isBankDown:[[_bankDetails objectAtIndex:indexPath.row] valueForKey:@"title"]])
+        {
+            CGRect frame =  CGRectMake(_selectBank.frame.origin.x, _selectBank.frame.origin.y+_selectBank.frame.size.height+10, self.view.frame.size.width-16,_selectBank.frame.size.height);
+            _downTimeMsgLbl = [Utils customLabelWithString:[NSString stringWithFormat:DOWN_TIME_MESSAGE,[[_bankDetails objectAtIndex:indexPath.row] valueForKey:@"title"]] andFrame:frame];
+            [_containerView addSubview:_downTimeMsgLbl];
+        }
+
     }];
     
 }

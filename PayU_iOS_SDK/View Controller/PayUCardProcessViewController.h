@@ -41,5 +41,6 @@
 //total amount, being pay
 @property (nonatomic,assign) float totalAmount;
 
+@property (nonatomic,assign) BOOL isPaymentBeingDoneByRewardPoints;
 
 @end

@@ -35,9 +35,15 @@ typedef void (^urlRequestCompletionBlock)(NSURLResponse *response, NSData *data,
 - (void) deleteStoredCardWithCardToken:(NSNumber*)cardToken withCompletionBlock:(urlRequestCompletionBlock) completionBlock;
 
 
-- (NSMutableURLRequest *) URLRequestForInternetBankingWithBankCode:(NSString *)bankCode;
-- (NSURLRequest *) URLRequestForPaymentWithStoredCard:(NSDictionary *)selectedStoredCardDict;
-- (NSURLRequest *) URLRequestForCardPayment:(NSDictionary *) detailsDict;
+- (NSMutableURLRequest *) URLRequestForInternetBankingWithBankCode:(NSString *)bankCode andTransactionID:(NSString *)txtId;
+- (NSURLRequest *) URLRequestForPaymentWithStoredCard:(NSDictionary *)selectedStoredCardDict andTransactionID:(NSString *)txtId;
+- (NSURLRequest *) URLRequestForCardPayment:(NSDictionary *) detailsDict andTransactionID:(NSString *)txtId;
 - (NSURLRequest *) URLRequestForPayWithPayUMoney;
+
+
+
+//-----------------******-------------------------
+
++(void) generateHashFromServer:(NSDictionary *) paramDict withCompletionBlock:(urlRequestCompletionBlock) completionBlock;
 
 @end

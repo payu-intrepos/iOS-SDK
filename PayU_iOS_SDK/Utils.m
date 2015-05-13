@@ -41,5 +41,29 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:PAYU_NOTIFICATION  object:object userInfo:userInfo];
 }
 
++ (UILabel *) customLabelWithString :(NSString *) message andFrame:(CGRect) frame{
+    
+    UIFont * customFont = [UIFont systemFontOfSize:12.0]; //custom font
+    
+    UILabel *customLabel = [[UILabel alloc]initWithFrame:frame];
+    customLabel.text = message;
+    customLabel.font = customFont;
+    customLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    customLabel.numberOfLines = 0;
+    customLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines; // or UIBaselineAdjustmentAlignCenters, or UIBaselineAdjustmentNone
+    customLabel.adjustsFontSizeToFitWidth = YES;
+    //customLabel.adjustsLetterSpacingToFitWidth = YES;
+    customLabel.minimumScaleFactor = 10.0f/12.0f;
+    customLabel.clipsToBounds = YES;
+    customLabel.textColor = [UIColor redColor];
+    customLabel.textAlignment = NSTextAlignmentCenter;
+    customLabel.backgroundColor = [UIColor colorWithRed:255.0/255.0 green:198.0/255.0 blue:198.0/255.0 alpha:1.0];
+    customLabel.layer.borderWidth = 2.0;
+    customLabel.layer.borderColor = [UIColor redColor].CGColor ;
+    customLabel.layer.cornerRadius = 5.0;
+    
+    return customLabel;
+}
+
 
 @end

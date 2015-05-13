@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -7,8 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PayUPaymentResultViewController">
             <connections>
-                <outlet property="activityIndicator" destination="mHw-zI-vRI" id="fy1-DH-gJP"/>
-                <outlet property="processingLbl" destination="6qD-aD-V6l" id="PJb-Zh-Hur"/>
+                <outlet property="activityIndicator" destination="CyC-ZY-qB5" id="SRO-Vu-ebf"/>
                 <outlet property="resultWebView" destination="bVp-yn-agl" id="IRb-HJ-t20"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -18,18 +17,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="mHw-zI-vRI">
-                    <rect key="frame" x="177" y="324" width="20" height="20"/>
-                </activityIndicatorView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Processing..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6qD-aD-V6l">
-                    <rect key="frame" x="134" y="364" width="107" height="21"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="107" id="JYZ-Ha-V7p"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bVp-yn-agl">
                     <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -37,17 +24,18 @@
                         <constraint firstAttribute="height" constant="603" id="f9L-oj-qwG"/>
                     </constraints>
                 </webView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="CyC-ZY-qB5">
+                    <rect key="frame" x="177" y="324" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="bVp-yn-agl" firstAttribute="centerX" secondItem="mHw-zI-vRI" secondAttribute="centerX" id="8TB-tF-YY5"/>
                 <constraint firstItem="bVp-yn-agl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MWS-k2-4FX"/>
-                <constraint firstAttribute="bottom" secondItem="6qD-aD-V6l" secondAttribute="bottom" constant="282" id="Rbz-T4-Q2C"/>
-                <constraint firstItem="6qD-aD-V6l" firstAttribute="centerX" secondItem="mHw-zI-vRI" secondAttribute="centerX" id="UnD-AK-5RH"/>
                 <constraint firstAttribute="bottom" secondItem="bVp-yn-agl" secondAttribute="bottom" id="YDr-ZT-hfd"/>
+                <constraint firstItem="CyC-ZY-qB5" firstAttribute="centerX" secondItem="bVp-yn-agl" secondAttribute="centerX" id="YpK-dX-UPc"/>
+                <constraint firstItem="bVp-yn-agl" firstAttribute="top" secondItem="CyC-ZY-qB5" secondAttribute="bottom" constant="-280" id="hXk-Yg-lfe"/>
                 <constraint firstAttribute="trailing" secondItem="bVp-yn-agl" secondAttribute="trailing" id="jrP-PW-3Bh"/>
                 <constraint firstItem="bVp-yn-agl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="kHf-Aw-gK0"/>
-                <constraint firstItem="6qD-aD-V6l" firstAttribute="top" secondItem="mHw-zI-vRI" secondAttribute="bottom" constant="20" id="mfD-az-28d"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="355.5" y="320.5"/>
