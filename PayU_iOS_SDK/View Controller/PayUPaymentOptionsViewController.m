@@ -19,9 +19,6 @@
 #import "PayUCashCardViewController.h"
 #import "PayUConnectionHandlerController.h"
 
-// POX
-#import "PayUGetResponseTask.h"
-
 #define CASH_CARD               @"cashcard"
 
 #define PARAM_VAR1_DEFAULT      @"default"
@@ -43,7 +40,7 @@ typedef enum : NSUInteger {
 
 @interface PayUPaymentOptionsViewController () <UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong) PayUGetResponseTask *payUGetResponseTask; // POX
+
 @property (nonatomic,strong) NSURLConnection *connection;
 @property (nonatomic,strong) NSMutableData *connectionSpecificDataObject;
 @property (nonatomic,strong) NSMutableData *receivedData;
@@ -66,6 +63,7 @@ typedef enum : NSUInteger {
 
 @implementation PayUPaymentOptionsViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -81,8 +79,6 @@ typedef enum : NSUInteger {
     [_activityIndicator startAnimating];
     SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
     dataManager.allInfoDict = [self createDictionaryWithAllParam];
-    
-    ALog(@"AllInfoDict = %f",[[dataManager.allInfoDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]);
     _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[dataManager.allInfoDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
     
     //_preferredPaymentTable.backgroundColor = [UIColor colorWithRed:240.0/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
@@ -132,14 +128,11 @@ typedef enum : NSUInteger {
             }
         }
     }
-//    [_allPaymentMethodNameArray insertObject:PARAM_STORE_CARD atIndex:0];
-//    [_allPaymentMethodNameArray addObject:PARAM_PAYU_MONEY];
-//    ALog(@"All Key = %@ Sorted option = %@", bankOption, _allPaymentMethodNameArray);
-    
-//    if ([dataManager.allInfoDict valueForKey:PARAM_USER_CREDENTIALS])
-//        [_allPaymentMethodNameArray insertObject:PARAM_STORE_CARD atIndex:0];
-//    [_allPaymentMethodNameArray addObject:PARAM_PAYU_MONEY];
-//    ALog(@"All Key = %@ Sorted option = %@", bankOption, _allPaymentMethodNameArray);
+    SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
+    if([dataManager.allInfoDict valueForKey:PARAM_USER_CREDENTIALS])
+    [_allPaymentMethodNameArray insertObject:PARAM_STORE_CARD atIndex:0];
+    [_allPaymentMethodNameArray addObject:PARAM_PAYU_MONEY];
+    NSLog(@"All Key = %@ Sorted option = %@", bankOption, _allPaymentMethodNameArray);
 }
 
 - (void) loadAllStoredCard:(int) aFlag{
@@ -183,19 +176,21 @@ typedef enum : NSUInteger {
 }
 
 -(void) loadAllEMIOption{
-//    NSDictionary *allEMIOptionsDict = [[_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1]objectForKey:PARAM_EMI];
-//    NSMutableArray *allEMIOptions = nil;
-//    if(allEMIOptionsDict.allKeys.count){
-//        allEMIOptions =  [[NSMutableArray alloc] init];
-//        for(NSString *aKey in allEMIOptionsDict){
-//            NSMutableDictionary *emiBankDict = [NSMutableDictionary dictionaryWithDictionary:[allEMIOptionsDict objectForKey:aKey]];
-//            [emiBankDict setValue:aKey forKey:PARAM_BANK_CODE];
-//            [allEMIOptions addObject:emiBankDict];
-//        }
-//    }
-//    NSArray *listOfBankAvailableForEMI = [allEMIOptions sortedArrayUsingComparator:^(NSDictionary *item1, NSDictionary *item2) {
-//        return [item1[PARAM_BANK] compare:item2[PARAM_BANK] options:NSNumericSearch];
-//    }];
+    NSLog(@"_allPaymentOption = %@",[_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1]);
+    NSDictionary *allEMIOptionsDict = [[_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1] objectForKey:PARAM_EMI];
+    NSLog(@"allEMIOptionsDict = %@",allEMIOptionsDict);
+    NSMutableArray *allEMIOptions = nil;
+    if(allEMIOptionsDict.allKeys.count){
+        allEMIOptions =  [[NSMutableArray alloc] init];
+        for(NSString *aKey in allEMIOptionsDict){
+            NSMutableDictionary *emiBankDict = [NSMutableDictionary dictionaryWithDictionary:[allEMIOptionsDict objectForKey:aKey]];
+            [emiBankDict setValue:aKey forKey:PARAM_BANK_CODE];
+            [allEMIOptions addObject:emiBankDict];
+        }
+    }
+    NSArray *listOfBankAvailableForEMI = [allEMIOptions sortedArrayUsingComparator:^(NSDictionary *item1, NSDictionary *item2) {
+        return [item1[PARAM_BANK] compare:item2[PARAM_BANK] options:NSNumericSearch];
+    }];
     PayUEMIOptionViewController *emiOprionVC = nil;
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
@@ -214,33 +209,34 @@ typedef enum : NSUInteger {
     }
     
     
-//    emiOprionVC.emiDetails = listOfBankAvailableForEMI;
-    emiOprionVC.emiDetails = self.payUGetResponseTask.emiAvailableArray;
+    emiOprionVC.emiDetails = listOfBankAvailableForEMI;
     emiOprionVC.paymentCategory = @"EMI";
     [self.navigationController pushViewController:emiOprionVC animated:YES];
     
 }
 
 -(void) loadAllInternetBankingOption{
-//    NSDictionary *allInternetBankingOptionsDict = [[_allPaymentOption valueForKey:@"ibiboCodes"]valueForKey:NET_BANKING];
-//    NSMutableArray *allInternetBankingOptions = nil;
-//    if(allInternetBankingOptionsDict.allKeys.count)
-//    {
-//        allInternetBankingOptions =  [[NSMutableArray alloc] init];
-//        for(NSString *aKey in allInternetBankingOptionsDict){
-//            NSMutableDictionary *bankDict = [NSMutableDictionary dictionaryWithDictionary:[allInternetBankingOptionsDict objectForKey:aKey]];
-//            [bankDict setValue:aKey forKey:PARAM_BANK_CODE];
-//            [allInternetBankingOptions addObject:bankDict];
-//        }
-//    }
-//    NSArray *listOfBankAvailableForNetBanking = [allInternetBankingOptions sortedArrayUsingComparator:^(NSDictionary *item1, NSDictionary *item2) {
-//        return [item1[BANK_TITLE] compare:item2[BANK_TITLE] options:NSCaseInsensitiveSearch];
-//    }];
-//    ALog(@"Sorted Bank by default = %@",listOfBankAvailableForNetBanking);
-    //    ALog(@"Sorted Bank bt sorted selector = %@",[listOfBankAvailableForNetBanking sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]);
+    NSDictionary *allInternetBankingOptionsDict = [[_allPaymentOption valueForKey:@"ibiboCodes"] valueForKey:NET_BANKING];
+    NSMutableArray *allInternetBankingOptions = nil;
+    NSLog(@"Test internetr options allInternetBankingOptionsDict = %@ and All payment options = %@",allInternetBankingOptionsDict,_allPaymentOption);
+
+    if(allInternetBankingOptionsDict.allKeys.count)
+    {
+        allInternetBankingOptions =  [[NSMutableArray alloc] init];
+        for(NSString *aKey in allInternetBankingOptionsDict){
+            NSMutableDictionary *bankDict = [NSMutableDictionary dictionaryWithDictionary:[allInternetBankingOptionsDict objectForKey:aKey]];
+            [bankDict setValue:aKey forKey:PARAM_BANK_CODE];
+            [allInternetBankingOptions addObject:bankDict];
+        }
+    }
+    NSArray *listOfBankAvailableForNetBanking = [allInternetBankingOptions sortedArrayUsingComparator:^(NSDictionary *item1, NSDictionary *item2) {
+        return [item1[BANK_TITLE] compare:item2[BANK_TITLE] options:NSCaseInsensitiveSearch];
+    }];
+    NSLog(@"Sorted Bank by default = %@",listOfBankAvailableForNetBanking);
+    //    NSLog(@"Sorted Bank bt sorted selector = %@",[listOfBankAvailableForNetBanking sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]);
     
     PayUInternetBankingViewController *internetBankingVC = [[PayUInternetBankingViewController alloc] initWithNibName:@"PayUInternetBankingViewController" bundle:nil];
-    internetBankingVC.bankDetails = self.payUGetResponseTask.banksAvailableArray;
+    internetBankingVC.bankDetails = listOfBankAvailableForNetBanking;
     
     [self.navigationController pushViewController:internetBankingVC animated:YES];
     
@@ -248,20 +244,20 @@ typedef enum : NSUInteger {
 
 -(void) loadAllCashCardOption{
     
-//    NSDictionary *allCashCardOptionsDict = [[_allPaymentOption valueForKey:@"ibiboCodes"] objectForKey:CASH_CARD];
-//    NSMutableArray *allInternetBankingOptions = nil;
-//    if(allCashCardOptionsDict.allKeys.count)
-//    {
-//        allInternetBankingOptions =  [[NSMutableArray alloc] init];
-//        for(NSString *aKey in allCashCardOptionsDict){
-//            NSMutableDictionary *bankDict = [NSMutableDictionary dictionaryWithDictionary:[allCashCardOptionsDict objectForKey:aKey]];
-//            [bankDict setValue:aKey forKey:PARAM_BANK_CODE];
-//            [allInternetBankingOptions addObject:bankDict];
-//        }
-//    }
-//    NSArray *listOfBankAvailableCashCardPayment = [allInternetBankingOptions sortedArrayUsingComparator:^(NSDictionary *item1, NSDictionary *item2) {
-//        return [item1[PARAM_BANK_CODE] compare:item2[PARAM_BANK_CODE] options:NSNumericSearch];
-//    }];
+    NSDictionary *allCashCardOptionsDict = [[_allPaymentOption valueForKey:@"ibiboCodes"] objectForKey:CASH_CARD];
+    NSMutableArray *allInternetBankingOptions = nil;
+    if(allCashCardOptionsDict.allKeys.count)
+    {
+        allInternetBankingOptions =  [[NSMutableArray alloc] init];
+        for(NSString *aKey in allCashCardOptionsDict){
+            NSMutableDictionary *bankDict = [NSMutableDictionary dictionaryWithDictionary:[allCashCardOptionsDict objectForKey:aKey]];
+            [bankDict setValue:aKey forKey:PARAM_BANK_CODE];
+            [allInternetBankingOptions addObject:bankDict];
+        }
+    }
+    NSArray *listOfBankAvailableCashCardPayment = [allInternetBankingOptions sortedArrayUsingComparator:^(NSDictionary *item1, NSDictionary *item2) {
+        return [item1[PARAM_BANK_CODE] compare:item2[PARAM_BANK_CODE] options:NSNumericSearch];
+    }];
     
     PayUCashCardViewController *cashCardVC = nil;
     
@@ -278,10 +274,8 @@ typedef enum : NSUInteger {
         }
     }
     
-//    cashCardVC.cashCardDetail = listOfBankAvailableCashCardPayment;
-    cashCardVC.cashCardDetail = self.payUGetResponseTask.cashCardsAvailableArray;
-    // POX
-//    listOfBankAvailableCashCardPayment = nil;
+    cashCardVC.cashCardDetail = listOfBankAvailableCashCardPayment;
+    listOfBankAvailableCashCardPayment = nil;
     
     [self.navigationController pushViewController:cashCardVC animated:YES];
     
@@ -346,10 +340,10 @@ typedef enum : NSUInteger {
     }
     
     [allParamDict addEntriesFromDictionary:_parameterDict];
-    ALog(@"ARGUMENT PARAM DICT =%@",_parameterDict);
+    NSLog(@"ARGUMENT PARAM DICT =%@",_parameterDict);
 
     
-    ALog(@"ALL PARAM DICT =%@",allParamDict);
+    NSLog(@"ALL PARAM DICT =%@",allParamDict);
     return allParamDict;
 }
 
@@ -365,105 +359,61 @@ typedef enum : NSUInteger {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString *cellIdentifier = @"cellIdentifier";
+    static NSString *cellIdentifier = @"customCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (cell == nil) {
-        
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        
-        cell.backgroundColor = [UIColor colorWithRed:240.0/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
-        
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
+    PreferredPaymentMethodCustomeCell *cell = (PreferredPaymentMethodCustomeCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"PreferredPaymentMethodCustomeCell" owner:cell options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
     NSString *keyName = _allPaymentMethodNameArray[indexPath.row];
     
-    
-    
-    if([keyName caseInsensitiveCompare:PARAM_DEBIT_CARD] == NSOrderedSame){
-        
-        cell.textLabel.text = @"Debit Card";
-        
-        cell.imageView.image = [UIImage imageNamed:@"card.png"];
-        
+    if([keyName caseInsensitiveCompare:@"debitcard"] == NSOrderedSame){
+        cell.preferredPaymentOption.text = @"Debit Card";
+        cell.paymentImage.image = [UIImage imageNamed:@"card.png"];
     }
-    
     else if ([keyName caseInsensitiveCompare:@"Credit/Debit card"] == NSOrderedSame){
-        
-        cell.textLabel.text = keyName;
-        
-        cell.imageView.image = [UIImage imageNamed:@"card.png"];
-        
+        cell.preferredPaymentOption.text = keyName;
+        cell.paymentImage.image = [UIImage imageNamed:@"card.png"];
     }
-    
-    else if ([keyName caseInsensitiveCompare:PARAM_NET_BANKING] == NSOrderedSame){
-        
-        cell.textLabel.text = @"Net Banking";
-        
-        cell.imageView.image = [UIImage imageNamed:@"lock2.png"];
-        
+    else if ([keyName caseInsensitiveCompare:@"netbanking"] == NSOrderedSame){
+        cell.preferredPaymentOption.text = @"Net Banking";
+        cell.paymentImage.image = [UIImage imageNamed:@"lock2.png"];
     }
-    
-    else if ([keyName caseInsensitiveCompare:PARAM_EMI] == NSOrderedSame){
-        
-        cell.textLabel.text = @"EMI";
-        
-        cell.imageView.image = [UIImage imageNamed:@"coin.png"];
-        
+    else if ([keyName caseInsensitiveCompare:@"emi"] == NSOrderedSame){
+        cell.preferredPaymentOption.text = @"EMI";
+        cell.paymentImage.image = [UIImage imageNamed:@"coin.png"];
     }
-    
-    else if ([keyName caseInsensitiveCompare:PARAM_REWARD] == NSOrderedSame){
-        
-        cell.textLabel.text = @"Rewards";
-        
-        cell.imageView.image = [UIImage imageNamed:@"card.png"];
-        
+    else if ([keyName caseInsensitiveCompare:@"rewards"] == NSOrderedSame){
+        cell.preferredPaymentOption.text = @"Rewards";
+        cell.paymentImage.image = [UIImage imageNamed:@"card.png"];
     }
-    
-    else if ([keyName caseInsensitiveCompare:PARAM_CASH_CARD] == NSOrderedSame){
-        
-        cell.textLabel.text = @"Cash Card";
-        
-        cell.imageView.image = [UIImage imageNamed:@"cash_card.png"];
-        
+    else if ([keyName caseInsensitiveCompare:@"cashcard"] == NSOrderedSame){
+        cell.preferredPaymentOption.text = @"Cash Card";
+        cell.paymentImage.image = [UIImage imageNamed:@"cash_card.png"];
     }
-    
-    else if ([keyName caseInsensitiveCompare:PARAM_STORE_CARD] == NSOrderedSame){
-        
-        cell.textLabel.text = @"Stored Cards";
-        
-        cell.imageView.image = [UIImage imageNamed:@"store_card.png"];
-        
+    else if ([keyName caseInsensitiveCompare:@"payumobey"] == NSOrderedSame){
+        cell.preferredPaymentOption.text = @"PayU money";
+        cell.paymentImage.image = [UIImage imageNamed:@"payu_money.png"];
     }
-    
-    else if ([keyName caseInsensitiveCompare:PARAM_CASH_ON_DILEVERY] == NSOrderedSame){
-        
-        cell.textLabel.text = @"Cash on Delivery";
-        
-        cell.imageView.image = [UIImage imageNamed:@"store_card.png"];
-        
+    else if ([keyName caseInsensitiveCompare:@"storedcards"] == NSOrderedSame){
+        cell.preferredPaymentOption.text = @"Stored Cards";
+        cell.paymentImage.image = [UIImage imageNamed:@"store_card.png"];
     }
-    
+    else if ([keyName caseInsensitiveCompare:@"cod"] == NSOrderedSame){
+        cell.preferredPaymentOption.text = @"Cash on Delivery";
+        cell.paymentImage.image = [UIImage imageNamed:@"store_card.png"];
+    }
     else if ([keyName caseInsensitiveCompare:PARAM_PAYU_MONEY] == NSOrderedSame){
-        
-        cell.textLabel.text = PARAM_PAYU_MONEY;
-        
-        cell.imageView.image = [UIImage imageNamed:@"payu_money.png"];
-        
+        cell.preferredPaymentOption.text = PARAM_PAYU_MONEY;
+        cell.paymentImage.image = [UIImage imageNamed:@"payu_money.png"];
     }
-    
     else{
-        
-        cell.textLabel.text = keyName;
-        
-        cell.imageView.image = [UIImage imageNamed:@"card.png"];
-        
+        cell.preferredPaymentOption.text = keyName;
+        cell.paymentImage.image = [UIImage imageNamed:@"card.png"];
     }
-    
-    
     
     return cell;
 }
@@ -471,37 +421,37 @@ typedef enum : NSUInteger {
 #pragma mark - TableView delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSInteger selection = indexPath.row;
     
     NSString *keyName = _allPaymentMethodNameArray[indexPath.row];
     
-    if([keyName caseInsensitiveCompare:PARAM_DEBIT_CARD] == NSOrderedSame){
-        [self loadCCDCView:2];
+    NSLog(@"ALl Payment optionsList %@",_allPaymentMethodNameArray);
+    
+    if([keyName caseInsensitiveCompare:@"debitcard"] == NSOrderedSame){
+        [self loadAllStoredCard:(int)indexPath.row];
     }
     else if ([keyName caseInsensitiveCompare:@"Credit/Debit card"] == NSOrderedSame){
-        [self loadCCDCView:1];
+        [self loadCCDCView:(int)indexPath.row];
     }
-    else if ([keyName caseInsensitiveCompare:PARAM_NET_BANKING] == NSOrderedSame){
+    else if ([keyName caseInsensitiveCompare:@"netbanking"] == NSOrderedSame){
         [self loadAllInternetBankingOption];
     }
-    else if ([keyName caseInsensitiveCompare:PARAM_EMI] == NSOrderedSame){
+    else if ([keyName caseInsensitiveCompare:@"emi"] == NSOrderedSame){
         [self loadAllEMIOption];
     }
-//    else if ([keyName caseInsensitiveCompare:@"rewards"] == NSOrderedSame){
-//        cell.preferredPaymentOption.text = @"Rewards";
-//        cell.paymentImage.image = [UIImage imageNamed:@"card.png"];
-//    }
-    else if ([keyName caseInsensitiveCompare:PARAM_CASH_CARD] == NSOrderedSame){
+    else if ([keyName caseInsensitiveCompare:@"rewards"] == NSOrderedSame){
+        NSLog(@"Not Implemented");
+    }
+    else if ([keyName caseInsensitiveCompare:@"cashcard"] == NSOrderedSame){
         [self loadAllCashCardOption];
     }
-    else if ([keyName caseInsensitiveCompare:PARAM_STORE_CARD] == NSOrderedSame){
-        //Stored Card.
-        [self loadAllStoredCard:(int)selection];
+    else if ([keyName caseInsensitiveCompare:@"payumobey"] == NSOrderedSame){
+        [self payWithPayUMoney];
     }
-//    else if ([keyName caseInsensitiveCompare:PARAM_CASH_ON_DILEVERY] == NSOrderedSame){
-//        cell.preferredPaymentOption.text = @"Cash on Delivery";
-//        cell.paymentImage.image = [UIImage imageNamed:@"store_card.png"];
-//    }
+    else if ([keyName caseInsensitiveCompare:@"storedcards"] == NSOrderedSame){
+        [self loadAllStoredCard:(int)indexPath.row];
+    }
+    else if ([keyName caseInsensitiveCompare:@"cod"] == NSOrderedSame){
+    }
     else if ([keyName caseInsensitiveCompare:PARAM_PAYU_MONEY] == NSOrderedSame){
         [self payWithPayUMoney];
     }
@@ -512,7 +462,6 @@ typedef enum : NSUInteger {
 // Connection Request.
 -(void) callAPI{
     NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION];
-    
     
     // create the request
     NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
@@ -550,7 +499,7 @@ typedef enum : NSUInteger {
     if (_connection) {
         _receivedData=[NSMutableData data];
     } else {
-        // inform the user that the download could not be made
+        NSLog(@"Connection not created");
     }
     [_connection start];
 }
@@ -583,36 +532,24 @@ typedef enum : NSUInteger {
 {
     if (connection == _connection)
     {
+        NSLog(@"connectionDidFinishLoading");
         if(_connectionSpecificDataObject){
             NSError *errorJson=nil;
-            
             _allPaymentOption = [NSJSONSerialization JSONObjectWithData:_connectionSpecificDataObject options:kNilOptions error:&errorJson];
-            
-            //POX
-            _payUGetResponseTask = [[PayUGetResponseTask alloc] initWithAllPaymentOptionsDictionary:_allPaymentOption];
-            
             SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
-            
-            //        ALog(@"First API Call response = %@",_allPaymentOption);
-            
+            NSLog(@"First API Call response = %@",[_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1]);
             dataManager.allPaymentOptionDict = [_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1];
-            
-            //dataManager.storedCard = [_allPaymentOption valueForKey:RESPONSE_DICT_KEY_2];
-            
-            //        ALog(@"responseDict=%@",_allPaymentOption);
-            
-            
+            dataManager.storedCard = [_allPaymentOption valueForKey:RESPONSE_DICT_KEY_2];
+            NSLog(@"responseDict=%@",_allPaymentOption);
             
             //sort available payment methods.
-            
-            // POX
-            //        [self sortBankOptionArray:[[_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1] allKeys]];
-            [self sortBankOptionArray:self.payUGetResponseTask.modesAvailableArray];
+            [self sortBankOptionArray:[[_allPaymentOption valueForKey:RESPONSE_DICT_KEY_1] allKeys]];
             
             [_preferredPaymentTable reloadData];
             _activityIndicator.hidden = YES;
             [_activityIndicator stopAnimating];
         }
+        
     }
 }
 

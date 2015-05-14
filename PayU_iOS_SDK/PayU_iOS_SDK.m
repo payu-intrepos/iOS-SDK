@@ -8,6 +8,6 @@
 
 #import "PayU_iOS_SDK.h"
 
-//@implementation PayU_iOS_SDK
+@implementation PayU_iOS_SDK
 
-//@end
+@end

@@ -26,9 +26,6 @@
 		921FE1591A90E8C000B7B78B /* ReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 921FE1581A90E8C000B7B78B /* ReachabilityManager.m */; };
 		921FE15A1A90ED8800B7B78B /* PayUErrorConstant.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 921FE0F71A90E3C500B7B78B /* PayUErrorConstant.h */; };
 		921FE15B1A90ED8D00B7B78B /* PayUNotificationConstant.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 921FE0F81A90E3C500B7B78B /* PayUNotificationConstant.h */; };
-		92FFEF8F1B02FFF100DB8179 /* PayUGetResponseTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFEF8E1B02FFF100DB8179 /* PayUGetResponseTask.m */; };
-		92FFEF941B0307F700DB8179 /* WebViewJavascriptBridge.js.txt in Resources */ = {isa = PBXBuildFile; fileRef = 92FFEF921B0307F700DB8179 /* WebViewJavascriptBridge.js.txt */; };
-		92FFEF951B0307F700DB8179 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 92FFEF931B0307F700DB8179 /* WebViewJavascriptBridge.m */; };
 		E02CA2731ACD295700F306EE /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = E02CA26F1ACD295700F306EE /* next.png */; };
 		E02CA2741ACD295700F306EE /* next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02CA2701ACD295700F306EE /* next@2x.png */; };
 		E02CA2751ACD295700F306EE /* prev.png in Resources */ = {isa = PBXBuildFile; fileRef = E02CA2711ACD295700F306EE /* prev.png */; };
@@ -115,6 +112,8 @@
 		E0859BBE1A47FD8800AB656C /* unchecked.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0859B7D1A47FD1B00AB656C /* unchecked.png */; };
 		E0859BBF1A47FD8800AB656C /* unchecked@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0859B7E1A47FD1B00AB656C /* unchecked@2x.png */; };
 		E09B11591A8B3C9F000DC356 /* StoredCard.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = E09B11581A8B3B03000DC356 /* StoredCard.xib */; };
+		E0AF70201A82028B00F11785 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E0AF6F661A81FA0600F11785 /* WebViewJavascriptBridge.m */; };
+		E0AF724D1A82406F00F11785 /* WebViewJavascriptBridge.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0AF6F641A81FA0500F11785 /* WebViewJavascriptBridge.h */; };
 		E0B759711A7B5C410077A1D2 /* EMIOptionView.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0B759701A7B54440077A1D2 /* EMIOptionView.xib */; };
 		E0C0F3A01A8F502600DD0314 /* PayUConnectionHandlerController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0321AE51A8F15D100406554 /* PayUConnectionHandlerController.h */; };
 		E0C3A4E91A318E4E00BC2F0B /* PayU_iOS_SDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0C3A4E81A318E4E00BC2F0B /* PayU_iOS_SDK.h */; };
@@ -157,6 +156,7 @@
 				921FE15A1A90ED8800B7B78B /* PayUErrorConstant.h in CopyFiles */,
 				E0C0F3A01A8F502600DD0314 /* PayUConnectionHandlerController.h in CopyFiles */,
 				E09B11591A8B3C9F000DC356 /* StoredCard.xib in CopyFiles */,
+				E0AF724D1A82406F00F11785 /* WebViewJavascriptBridge.h in CopyFiles */,
 				E0B759711A7B5C410077A1D2 /* EMIOptionView.xib in CopyFiles */,
 				E0E85EB21A7A67600087C080 /* CardProcessView.xib in CopyFiles */,
 				E0E85CB81A7A42FB0087C080 /* AllPaymentOprionsView.xib in CopyFiles */,
@@ -215,11 +215,6 @@
 		921FE1551A90E7BD00B7B78B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		921FE1571A90E8C000B7B78B /* ReachabilityManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachabilityManager.h; sourceTree = "<group>"; };
 		921FE1581A90E8C000B7B78B /* ReachabilityManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachabilityManager.m; sourceTree = "<group>"; };
-		92FFEF8D1B02FFF100DB8179 /* PayUGetResponseTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayUGetResponseTask.h; sourceTree = "<group>"; };
-		92FFEF8E1B02FFF100DB8179 /* PayUGetResponseTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayUGetResponseTask.m; sourceTree = "<group>"; };
-		92FFEF911B0307F700DB8179 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
-		92FFEF921B0307F700DB8179 /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
-		92FFEF931B0307F700DB8179 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
 		E02CA26F1ACD295700F306EE /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next.png; sourceTree = "<group>"; };
 		E02CA2701ACD295700F306EE /* next@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "next@2x.png"; sourceTree = "<group>"; };
 		E02CA2711ACD295700F306EE /* prev.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prev.png; sourceTree = "<group>"; };
@@ -291,6 +286,9 @@
 		E0859B7D1A47FD1B00AB656C /* unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked.png; sourceTree = "<group>"; };
 		E0859B7E1A47FD1B00AB656C /* unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked@2x.png"; sourceTree = "<group>"; };
 		E09B11581A8B3B03000DC356 /* StoredCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoredCard.xib; sourceTree = "<group>"; };
+		E0AF6F641A81FA0500F11785 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		E0AF6F651A81FA0600F11785 /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
+		E0AF6F661A81FA0600F11785 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
 		E0B759701A7B54440077A1D2 /* EMIOptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EMIOptionView.xib; path = "View Controller/EMIOptionView.xib"; sourceTree = "<group>"; };
 		E0C3A4E51A318E4E00BC2F0B /* libPayU_iOS_SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPayU_iOS_SDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0C3A4E81A318E4E00BC2F0B /* PayU_iOS_SDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayU_iOS_SDK.h; sourceTree = "<group>"; };
@@ -323,16 +321,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		92FFEF901B0307F700DB8179 /* WebViewJavascriptBridge */ = {
-			isa = PBXGroup;
-			children = (
-				92FFEF911B0307F700DB8179 /* WebViewJavascriptBridge.h */,
-				92FFEF921B0307F700DB8179 /* WebViewJavascriptBridge.js.txt */,
-				92FFEF931B0307F700DB8179 /* WebViewJavascriptBridge.m */,
-			);
-			path = WebViewJavascriptBridge;
-			sourceTree = "<group>";
-		};
 		E065B2671A39AA3B003B776B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,6 +396,16 @@
 			name = ViewController;
 			sourceTree = "<group>";
 		};
+		E0AF6F631A81FA0500F11785 /* WebViewJavascriptBridge */ = {
+			isa = PBXGroup;
+			children = (
+				E0AF6F641A81FA0500F11785 /* WebViewJavascriptBridge.h */,
+				E0AF6F661A81FA0600F11785 /* WebViewJavascriptBridge.m */,
+				E0AF6F651A81FA0600F11785 /* WebViewJavascriptBridge.js.txt */,
+			);
+			path = WebViewJavascriptBridge;
+			sourceTree = "<group>";
+		};
 		E0C3A4DC1A318E4E00BC2F0B = {
 			isa = PBXGroup;
 			children = (
@@ -433,8 +431,6 @@
 				921FE0F71A90E3C500B7B78B /* PayUErrorConstant.h */,
 				921FE0F81A90E3C500B7B78B /* PayUNotificationConstant.h */,
 				E06A67B71A3819C300474668 /* PayUConstant.h */,
-				92FFEF8D1B02FFF100DB8179 /* PayUGetResponseTask.h */,
-				92FFEF8E1B02FFF100DB8179 /* PayUGetResponseTask.m */,
 				E06A67B81A3819C300474668 /* PayUiOSDevice.h */,
 				E06A67B91A3819C300474668 /* PayUiOSDevice.m */,
 				E06A67BA1A3819C300474668 /* PayUItem.h */,
@@ -456,10 +452,10 @@
 				921FE1551A90E7BD00B7B78B /* Reachability.m */,
 				921FE1571A90E8C000B7B78B /* ReachabilityManager.h */,
 				921FE1581A90E8C000B7B78B /* ReachabilityManager.m */,
+				E0AF6F631A81FA0500F11785 /* WebViewJavascriptBridge */,
 				E094A76D1A36F8D6004AF674 /* ViewController */,
 				E0321AE51A8F15D100406554 /* PayUConnectionHandlerController.h */,
 				E0321AE61A8F15D100406554 /* PayUConnectionHandlerController.m */,
-				92FFEF901B0307F700DB8179 /* WebViewJavascriptBridge */,
 			);
 			path = PayU_iOS_SDK;
 			sourceTree = "<group>";
@@ -581,7 +577,6 @@
 				E065B28B1A39AA3B003B776B /* master.png in Resources */,
 				E065B28C1A39AA3B003B776B /* payu_money.png in Resources */,
 				E0859B811A47FD1B00AB656C /* unchecked.png in Resources */,
-				92FFEF941B0307F700DB8179 /* WebViewJavascriptBridge.js.txt in Resources */,
 				E02CA2731ACD295700F306EE /* next.png in Resources */,
 				E065B28E1A39AA3B003B776B /* user.png in Resources */,
 				E07763EE1A5AB0D500758E0B /* dropdown@2x.png in Resources */,
@@ -635,8 +630,8 @@
 				E0730C751A418D8A00A5D790 /* PayUPaymentResultViewController.m in Sources */,
 				E0739C8D1A40462F00416EE4 /* Utils.m in Sources */,
 				E06A67C61A3819C300474668 /* PayUShippingAddress.m in Sources */,
-				92FFEF8F1B02FFF100DB8179 /* PayUGetResponseTask.m in Sources */,
 				E0321AE71A8F15D100406554 /* PayUConnectionHandlerController.m in Sources */,
+				E0AF70201A82028B00F11785 /* WebViewJavascriptBridge.m in Sources */,
 				E0C94CCD1A665046004037A2 /* PayUEMIOptionViewController.m in Sources */,
 				E06A67C41A3819C300474668 /* PayUPayment.m in Sources */,
 				E06A67C21A3819C300474668 /* PayUiOSDevice.m in Sources */,
@@ -657,7 +652,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92FFEF951B0307F700DB8179 /* WebViewJavascriptBridge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
