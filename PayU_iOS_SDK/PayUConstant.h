@@ -152,6 +152,8 @@
 
 #define PARAM_PRODUCTION_OR_TEST_MODE  @"production"
 
+#define  PG_URL_LIST @"pgUrlList"
+
 
 #define     IPHONE_3_5    480
 #define     IPHONE_4     568

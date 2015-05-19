@@ -59,7 +59,6 @@
 + (BOOL) luhnCheck:(NSString *)cardNumber {
     
     if (![CardValidation checkCardLengthWithNumber:cardNumber ForBrand:CreditCardBrandUnknown]) {
-        ALog(@"luhnCheck failed for card length: %@",cardNumber);
         return NO;
     }
     
