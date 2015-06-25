@@ -9,7 +9,6 @@
 #import "PayUPaymentResultViewController.h"
 #import "PayUConstant.h"
 #import "Utils.h"
-//#import "WebViewJavascriptBridge.h"
 #import "SharedDataManager.h"
 #import "Reachability.h"
 #import "ReachabilityManager.h"
@@ -23,8 +22,6 @@
 
 
 @interface PayUPaymentResultViewController () <UIWebViewDelegate,CBConnectionHandlerDelegate>
-
-//@property WebViewJavascriptBridge* bridge;
 
 @property (unsafe_unretained, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *processingLbl;
@@ -62,6 +59,9 @@
             //[self.navigationItem setHidesBackButton:YES animated:YES];
             
         }
+    }
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
     
     if(_flag){
@@ -120,6 +120,13 @@
     _resultWebView.scalesPageToFit = NO;
 //    _resultWebView.layer.borderWidth = 1;
 //    _resultWebView.layer.borderColor = [UIColor redColor].CGColor;
+
+    _resultWebView.opaque = NO;
+    _resultWebView.backgroundColor = [UIColor clearColor];
+
+    //to display contant in webview from top.
+    [[_resultWebView scrollView] setContentInset:UIEdgeInsetsMake(-64, 0, 0, 0)];
+
 }
 
 - (void)dealloc {
@@ -143,7 +150,7 @@
     [ReachabilityManager sharedManager];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityDidChange:) name:payUReachabilityChangedNotification object:nil];
     
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appGoingInBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     _resultWebView.delegate = self;
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -164,7 +171,6 @@
 //    [[NSNotificationCenter defaultCenter] removeObserver:_handler forKeyPath:UIKeyboardDidHideNotification];
 //    [[NSNotificationCenter defaultCenter] removeObserver:_handler forKeyPath:UIKeyboardDidShowNotification];
    _handler = nil;
-
 }
 
 - (void)viewDidLayoutSubviews{
@@ -184,6 +190,10 @@
  }];
  }
  */
+
+-(void) appGoingInBackground:(NSNotification *)notification{
+    [self.view endEditing:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -305,13 +315,21 @@
     }
     
     
+    if([url.absoluteString containsString:CB_RETRY_PAYMENT_OPTION_URL]){
+        [_handler removeIntermidiateLoader];
+        [_customIndicator removeFromSuperview];
+        [_transparentView removeFromSuperview];
+
+    }
+    
+    
     return YES;
 }
 
 
 
 -(void)navigateToRootViewController{
-    NSLog(@"");
+    NSLog(@"");    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -387,22 +405,26 @@
 - (void) adjustWebViewHeight:(BOOL) upOrDown
 {
     NSLog(@"upOrDown: %d",upOrDown);
+    //__block CGRect webViewFrame = CGRectZero;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
         if(upOrDown){
-            
+            CGRect webViewFrame = CGRectZero;
             NSLog(@"WebViewFrame without updates = %@",NSStringFromCGRect(_resultWebView.frame));
             [_resultWebView removeConstraints:_resultWebView.constraints];
             //_resultWebView.scalesPageToFit = YES;
-            CGRect webViewFrame = _resultWebView.frame;
+            webViewFrame = _resultWebView.frame;
             webViewFrame.size.height = webViewFrame.size.height - 227;
             _resultWebView.frame = webViewFrame;
             NSLog(@"WebViewFrame when CB is on Screen = %@",NSStringFromCGRect(_resultWebView.frame));
         }
         else{
+            CGRect webViewFrame = CGRectZero;
+            NSLog(@"WebViewFrame without updates = %@",NSStringFromCGRect(_resultWebView.frame));
             [_resultWebView removeConstraints:_resultWebView.constraints];
             //_resultWebView.scalesPageToFit = NO;
-            CGRect webViewFrame = _resultWebView.frame;
+            webViewFrame = _resultWebView.frame;
             webViewFrame.size.height = webViewFrame.size.height + 227;
             _resultWebView.frame = webViewFrame;
             NSLog(@"WebViewFrame when CB is off Screen = %@",NSStringFromCGRect(_resultWebView.frame));
@@ -419,6 +441,25 @@
     });
 
 }
+
+#pragma mark - Back Button Handling
+
+-(BOOL) navigationShouldPopOnBackButton
+{
+    [[[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"Do you want to cancel this transaction?"
+                               delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
+    return NO;
+}
+
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex==1) {
+        NSDictionary *InfoDict = [NSDictionary dictionaryWithObject:@"Transaction canceled due to back button pressed!" forKey:INFO_DICT_RESPONSE];
+        [Utils startPayUNotificationForKey:PAYU_ERROR intValue:PBackButtonPressed object:InfoDict];
+        NSLog(@"cancel block with infoDict = %@",InfoDict);
+    }
+}
+
 
 #pragma mark - Keyboard Handling
 /*- (void)keyboardDidShow:(NSNotification *)notification

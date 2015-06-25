@@ -61,6 +61,13 @@
     _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
 }
 
+
+- (void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    _payNow.enabled = NO;
+
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }

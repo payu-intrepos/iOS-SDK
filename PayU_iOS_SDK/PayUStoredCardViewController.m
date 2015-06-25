@@ -94,11 +94,6 @@
 
 }
 
-- (void) viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -204,21 +199,18 @@
     customAlertView.layer.masksToBounds = YES;
     customAlertView.backgroundColor = [UIColor lightGrayColor];
     
-    _dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
-//    _dismissButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 109, 150, 40)];
-    _dismissButton.frame = CGRectMake(0, 109, 150, 40);
-    //[_dismissButton setFrame:CGRectMake(0, 109, 150, 40)];
+    _dismissButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [_dismissButton addTarget:self action:@selector(customAlertViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_dismissButton setTitle:@"Cancel" forState:UIControlStateNormal];
+    [_dismissButton setFrame:CGRectMake(0, 109, 150, 40)];
     _dismissButton.layer.borderColor = [UIColor whiteColor].CGColor;
     _dismissButton.layer.borderWidth = 0.5f;
-    [_dismissButton addTarget:self action:@selector(customAlertViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-
     [customAlertView addSubview:_dismissButton];
     
     _okButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [_okButton addTarget:self action:@selector(customAlertViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_okButton setTitle:@"Ok" forState:UIControlStateNormal];
     [_okButton setFrame:CGRectMake(150, 109, 150, 40)];
-    [_okButton addTarget:self action:@selector(customAlertViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     _okButton.layer.borderColor = [UIColor whiteColor].CGColor;
     _okButton.layer.borderWidth = 0.5f;
     
@@ -266,7 +258,6 @@
 // Custom AlertView button get clicked.
 - (void)customAlertViewButtonClicked:(UIButton *)sender
 {
-    [_cvvTextField  resignFirstResponder];
     [UIView animateWithDuration:0.2f animations:^{
         [sender.superview setAlpha:0.0f];
     }completion:^(BOOL done){
