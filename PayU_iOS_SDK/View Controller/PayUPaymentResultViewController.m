@@ -12,10 +12,11 @@
 #import "SharedDataManager.h"
 #import "Reachability.h"
 #import "ReachabilityManager.h"
-#import "CBApproveView.h"
-#import "CustomActivityIndicator.h"
 
 // ------------------- CB Import ----------------
+#import "CBApproveView.h"
+#import "CustomActivityIndicator.h"
+#import "CBConstant.h"
 #import "PayU_CB_SDK.h"
 #define DETECT_BANK_KEY @"detectBank"
 #define INIT  @"init"
