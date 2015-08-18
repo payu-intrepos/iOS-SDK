@@ -59,7 +59,6 @@
     if(0 == paramDict.allKeys.count){
         manager.allInfoDict = [self createDictionaryWithAllParam];
     }
-    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[paramDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
     
     if(!manager.listOfDownInternetBanking){
         [manager makeVasApiCall];
@@ -76,6 +75,13 @@
     if(!_bankDetails){
         [self callAPI];
     }
+}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
+    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[paramDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -150,6 +156,11 @@
         [postData appendFormat:@"%@=%@",PARAM_SURL,[paramDict objectForKey:PARAM_SURL]];
         [postData appendString:@"&"];
     }
+    if([paramDict objectForKey:PARAM_OFFER_KEY]){
+        [postData appendFormat:@"%@=%@",PARAM_OFFER_KEY,[paramDict objectForKey:PARAM_OFFER_KEY]];
+        [postData appendString:@"&"];
+    }
+    
     if([paramDict objectForKey:PARAM_FURL]){
         [postData appendFormat:@"%@=%@",PARAM_FURL,[paramDict objectForKey:PARAM_FURL]];
         [postData appendString:@"&"];
@@ -498,7 +509,5 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor colorWithRed:240.0/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
 }
-
-
 
 @end

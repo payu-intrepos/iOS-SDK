@@ -195,6 +195,10 @@
         }
 
     }
+    if([paramDict objectForKey:PARAM_OFFER_KEY]){
+        [postData appendFormat:@"%@=%@",PARAM_OFFER_KEY,[paramDict objectForKey:PARAM_OFFER_KEY]];
+        [postData appendString:@"&"];
+    }
     
     if(_paymentCategory){
         [postData appendFormat:@"%@=%@",PARAM_PG,_paymentCategory];

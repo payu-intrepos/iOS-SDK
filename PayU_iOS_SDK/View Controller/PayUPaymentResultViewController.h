@@ -7,22 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-//@import JavaScriptCore;
-//
-//@protocol JSCallBackToObjC <JSExport>
-//
-//- (void) bankFound:(NSString *)BankName;
-//- (void) convertToNative:(NSString *)paymentOption andOtherOption:(NSString *)otherPaymentOptipon;
-//
-//@end
 
-@interface PayUPaymentResultViewController : UIViewController //<JSCallBackToObjC>
+
+@interface PayUPaymentResultViewController : UIViewController
 
 @property (nonatomic,strong) NSURLRequest *request;
 @property (assign, nonatomic) BOOL flag;
 @property (assign, nonatomic) BOOL isBackOrDoneNeeded;
-
--(void) loadJavascript;
-
 
 @end

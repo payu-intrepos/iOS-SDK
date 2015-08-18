@@ -22,6 +22,17 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		73E2808C1B833EB000680E93 /* PayUConstant.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E06A67B71A3819C300474668 /* PayUConstant.h */; };
+		73E2808D1B833EED00680E93 /* PayUiOSDevice.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E06A67B81A3819C300474668 /* PayUiOSDevice.h */; };
+		73E2808E1B833EF400680E93 /* PayUItem.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E06A67BA1A3819C300474668 /* PayUItem.h */; };
+		73E2808F1B833EFD00680E93 /* PayUPayment.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E06A67BC1A3819C300474668 /* PayUPayment.h */; };
+		73E280901B833F0600680E93 /* PayUPaymentDetails.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E06A67BE1A3819C300474668 /* PayUPaymentDetails.h */; };
+		73E280911B833F0F00680E93 /* PayUShippingAddress.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E06A67C01A3819C300474668 /* PayUShippingAddress.h */; };
+		73E280921B833F1700680E93 /* CardValidation.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E057AF231A3E1212000C8958 /* CardValidation.h */; };
+		73E280931B833F1F00680E93 /* SharedDataManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E05423231A40029400CC3861 /* SharedDataManager.h */; };
+		73E280941B833F2700680E93 /* Utils.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0739C8B1A40462F00416EE4 /* Utils.h */; };
+		73E280951B833F2F00680E93 /* Reachability.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 921FE1541A90E7BD00B7B78B /* Reachability.h */; };
+		73E280961B833F3600680E93 /* ReachabilityManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 921FE1571A90E8C000B7B78B /* ReachabilityManager.h */; };
 		921FE1561A90E7BD00B7B78B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 921FE1551A90E7BD00B7B78B /* Reachability.m */; };
 		921FE1591A90E8C000B7B78B /* ReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 921FE1581A90E8C000B7B78B /* ReachabilityManager.m */; };
 		921FE15A1A90ED8800B7B78B /* PayUErrorConstant.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 921FE0F71A90E3C500B7B78B /* PayUErrorConstant.h */; };
@@ -112,13 +123,14 @@
 		E0859BBE1A47FD8800AB656C /* unchecked.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0859B7D1A47FD1B00AB656C /* unchecked.png */; };
 		E0859BBF1A47FD8800AB656C /* unchecked@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0859B7E1A47FD1B00AB656C /* unchecked@2x.png */; };
 		E09B11591A8B3C9F000DC356 /* StoredCard.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = E09B11581A8B3B03000DC356 /* StoredCard.xib */; };
+		E0AF70201A82028B00F11785 /* WebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E0AF6F661A81FA0600F11785 /* WebViewJavascriptBridge.m */; };
+		E0AF724D1A82406F00F11785 /* WebViewJavascriptBridge.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0AF6F641A81FA0500F11785 /* WebViewJavascriptBridge.h */; };
 		E0B759711A7B5C410077A1D2 /* EMIOptionView.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0B759701A7B54440077A1D2 /* EMIOptionView.xib */; };
 		E0C0F3A01A8F502600DD0314 /* PayUConnectionHandlerController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0321AE51A8F15D100406554 /* PayUConnectionHandlerController.h */; };
 		E0C3A4E91A318E4E00BC2F0B /* PayU_iOS_SDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0C3A4E81A318E4E00BC2F0B /* PayU_iOS_SDK.h */; };
 		E0C94CCD1A665046004037A2 /* PayUEMIOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E0C94CCB1A665046004037A2 /* PayUEMIOptionViewController.m */; };
 		E0C94CCE1A66A14E004037A2 /* PayUEMIOptionViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0C94CCA1A665046004037A2 /* PayUEMIOptionViewController.h */; };
 		E0C94CCF1A66A14E004037A2 /* PayUEMIOptionViewController.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0C94CCC1A665046004037A2 /* PayUEMIOptionViewController.xib */; };
-		E0CD40DA1B30063A00DD86AB /* UIViewController+BackButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E0CD40D91B30063A00DD86AB /* UIViewController+BackButtonHandler.m */; };
 		E0D65EF71AD3EE790041DE2F /* EMIOption5.xib in CopyFiles */ = {isa = PBXBuildFile; fileRef = E0D65EF61AD3E9920041DE2F /* EMIOption5.xib */; };
 		E0D65EF81AD3EE790041DE2F /* next.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = E02CA26F1ACD295700F306EE /* next.png */; };
 		E0D65EF91AD3EE790041DE2F /* next@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = E02CA2701ACD295700F306EE /* next@2x.png */; };
@@ -145,6 +157,17 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				73E280961B833F3600680E93 /* ReachabilityManager.h in CopyFiles */,
+				73E280951B833F2F00680E93 /* Reachability.h in CopyFiles */,
+				73E280941B833F2700680E93 /* Utils.h in CopyFiles */,
+				73E280931B833F1F00680E93 /* SharedDataManager.h in CopyFiles */,
+				73E280921B833F1700680E93 /* CardValidation.h in CopyFiles */,
+				73E280911B833F0F00680E93 /* PayUShippingAddress.h in CopyFiles */,
+				73E280901B833F0600680E93 /* PayUPaymentDetails.h in CopyFiles */,
+				73E2808F1B833EFD00680E93 /* PayUPayment.h in CopyFiles */,
+				73E2808E1B833EF400680E93 /* PayUItem.h in CopyFiles */,
+				73E2808D1B833EED00680E93 /* PayUiOSDevice.h in CopyFiles */,
+				73E2808C1B833EB000680E93 /* PayUConstant.h in CopyFiles */,
 				E0D65EF71AD3EE790041DE2F /* EMIOption5.xib in CopyFiles */,
 				E0D65EF81AD3EE790041DE2F /* next.png in CopyFiles */,
 				E0D65EF91AD3EE790041DE2F /* next@2x.png in CopyFiles */,
@@ -155,6 +178,7 @@
 				921FE15A1A90ED8800B7B78B /* PayUErrorConstant.h in CopyFiles */,
 				E0C0F3A01A8F502600DD0314 /* PayUConnectionHandlerController.h in CopyFiles */,
 				E09B11591A8B3C9F000DC356 /* StoredCard.xib in CopyFiles */,
+				E0AF724D1A82406F00F11785 /* WebViewJavascriptBridge.h in CopyFiles */,
 				E0B759711A7B5C410077A1D2 /* EMIOptionView.xib in CopyFiles */,
 				E0E85EB21A7A67600087C080 /* CardProcessView.xib in CopyFiles */,
 				E0E85CB81A7A42FB0087C080 /* AllPaymentOprionsView.xib in CopyFiles */,
@@ -284,6 +308,9 @@
 		E0859B7D1A47FD1B00AB656C /* unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked.png; sourceTree = "<group>"; };
 		E0859B7E1A47FD1B00AB656C /* unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked@2x.png"; sourceTree = "<group>"; };
 		E09B11581A8B3B03000DC356 /* StoredCard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StoredCard.xib; sourceTree = "<group>"; };
+		E0AF6F641A81FA0500F11785 /* WebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		E0AF6F651A81FA0600F11785 /* WebViewJavascriptBridge.js.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WebViewJavascriptBridge.js.txt; sourceTree = "<group>"; };
+		E0AF6F661A81FA0600F11785 /* WebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge.m; sourceTree = "<group>"; };
 		E0B759701A7B54440077A1D2 /* EMIOptionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EMIOptionView.xib; path = "View Controller/EMIOptionView.xib"; sourceTree = "<group>"; };
 		E0C3A4E51A318E4E00BC2F0B /* libPayU_iOS_SDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPayU_iOS_SDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0C3A4E81A318E4E00BC2F0B /* PayU_iOS_SDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayU_iOS_SDK.h; sourceTree = "<group>"; };
@@ -292,8 +319,6 @@
 		E0C94CCA1A665046004037A2 /* PayUEMIOptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayUEMIOptionViewController.h; sourceTree = "<group>"; };
 		E0C94CCB1A665046004037A2 /* PayUEMIOptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayUEMIOptionViewController.m; sourceTree = "<group>"; };
 		E0C94CCC1A665046004037A2 /* PayUEMIOptionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PayUEMIOptionViewController.xib; sourceTree = "<group>"; };
-		E0CD40D81B30063A00DD86AB /* UIViewController+BackButtonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+BackButtonHandler.h"; sourceTree = "<group>"; };
-		E0CD40D91B30063A00DD86AB /* UIViewController+BackButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+BackButtonHandler.m"; sourceTree = "<group>"; };
 		E0D65EF61AD3E9920041DE2F /* EMIOption5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EMIOption5.xib; path = "View Controller/EMIOption5.xib"; sourceTree = "<group>"; };
 		E0DCCA891A7B89E20061B54A /* CashCardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CashCardView.xib; sourceTree = "<group>"; };
 		E0E85CB71A7A40D70087C080 /* AllPaymentOprionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllPaymentOprionsView.xib; sourceTree = "<group>"; };
@@ -393,6 +418,16 @@
 			name = ViewController;
 			sourceTree = "<group>";
 		};
+		E0AF6F631A81FA0500F11785 /* WebViewJavascriptBridge */ = {
+			isa = PBXGroup;
+			children = (
+				E0AF6F641A81FA0500F11785 /* WebViewJavascriptBridge.h */,
+				E0AF6F661A81FA0600F11785 /* WebViewJavascriptBridge.m */,
+				E0AF6F651A81FA0600F11785 /* WebViewJavascriptBridge.js.txt */,
+			);
+			path = WebViewJavascriptBridge;
+			sourceTree = "<group>";
+		};
 		E0C3A4DC1A318E4E00BC2F0B = {
 			isa = PBXGroup;
 			children = (
@@ -415,7 +450,6 @@
 		E0C3A4E71A318E4E00BC2F0B /* PayU_iOS_SDK */ = {
 			isa = PBXGroup;
 			children = (
-				E0CD40D71B30060700DD86AB /* View Controller category */,
 				921FE0F71A90E3C500B7B78B /* PayUErrorConstant.h */,
 				921FE0F81A90E3C500B7B78B /* PayUNotificationConstant.h */,
 				E06A67B71A3819C300474668 /* PayUConstant.h */,
@@ -440,6 +474,7 @@
 				921FE1551A90E7BD00B7B78B /* Reachability.m */,
 				921FE1571A90E8C000B7B78B /* ReachabilityManager.h */,
 				921FE1581A90E8C000B7B78B /* ReachabilityManager.m */,
+				E0AF6F631A81FA0500F11785 /* WebViewJavascriptBridge */,
 				E094A76D1A36F8D6004AF674 /* ViewController */,
 				E0321AE51A8F15D100406554 /* PayUConnectionHandlerController.h */,
 				E0321AE61A8F15D100406554 /* PayUConnectionHandlerController.m */,
@@ -461,15 +496,6 @@
 				E0C3A4F31A318E4E00BC2F0B /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		E0CD40D71B30060700DD86AB /* View Controller category */ = {
-			isa = PBXGroup;
-			children = (
-				E0CD40D81B30063A00DD86AB /* UIViewController+BackButtonHandler.h */,
-				E0CD40D91B30063A00DD86AB /* UIViewController+BackButtonHandler.m */,
-			);
-			name = "View Controller category";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -627,7 +653,7 @@
 				E0739C8D1A40462F00416EE4 /* Utils.m in Sources */,
 				E06A67C61A3819C300474668 /* PayUShippingAddress.m in Sources */,
 				E0321AE71A8F15D100406554 /* PayUConnectionHandlerController.m in Sources */,
-				E0CD40DA1B30063A00DD86AB /* UIViewController+BackButtonHandler.m in Sources */,
+				E0AF70201A82028B00F11785 /* WebViewJavascriptBridge.m in Sources */,
 				E0C94CCD1A665046004037A2 /* PayUEMIOptionViewController.m in Sources */,
 				E06A67C41A3819C300474668 /* PayUPayment.m in Sources */,
 				E06A67C21A3819C300474668 /* PayUiOSDevice.m in Sources */,
@@ -759,7 +785,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Build/Products/Debug-iphonesimulator",
-					"$(PROJECT_DIR)/PayU_iOS_SDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
@@ -779,7 +804,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Build/Products/Debug-iphonesimulator",
-					"$(PROJECT_DIR)/PayU_iOS_SDK",
 				);
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
