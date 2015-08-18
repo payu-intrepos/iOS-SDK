@@ -474,6 +474,10 @@ void(^serverResponseForHashGenerationCallback)(NSURLResponse *response, NSData *
         [postData appendFormat:@"%@=%@",PARAM_SURL,[paramDict objectForKey:PARAM_SURL]];
         [postData appendString:@"&"];
     }
+    if([paramDict objectForKey:PARAM_OFFER_KEY]){
+        [postData appendFormat:@"%@=%@",PARAM_OFFER_KEY,[paramDict objectForKey:PARAM_OFFER_KEY]];
+        [postData appendString:@"&"];
+    }
     if([paramDict objectForKey:PARAM_FURL]){
         [postData appendFormat:@"%@=%@",PARAM_FURL,[paramDict objectForKey:PARAM_FURL]];
         [postData appendString:@"&"];
@@ -827,6 +831,10 @@ void(^serverResponseForHashGenerationCallback)(NSURLResponse *response, NSData *
     
     if([paramDict objectForKey:PARAM_SURL]){
         [postData appendFormat:@"%@=%@",PARAM_SURL,[paramDict objectForKey:PARAM_SURL]];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_OFFER_KEY]){
+        [postData appendFormat:@"%@=%@",PARAM_OFFER_KEY,[paramDict objectForKey:PARAM_OFFER_KEY]];
         [postData appendString:@"&"];
     }
     if([paramDict objectForKey:PARAM_FURL]){

@@ -61,13 +61,6 @@
     _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
 }
 
-
-- (void) viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    _payNow.enabled = NO;
-
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -145,6 +138,10 @@
     }
     if([paramDict objectForKey:PARAM_PRODUCT_INFO]){
         [postData appendFormat:@"%@=%@",PARAM_PRODUCT_INFO,[paramDict objectForKey:PARAM_PRODUCT_INFO]];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_OFFER_KEY]){
+        [postData appendFormat:@"%@=%@",PARAM_OFFER_KEY,[paramDict objectForKey:PARAM_OFFER_KEY]];
         [postData appendString:@"&"];
     }
     
