@@ -103,7 +103,6 @@
 @property (strong, nonatomic) UILabel *msgLbl;
 @property (strong, nonatomic) UIButton *button;
 
-@property (strong,nonatomic) NSDictionary *paramDict;
 
 -(IBAction) displayDatePicketView :(UIPickerView *) pickerView;
 
@@ -121,7 +120,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
+    
     _cvvLength = 3;
     _months = nil;
     _years  = nil;
@@ -174,6 +173,7 @@
     if(_appTitle)
         self.navigationController.navigationItem.title = _appTitle;
     
+    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[paramDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
 /*    if([paramDict valueForKey:PARAM_USER_CREDENTIALS] || _storeThisCard){
         [self displayStoreCardOption];
         if(_storeThisCard){
@@ -183,11 +183,6 @@
 
     
 }
--(void)viewWillAppear:(BOOL)animated{
-    NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
-    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[paramDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
-}
-
 
 - (void) viewDidAppear:(BOOL)animated{
     if([[[SharedDataManager sharedDataManager] allInfoDict] valueForKey:PARAM_USER_CREDENTIALS] || _storeThisCard){
@@ -228,10 +223,6 @@
         [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
         [postData appendString:@"&"];
         }
-    }
-    if([paramDict objectForKey:PARAM_OFFER_KEY]){
-        [postData appendFormat:@"%@=%@",PARAM_OFFER_KEY,[paramDict objectForKey:PARAM_OFFER_KEY]];
-        [postData appendString:@"&"];
     }
     
     if(_checkBoxSelected){
@@ -399,84 +390,6 @@
     [self.navigationController pushViewController:resultViewController animated:YES];
 }
 
-
-- (void) checkOfferKey:(NSString *) cardNumber{
-    
-    NSURL *restURL = [NSURL URLWithString:PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION];
-    NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
-    
-    // create the request
-    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:restURL
-                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                        timeoutInterval:60.0];
-    // Specify that it will be a POST request
-    theRequest.HTTPMethod = @"POST";
-    /*
-     Sending value of user_credentials as var1 according to new UI
-     */
-    
-    
-    NSString *checkSum = nil;
-        NSString *checkSumStr = [NSString stringWithFormat:@"%@|%@|%@|%@",[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_KEY],PARAM_CHECK_OFFER_STATUS,[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_OFFER_KEY],[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_SALT]];
-        checkSum = [Utils createCheckSumString:checkSumStr];
-
-    NSString *postData = [NSString stringWithFormat:@"key=%@&command=%@&var1=%@&var2=%@&var3=%@&var4=%@&var5=%@&var6=%@&var7=%@&var8=%@&device_type=%@&hash=%@",[paramDict valueForKey:PARAM_KEY],PARAM_CHECK_OFFER_STATUS,[paramDict valueForKey:PARAM_OFFER_KEY],[paramDict valueForKey:PARAM_TOTAL_AMOUNT],CARD_TYPE, CARD_TYPE, cardNumber,@"",@"",@"",PARAM_DEVICE_TYPE,checkSum];
-    
-    //set request content type we MUST set this value.
-    [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    //set post data of request
-    [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSOperationQueue *networkQueue = [[NSOperationQueue alloc] init];
-    [NSURLConnection sendAsynchronousRequest:theRequest queue:networkQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSError *errorJson = nil;
-        if(data){
-            NSDictionary *offerResponse = [[NSDictionary alloc]init];
-            offerResponse = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&errorJson];
-            NSLog(@"Offer Response : %@",offerResponse);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self displayNewTxnAmount:offerResponse];
-            });
-        }
-    }];
-}
-
-
--(void) displayNewTxnAmount:(NSDictionary *)offerResponse{
-    
-    NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
-    
-    if(offerResponse && [offerResponse valueForKey:PARAM_OFFER_DISCOUNT]){
-        
-        NSAttributedString * title =
-        [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Rs. %.2f",[[paramDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]]
-                                        attributes:@{NSStrikethroughStyleAttributeName:@(NSUnderlineStyleSingle),NSStrikethroughColorAttributeName: [UIColor redColor]}];
-        [_amountLbl setAttributedText:title];
-        
-        float transactionAmoundAfterDiscount = [[paramDict valueForKey:PARAM_TOTAL_AMOUNT] floatValue];
-        transactionAmoundAfterDiscount = transactionAmoundAfterDiscount - [[offerResponse valueForKey:PARAM_OFFER_DISCOUNT] floatValue];
-        //[paramDict setValue:[NSString stringWithFormat:@"%f",transactionAmoundAfterDiscount] forKey:PARAM_TOTAL_AMOUNT];
-        
-        CGRect frame = _amountLbl.frame;
-        
-        //frame = _amountLbl.frame;
-        frame.origin.y = frame.origin.y + frame.size.height;
-        self.DiscountedAmntLbl = [[UILabel alloc] initWithFrame:frame];
-        self.DiscountedAmntLbl.text = [NSString stringWithFormat:@"Rs. %.2f",transactionAmoundAfterDiscount];
-        self.DiscountedAmntLbl.textAlignment = NSTextAlignmentCenter;
-        [self.view addSubview:self.DiscountedAmntLbl];
-        
-    }
-    
-}
--(void) removeDiscountedAmntLbl
-{
-    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[_paramDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
-    //[self.view addSubview:self.DiscountedAmntLbl];
-    [self.DiscountedAmntLbl removeFromSuperview];
-}
-
 -(void) resignAllFromFirstRespon{
     [_cardNumber resignFirstResponder];
     [_nameOnCard resignFirstResponder];
@@ -625,7 +538,6 @@
             _ccImageView.image = [UIImage imageNamed:@"card.png"];
             _ccImageView.alpha = ALPHA_HALF;
             _cvvLength = 3;
-            [self removeDiscountedAmntLbl];
         } else {
             _isCardNumberValid = [CardValidation luhnCheck:_cardNum];
             
@@ -638,13 +550,9 @@
                     _downTimeMsgLbl = [Utils customLabelWithString:[NSString stringWithFormat:DOWN_TIME_MESSAGE,bankName] andFrame:frame];
                     [self.view addSubview:_downTimeMsgLbl];
                 }
-                NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
-                if([paramDict valueForKey:PARAM_OFFER_KEY]){
-                    [self checkOfferKey:_cardNum];
-                }
+
               }
             else {
-                [self removeDiscountedAmntLbl];
                 _isCardBrandDetected = NO;
                 _ccImageView.alpha = ALPHA_FULL;
                 if (bIsFocused) {

@@ -32,7 +32,7 @@
 #define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION  @"https://info.payu.in/merchant/postservice.php?form=2"
 
 // 0 if pointing to payu production server, 1 for test server
-#define TEST_SERVER 0
+#define TEST_SERVER 1
 
 #if  TEST_SERVER
 #define PAYU_PAYMENT_BASE_URL                          PAYU_PAYMENT_BASE_URL_TEST
@@ -52,10 +52,6 @@
 
 
 //All Required or option Param defines
-
-#define CARD_TYPE @"CC"
-
-
 #define     PARAM_KEY                       @"key"
 #define     PARAM_COMMAND                   @"command"
 #define     PARAM_HASH                      @"hash"
@@ -104,7 +100,6 @@
 #define     PARAM_INSTRUMENT_TYPE           @"instrument_type"
 #define     PARAM_INSTRUMENT_ID             @"instrument_id"
 
-#define     PARAM_OFFER_DISCOUNT            @"discount"
 
 #define     PARAM_PG                        @"pg"
 #define     PARAM_BANK_CODE                 @"bankcode"
@@ -125,7 +120,6 @@
 #define  PARAM_GET_STORED_CARD              @"get_user_cards"
 #define  PARAM_DELETE_STORED_CARD           @"delete_user_card"
 
-#define PARAM_CHECK_OFFER_STATUS            @"check_offer_status"
 
 #define PARAM_VAS_COMMAND_VALUE             @"vas_for_mobile_sdk"
 
@@ -157,6 +151,8 @@
 #define INSTRUMENT_TYPE         @"iOS"
 
 #define PARAM_PRODUCTION_OR_TEST_MODE  @"production"
+
+#define  PG_URL_LIST @"pgUrlList"
 
 
 #define     IPHONE_3_5    480

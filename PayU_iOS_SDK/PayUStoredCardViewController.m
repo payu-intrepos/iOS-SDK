@@ -309,10 +309,6 @@
             [postData appendString:@"&"];
         }
     }
-    if([paramDict objectForKey:PARAM_OFFER_KEY]){
-        [postData appendFormat:@"%@=%@",PARAM_OFFER_KEY,[paramDict objectForKey:PARAM_OFFER_KEY]];
-        [postData appendString:@"&"];
-    }
     
     NSDictionary *selectedStoredCardDict = _cardList[_selectedCardNumber];
     
@@ -341,7 +337,6 @@
     if([selectedStoredCardDict objectForKey:@"card_mode"]){
         [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,[selectedStoredCardDict objectForKey:@"card_mode"]];
     }
-    
     [postData appendString:@"&"];
     [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
     [postData appendString:@"&"];

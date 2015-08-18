@@ -42,7 +42,5 @@
 @property (nonatomic,assign) float totalAmount;
 
 @property (nonatomic,assign) BOOL isPaymentBeingDoneByRewardPoints;
-@property (nonatomic,strong) UILabel *DiscountedAmntLbl;
-
 
 @end
