@@ -65,7 +65,20 @@
     /*
      Sending value of user_credentials as var1 according to new UI
      */
-    NSString *postData = [NSString stringWithFormat:@"key=%@&command=%@&var1=%@&var2=%@&var3=%@&device_type=%@&hash=%@",[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_KEY],PARAM_VAS_COMMAND_VALUE,DEFAULT,DEFAULT,DEFAULT,IOS_SDK,[Utils createCheckSumString:[NSString stringWithFormat:@"%@|%@|%@|%@",[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_KEY],PARAM_VAS_COMMAND_VALUE,DEFAULT,[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_SALT]]]];
+    
+    
+    NSString *checkSum = nil;
+    if(HASH_KEY_GENERATION_FROM_SERVER){
+        if ([[[SharedDataManager sharedDataManager] hashDict] valueForKey:MOBILE_SDK]) {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:MOBILE_SDK];
+        } else {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:VAS_FOR_MOBILE_SDK];
+        }
+    }
+    else{
+//        checkSum = [Utils createCheckSumString:[NSString stringWithFormat:@"%@|%@|%@|%@",[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_KEY],PARAM_VAS_COMMAND_VALUE,DEFAULT,[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_SALT]]];
+    }
+    NSString *postData = [NSString stringWithFormat:@"key=%@&command=%@&var1=%@&var2=%@&var3=%@&device_type=%@&hash=%@",[[[SharedDataManager sharedDataManager] allInfoDict] objectForKey:PARAM_KEY],PARAM_VAS_COMMAND_VALUE,DEFAULT,DEFAULT,DEFAULT,IOS_SDK,checkSum];
     
     //set request content type we MUST set this value.
     [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];

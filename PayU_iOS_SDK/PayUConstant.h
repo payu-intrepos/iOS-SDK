@@ -32,7 +32,7 @@
 #define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION  @"https://info.payu.in/merchant/postservice.php?form=2"
 
 // 0 if pointing to payu production server, 1 for test server
-#define TEST_SERVER 0
+#define TEST_SERVER 1
 
 #if  TEST_SERVER
 #define PAYU_PAYMENT_BASE_URL                          PAYU_PAYMENT_BASE_URL_TEST
@@ -45,17 +45,37 @@
 /*
   0 = SDK will calculate Hash
   1 = Merchant will provide hash
-  2 = PayU server provide hash, use only external.
+  2 = PayU server provide hash, for external use only.
  */
 
-#define HASH_KEY_GENERATION_FROM_SERVER 0
+#define HASH_KEY_GENERATION_FROM_SERVER 1
+
+
+// Different Hash KEYS
+
+
+
+#define     PAYMENT_HASH_OLD                @"paymentHash"
+#define     MOBILE_SDK                  @"mobileSdk"
+#define     DELETE_HASH                 @"deleteHash" //delete_user_card
+#define     EDIT_USER_CARD_HASH_OLD     @"editUserCardHash" //edit_user_card
+#define     SAVE_USER_CARD_HASH         @"saveUserCardHash"
+#define     DETAILS_FOR_MOBILE_SDK      @"detailsForMobileSdk"
+#define     GET_USER_CAR_HASH           @"getUserCardHash"
+
+
+#define     GET_MERCHANT_IBIBO_CODES                @"get_merchant_ibibo_codes_hash"
+#define     PAYMENT_HASH                            @"payment_hash"
+#define     VAS_FOR_MOBILE_SDK                      @"vas_for_mobile_sdk_hash"
+#define     DELETE_USER_CARD                        @"delete_user_card_hash"
+#define     EDIT_USER_CARD                          @"edit_user_card_hash"
+#define     SAVE_USER_CARD                          @"save_user_card_hash"
+#define     PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK  @"payment_related_details_for_mobile_sdk_hash"
+#define     GET_USER_CARDS                          @"get_user_cards_hash"
+#define     CHECK_OFFER_STATUS_HASH                 @"check_offer_status_hash"
 
 
 //All Required or option Param defines
-
-#define CARD_TYPE @"CC"
-
-
 #define     PARAM_KEY                       @"key"
 #define     PARAM_COMMAND                   @"command"
 #define     PARAM_HASH                      @"hash"
@@ -105,7 +125,7 @@
 #define     PARAM_INSTRUMENT_ID             @"instrument_id"
 
 #define     PARAM_OFFER_DISCOUNT            @"discount"
-
+#define     CARD_TYPE @"CC"
 #define     PARAM_PG                        @"pg"
 #define     PARAM_BANK_CODE                 @"bankcode"
 #define     PARAM_CARD_NUMBER               @"ccnum"
@@ -125,9 +145,9 @@
 #define  PARAM_GET_STORED_CARD              @"get_user_cards"
 #define  PARAM_DELETE_STORED_CARD           @"delete_user_card"
 
-#define PARAM_CHECK_OFFER_STATUS            @"check_offer_status"
 
 #define PARAM_VAS_COMMAND_VALUE             @"vas_for_mobile_sdk"
+#define PARAM_CHECK_OFFER_STATUS            @"check_offer_status"
 
 #define PARAM_SERVER_HASH_GENERATION_COMMAND @"mobileHashTestWs"
 
@@ -158,11 +178,21 @@
 
 #define PARAM_PRODUCTION_OR_TEST_MODE  @"production"
 
+#define  PG_URL_LIST @"pgUrlList"
+
 
 #define     IPHONE_3_5    480
 #define     IPHONE_4     568
 #define     IPHONE_4_7   667
 #define     IPHONE_5_5   736
+
+
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
 
 /*
  #ifdef DEBUG

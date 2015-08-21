@@ -12,8 +12,6 @@
 #import "PayUPaymentOptionsViewController.h"
 #import "PayUConstant.h"
 
-//  SDK_VERSION_NAME    2.0.1
+//  SDK_VERSION_NAME    2.2
 //  Features            Added Offer Functionality
-
-
-
+//                      Hash is generated from server

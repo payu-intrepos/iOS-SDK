@@ -94,6 +94,11 @@
 
 }
 
+- (void) viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -139,35 +144,59 @@
     
     
     NSMutableString *postData = [[NSMutableString alloc] init];
+    
     for(NSString *aKey in [paramDict allKeys]){
-        [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
-        [postData appendString:@"&"];
+        
+        if(([aKey isEqualToString:PARAM_FIRST_NAME]) || ([aKey isEqualToString:PARAM_EMAIL])){
+            [postData appendFormat:@"%@=%@",aKey,@""];
+            [postData appendString:@"&"];
+        }
+        else if(!([aKey isEqualToString:PARAM_SALT])){
+            [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
+            [postData appendString:@"&"];
+        }
+
     }
     
     [postData appendString:@"&"];
     [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
     [postData appendString:@"&"];
+ 
     
-    NSMutableString *hashValue = [[NSMutableString alloc] init];
-    if([paramDict valueForKey:PARAM_KEY]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
-        [hashValue appendString:@"|"];
+    NSString *checkSum = nil;
+    if(!HASH_KEY_GENERATION_FROM_SERVER){
+
+        NSMutableString *hashValue = [[NSMutableString alloc] init];
+        if([paramDict valueForKey:PARAM_KEY]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_COMMAND]){
+            [hashValue appendString:[paramDict valueForKey:PARAM_COMMAND]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_VAR1]){
+            [hashValue appendString:[paramDict valueForKey:PARAM_VAR1]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_SALT]){
+            [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+            //[hashValue appendString:@"|"];
+        }
+//        checkSum = [Utils createCheckSumString:hashValue];
+        NSLog(@"Hash String = %@ hashvalue = %@",hashValue,checkSum);
     }
-    if([paramDict valueForKey:PARAM_COMMAND]){
-        [hashValue appendString:[paramDict valueForKey:PARAM_COMMAND]];
-        [hashValue appendString:@"|"];
+    else
+    {
+        if ([[[SharedDataManager sharedDataManager] hashDict] valueForKey:DETAILS_FOR_MOBILE_SDK]) {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:DETAILS_FOR_MOBILE_SDK];
+        } else {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK];
+        }
     }
-    if([paramDict valueForKey:PARAM_VAR1]){
-        [hashValue appendString:[paramDict valueForKey:PARAM_VAR1]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_SALT]){
-        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
-        //[hashValue appendString:@"|"];
-    }
-    
-    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
-    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+
+//    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
+    [postData appendFormat:@"%@=%@",PARAM_HASH,checkSum];
     //sha512(key|command|var1|salt)
     NSLog(@"STORED CARD POST DATA = %@",postData);
     //set request content type we MUST set this value.
@@ -199,18 +228,21 @@
     customAlertView.layer.masksToBounds = YES;
     customAlertView.backgroundColor = [UIColor lightGrayColor];
     
-    _dismissButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [_dismissButton addTarget:self action:@selector(customAlertViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    _dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
+//    _dismissButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 109, 150, 40)];
+    _dismissButton.frame = CGRectMake(0, 109, 150, 40);
+    //[_dismissButton setFrame:CGRectMake(0, 109, 150, 40)];
     [_dismissButton setTitle:@"Cancel" forState:UIControlStateNormal];
-    [_dismissButton setFrame:CGRectMake(0, 109, 150, 40)];
     _dismissButton.layer.borderColor = [UIColor whiteColor].CGColor;
     _dismissButton.layer.borderWidth = 0.5f;
+    [_dismissButton addTarget:self action:@selector(customAlertViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+
     [customAlertView addSubview:_dismissButton];
     
     _okButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [_okButton addTarget:self action:@selector(customAlertViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [_okButton setTitle:@"Ok" forState:UIControlStateNormal];
     [_okButton setFrame:CGRectMake(150, 109, 150, 40)];
+    [_okButton addTarget:self action:@selector(customAlertViewButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     _okButton.layer.borderColor = [UIColor whiteColor].CGColor;
     _okButton.layer.borderWidth = 0.5f;
     
@@ -258,6 +290,7 @@
 // Custom AlertView button get clicked.
 - (void)customAlertViewButtonClicked:(UIButton *)sender
 {
+    [_cvvTextField  resignFirstResponder];
     [UIView animateWithDuration:0.2f animations:^{
         [sender.superview setAlpha:0.0f];
     }completion:^(BOOL done){
@@ -304,7 +337,14 @@
     
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
-        if(/*!([aKey isEqualToString:PARAM_SALT]) && */!([aKey isEqualToString:PARAM_FIRST_NAME])){
+        
+        /*if(([aKey isEqualToString:PARAM_FIRST_NAME]) || ([aKey isEqualToString:PARAM_EMAIL])){
+            
+            [postData appendFormat:@"%@=%@",aKey,@""];
+            [postData appendString:@"&"];
+
+        }
+        else */if(!([aKey isEqualToString:PARAM_SALT])){
             [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
             [postData appendString:@"&"];
         }
@@ -320,19 +360,16 @@
         [postData appendFormat:@"%@=%@",PARAM_PG,[selectedStoredCardDict objectForKey:@"card_type"]];
         [postData appendString:@"&"];
     }
-    //    if([selectedStoredCardDict objectForKey:@"card_type"]){
-    //        [postData appendFormat:@"%@=%@",PARAM_PG,[selectedStoredCardDict objectForKey:@"card_type"]];
-    //        [postData appendString:@"&"];
-    //    }
     if([selectedStoredCardDict objectForKey:@"card_token"]){
         [postData appendFormat:@"%@=%@",PARAM_CARD_TOKEN,[selectedStoredCardDict objectForKey:@"card_token"]];
         [postData appendString:@"&"];
     }
-    //user_credentials name_on_card
-    if([selectedStoredCardDict objectForKey:@"name_on_card"]){
-        [postData appendFormat:@"%@=%@",PARAM_FIRST_NAME,[selectedStoredCardDict objectForKey:@"name_on_card"]];
-        [postData appendString:@"&"];
-    }
+    //user_credentials, name_on_card
+//    if([selectedStoredCardDict objectForKey:@"name_on_card"]){
+//        [postData appendFormat:@"%@=%@",@"name_on_card",[selectedStoredCardDict objectForKey:@"name_on_card"]];
+//        [postData appendString:@"&"];
+//    }
+    
     if(cvvStr){
         [postData appendFormat:@"%@=%@",PARAM_CARD_CVV,cvvStr];
         [postData appendString:@"&"];
@@ -341,83 +378,93 @@
     if([selectedStoredCardDict objectForKey:@"card_mode"]){
         [postData appendFormat:@"%@=%@",PARAM_BANK_CODE,[selectedStoredCardDict objectForKey:@"card_mode"]];
     }
-    
     [postData appendString:@"&"];
     [postData appendFormat:@"%@=%@",PARAM_DEVICE_TYPE,IOS_SDK];
     [postData appendString:@"&"];
     
     
+    NSString *checkSum = nil;
+    if(!HASH_KEY_GENERATION_FROM_SERVER){
+        
+            //checksum calculation.
+            NSMutableString *hashValue = [[NSMutableString alloc] init];
+        if([paramDict valueForKey:PARAM_KEY]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_TXID]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TXID]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_TOTAL_AMOUNT]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TOTAL_AMOUNT]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_PRODUCT_INFO]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_PRODUCT_INFO]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_FIRST_NAME]){
+            // name, we will provide the one that is stored along with card info.
+//            [hashValue appendFormat:@"%@",[selectedStoredCardDict objectForKey:@"name_on_card"]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_EMAIL]){
+//            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_EMAIL]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_1]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_1]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_2]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_2]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_3]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_3]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_4]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_4]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_5]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_5]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        [hashValue appendString:@"|||||"];
+        if([paramDict valueForKey:PARAM_SALT]){
+            [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+        }
+        checkSum = [Utils createCheckSumString:hashValue];
+        NSLog(@"Hash String = %@ hashvalue = %@",hashValue,checkSum);
+    }
+    else
+    {
+        if ([[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_HASH_OLD]) {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_HASH_OLD];
+        } else {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_HASH];
+        }
+    }
     
-    //checksum calculation.
-    
-    NSMutableString *hashValue = [[NSMutableString alloc] init];
-    if([paramDict valueForKey:PARAM_KEY]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_TXID]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TXID]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_TOTAL_AMOUNT]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TOTAL_AMOUNT]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_PRODUCT_INFO]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_PRODUCT_INFO]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_FIRST_NAME]){
-        // name, we will provide the one that is stored along with card info.
-        [hashValue appendFormat:@"%@",[selectedStoredCardDict objectForKey:@"name_on_card"]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_EMAIL]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_EMAIL]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_1]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_1]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_2]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_2]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_3]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_3]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_4]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_4]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_5]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_5]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    [hashValue appendString:@"|||||"];
-    if([paramDict valueForKey:PARAM_SALT]){
-        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
-    }
-    
-    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
-    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+    [postData appendFormat:@"%@=%@",PARAM_HASH,checkSum];
     //sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
     NSLog(@"Pay with Stored card POST DATA = %@",postData);
     //set request content type we MUST set this value.
@@ -554,25 +601,39 @@
     [postData appendFormat:@"%@=%@",PARAM_VAR2,[_cardList[cardNun] objectForKey:CARD_TOKEN]];
     [postData appendString:@"&"];
     
-    NSMutableString *hashValue = [[NSMutableString alloc] init];
     
-    if([paramDict valueForKey:PARAM_KEY]){
-        [hashValue appendString:[paramDict valueForKey:PARAM_KEY]];
-        [hashValue appendString:@"|"];
-    }
-    [hashValue appendFormat:@"%@",PARAM_DELETE_STORED_CARD];
-    [hashValue appendString:@"|"];
+    //Checksum calculation for delete card
+    NSString *checkSum = nil;
+    if(!HASH_KEY_GENERATION_FROM_SERVER){
 
-    if([paramDict valueForKey:PARAM_VAR1]){
-        [hashValue appendString:[paramDict valueForKey:PARAM_VAR1]];
+        NSMutableString *hashValue = [[NSMutableString alloc] init];
+        if([paramDict valueForKey:PARAM_KEY]){
+            [hashValue appendString:[paramDict valueForKey:PARAM_KEY]];
+            [hashValue appendString:@"|"];
+        }
+        [hashValue appendFormat:@"%@",PARAM_DELETE_STORED_CARD];
         [hashValue appendString:@"|"];
+
+        if([paramDict valueForKey:PARAM_VAR1]){
+            [hashValue appendString:[paramDict valueForKey:PARAM_VAR1]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_SALT]){
+            [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+        }
+        checkSum = [Utils createCheckSumString:hashValue];
+        NSLog(@"Hash String = %@ hashvalue = %@",hashValue,checkSum);
+
     }
-    if([paramDict valueForKey:PARAM_SALT]){
-        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+    else{
+        if ([[[SharedDataManager sharedDataManager] hashDict] valueForKey:DELETE_HASH]) {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:DELETE_HASH];
+        } else {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:DELETE_USER_CARD];
+        }
     }
     
-    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
-    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+    [postData appendFormat:@"%@=%@",PARAM_HASH,checkSum];
     //sha512(key|command|var1|salt)
     NSLog(@"STORED CARD POST DATA = %@",postData);
     //set request content type we MUST set this value.
@@ -716,9 +777,32 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
-    BOOL shouldChangeCharacters = YES;
-    if (textField.text.length == _cvvlength && ![string isEqualToString:@""])
+    //NSString *cvv = nil;
+    int cvvlength;
+    cvvlength = string.length+textField.text.length-range.length;//+range.location;
+    
+    if (cvvlength >_cvvlength) {
         return NO;
+    }
+    
+    
+    if(range.length + range.location > textField.text.length)
+    {
+        return NO;
+    }
+    if (textField.keyboardType == UIKeyboardTypeNumberPad) {
+        if([string rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location !=NSNotFound)
+        {
+            return NO;
+        }
+    }
+    
+    
+    
+    
+    //BOOL shouldChangeCharacters = YES;
+//    if (textField.text.length == _cvvlength && ![string isEqualToString:@""])
+//        return NO;
     
     //NSString *cvv = [NSString stringWithFormat:@"%@%@",textField.text,string];
     NSString *cvv = nil;
@@ -726,6 +810,7 @@
         cvv = [textField.text substringToIndex:textField.text.length-1];
     }
     else{
+        
         cvv  = [NSString stringWithFormat:@"%@%@",textField.text,string];
     }
     NSLog(@"CVV code = %@",cvv);
@@ -735,6 +820,9 @@
     else if([string isEqualToString:@""]){
         _okButton.enabled = NO;
     }
-    return shouldChangeCharacters;
+    //return shouldChangeCharacters;
+    
+    NSUInteger newLength = [textField.text length] + [string length] - range.length;
+    return newLength <= _cvvlength;
 }
 @end

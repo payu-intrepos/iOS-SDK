@@ -59,6 +59,7 @@
     if(0 == paramDict.allKeys.count){
         manager.allInfoDict = [self createDictionaryWithAllParam];
     }
+    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[paramDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
     
     if(!manager.listOfDownInternetBanking){
         [manager makeVasApiCall];
@@ -75,13 +76,6 @@
     if(!_bankDetails){
         [self callAPI];
     }
-}
-
-
--(void)viewWillAppear:(BOOL)animated
-{
-    NSDictionary *paramDict = [[SharedDataManager sharedDataManager] allInfoDict];
-    _amountLbl.text = [NSString stringWithFormat:@"Rs. %.2f",[[paramDict objectForKey:PARAM_TOTAL_AMOUNT] floatValue]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -156,11 +150,6 @@
         [postData appendFormat:@"%@=%@",PARAM_SURL,[paramDict objectForKey:PARAM_SURL]];
         [postData appendString:@"&"];
     }
-    if([paramDict objectForKey:PARAM_OFFER_KEY]){
-        [postData appendFormat:@"%@=%@",PARAM_OFFER_KEY,[paramDict objectForKey:PARAM_OFFER_KEY]];
-        [postData appendString:@"&"];
-    }
-    
     if([paramDict objectForKey:PARAM_FURL]){
         [postData appendFormat:@"%@=%@",PARAM_FURL,[paramDict objectForKey:PARAM_FURL]];
         [postData appendString:@"&"];
@@ -173,78 +162,155 @@
         [postData appendFormat:@"%@=%@",PARAM_PRODUCT_INFO,[paramDict objectForKey:PARAM_PRODUCT_INFO]];
         [postData appendString:@"&"];
     }
+    if([paramDict objectForKey:PARAM_FIRST_NAME]){
+        [postData appendFormat:@"%@=%@",PARAM_FIRST_NAME,[paramDict objectForKey:PARAM_FIRST_NAME]];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_EMAIL]){
+        [postData appendFormat:@"%@=%@",PARAM_EMAIL,[paramDict objectForKey:PARAM_EMAIL]];
+        [postData appendString:@"&"];
+    }
+
+    if([paramDict objectForKey:PARAM_PRODUCT_INFO]){
+        [postData appendFormat:@"%@=%@",PARAM_PRODUCT_INFO,[paramDict objectForKey:PARAM_PRODUCT_INFO]];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_OFFER_KEY]){
+        [postData appendFormat:@"%@=%@",PARAM_OFFER_KEY,[paramDict objectForKey:PARAM_OFFER_KEY]];
+        [postData appendString:@"&"];
+    }
+    
+    
+    /// user defined fields
+    if([paramDict objectForKey:PARAM_UDF_1]){
+        [postData appendFormat:@"%@=%@",PARAM_UDF_1,[paramDict objectForKey:PARAM_UDF_1]];
+        [postData appendString:@"&"];
+    }
+    else{
+        [postData appendFormat:@"%@=%@",PARAM_UDF_1,@""];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_UDF_2]){
+        [postData appendFormat:@"%@=%@",PARAM_UDF_2,[paramDict objectForKey:PARAM_UDF_2]];
+        [postData appendString:@"&"];
+    }
+    else{
+        [postData appendFormat:@"%@=%@",PARAM_UDF_2,@""];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_UDF_3]){
+        [postData appendFormat:@"%@=%@",PARAM_UDF_3,[paramDict objectForKey:PARAM_UDF_3]];
+        [postData appendString:@"&"];
+    }
+    else{
+        [postData appendFormat:@"%@=%@",PARAM_UDF_3,@""];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_UDF_4]){
+        [postData appendFormat:@"%@=%@",PARAM_UDF_4,[paramDict objectForKey:PARAM_UDF_4]];
+        [postData appendString:@"&"];
+    }
+    else{
+        [postData appendFormat:@"%@=%@",PARAM_UDF_4,@""];
+        [postData appendString:@"&"];
+    }
+    if([paramDict objectForKey:PARAM_UDF_5]){
+        [postData appendFormat:@"%@=%@",PARAM_UDF_5,[paramDict objectForKey:PARAM_UDF_5]];
+        [postData appendString:@"&"];
+    }
+    else{
+        [postData appendFormat:@"%@=%@",PARAM_UDF_5,@""];
+        [postData appendString:@"&"];
+    }
+
+    
     
     //checksum calculation.
+    NSString *checkSum = nil;
+    if(!HASH_KEY_GENERATION_FROM_SERVER){
     
-    NSMutableString *hashValue = [[NSMutableString alloc] init];
-    if([paramDict valueForKey:PARAM_KEY]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
-        [hashValue appendString:@"|"];
+        NSMutableString *hashValue = [[NSMutableString alloc] init];
+        if([paramDict valueForKey:PARAM_KEY]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_TXID]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TXID]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_TOTAL_AMOUNT]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TOTAL_AMOUNT]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_PRODUCT_INFO]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_PRODUCT_INFO]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_FIRST_NAME]){
+            //[hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_FIRST_NAME]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_EMAIL]){
+            //[hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_EMAIL]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_1]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_1]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_2]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_2]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_3]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_3]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_4]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_4]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_5]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_5]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        [hashValue appendString:@"|||||"];
+        if([paramDict valueForKey:PARAM_SALT]){
+            [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+        }
+        checkSum = [Utils createCheckSumString:hashValue];
+        NSLog(@"Hash String = %@ hashvalue = %@",hashValue,checkSum);
+
     }
-    if([paramDict valueForKey:PARAM_TXID]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TXID]];
-        [hashValue appendString:@"|"];
+    else
+    {
+        if ([[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_HASH_OLD]) {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_HASH_OLD];
+        } else {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_HASH];
+        }
     }
-    if([paramDict valueForKey:PARAM_TOTAL_AMOUNT]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TOTAL_AMOUNT]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_PRODUCT_INFO]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_PRODUCT_INFO]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_FIRST_NAME]){
-        //[hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_FIRST_NAME]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_EMAIL]){
-        //[hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_EMAIL]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_1]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_1]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_2]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_2]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_3]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_3]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_4]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_4]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_5]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_5]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    [hashValue appendString:@"|||||"];
-    if([paramDict valueForKey:PARAM_SALT]){
-        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
-    }
+
     
-    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
-    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+//    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,checkSum);
+    [postData appendFormat:@"%@=%@",PARAM_HASH,checkSum];
     //sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
-    NSLog(@"POST DATA = %@",postData);
+    NSLog(@"-->>NET BANKING POST DATA = %@",postData);
     //set request content type we MUST set this value.
     [theRequest setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
@@ -509,5 +575,7 @@
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor colorWithRed:240.0/255.0f green:240.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
 }
+
+
 
 @end

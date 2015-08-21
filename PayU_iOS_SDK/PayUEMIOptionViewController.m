@@ -189,7 +189,13 @@
     NSMutableString *postData = [[NSMutableString alloc] init];
     for(NSString *aKey in [paramDict allKeys]){
         
-        if(![aKey isEqualToString:PARAM_SALT]){
+        /*if(([aKey isEqualToString:PARAM_FIRST_NAME]) || ([aKey isEqualToString:PARAM_EMAIL])){
+            
+            [postData appendFormat:@"%@=%@",aKey,@""];
+            [postData appendString:@"&"];
+            
+        }
+        else */if(![aKey isEqualToString:PARAM_SALT]){
             [postData appendFormat:@"%@=%@",aKey,[paramDict valueForKey:aKey]];
             [postData appendString:@"&"];
         }
@@ -250,76 +256,89 @@
     [postData appendString:@"&"];
     
     
-    
     //checksum calculation.
+    NSString *checkSum = nil;
+    if(!HASH_KEY_GENERATION_FROM_SERVER){
+
+        NSMutableString *hashValue = [[NSMutableString alloc] init];
+        if([paramDict valueForKey:PARAM_KEY]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_TXID]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TXID]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_TOTAL_AMOUNT]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TOTAL_AMOUNT]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_PRODUCT_INFO]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_PRODUCT_INFO]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_FIRST_NAME]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_FIRST_NAME]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_EMAIL]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_EMAIL]];
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_1]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_1]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_2]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_2]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_3]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_3]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_4]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_4]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        if([paramDict valueForKey:PARAM_UDF_5]){
+            [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_5]];
+            [hashValue appendString:@"|"];
+        }
+        else{
+            [hashValue appendString:@"|"];
+        }
+        [hashValue appendString:@"|||||"];
+        if([paramDict valueForKey:PARAM_SALT]){
+            [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
+        }
+        checkSum = [Utils createCheckSumString:hashValue];
+        NSLog(@"Hash String = %@ hashvalue = %@",hashValue,checkSum);
+
+    }
+    else
+    {
+        if ([[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_HASH_OLD]) {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_HASH_OLD];
+        } else {
+            checkSum = [[[SharedDataManager sharedDataManager] hashDict] valueForKey:PAYMENT_HASH];
+        }
+    }
     
-    NSMutableString *hashValue = [[NSMutableString alloc] init];
-    if([paramDict valueForKey:PARAM_KEY]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_KEY]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_TXID]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TXID]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_TOTAL_AMOUNT]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_TOTAL_AMOUNT]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_PRODUCT_INFO]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_PRODUCT_INFO]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_FIRST_NAME]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_FIRST_NAME]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_EMAIL]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_EMAIL]];
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_1]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_1]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_2]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_2]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_3]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_3]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_4]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_4]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    if([paramDict valueForKey:PARAM_UDF_5]){
-        [hashValue appendFormat:@"%@",[paramDict valueForKey:PARAM_UDF_5]];
-        [hashValue appendString:@"|"];
-    }
-    else{
-        [hashValue appendString:@"|"];
-    }
-    [hashValue appendString:@"|||||"];
-    if([paramDict valueForKey:PARAM_SALT]){
-        [hashValue appendString:[paramDict valueForKey:PARAM_SALT]];
-    }
-    
-    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
-    [postData appendFormat:@"%@=%@",PARAM_HASH,[Utils createCheckSumString:hashValue]];
+//    NSLog(@"Hash String = %@ hashvalue = %@",hashValue,[Utils createCheckSumString:hashValue]);
+    [postData appendFormat:@"%@=%@",PARAM_HASH,checkSum];
     //sha512(key|txnid|amount|productinfo|firstname|email|udf1|udf2|udf3|udf4|udf5||||||SALT)
     NSLog(@"POST DATA = %@",postData);
     //set request content type we MUST set this value.
@@ -1119,6 +1138,12 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if (textField.keyboardType == UIKeyboardTypeNumberPad) {
+        if([string rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location !=NSNotFound)
+        {
+            return NO;
+        }
+    }
     
     NSString *trimmedText = [CardValidation removeEmptyCharsFromString:textField.text];
     BOOL isValid = YES;
@@ -1127,7 +1152,7 @@
         trimmedText = [textField.text substringToIndex:textField.text.length-1];
     }
     else{
-        trimmedText  = [NSString stringWithFormat:@"%@%@",textField.text,string];
+        trimmedText  = [textField.text stringByReplacingCharactersInRange:range withString:string];
     }
 
     
@@ -1145,7 +1170,7 @@
         cardNumStr = [textField.text substringToIndex:textField.text.length-1];
     }
     else{
-        cardNumStr  = [NSString stringWithFormat:@"%@%@",textField.text,string];
+        cardNumStr  = [textField.text stringByReplacingCharactersInRange:range withString:string];
     }
     
     if(6 > cardNumStr.length && [textField isEqual:_cardNumber]){

@@ -29,6 +29,9 @@
  */
 @property (nonatomic,copy) NSString *cardType;
 
+@property (nonatomic,copy) NSString *offerKey;
+
+
 //pg As it call in integration Doc, it defines the payment Category.
 //@property (nonatomic, copy) NSString *paymentCategory;
 
