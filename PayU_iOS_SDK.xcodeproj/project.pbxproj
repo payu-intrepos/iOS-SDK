@@ -22,6 +22,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		73C76E011B986595008A3F8D /* PayUConstant.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E06A67B71A3819C300474668 /* PayUConstant.h */; };
 		73F1F6B41B7B71A400A20685 /* CustomActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 73F1F6B21B7B71A400A20685 /* CustomActivityIndicator.m */; };
 		73F1F6B51B7B71D500A20685 /* l_icon1.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73F1F6AD1B7B71A400A20685 /* l_icon1.png */; };
 		73F1F6B61B7B71D500A20685 /* l_icon2.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73F1F6AE1B7B71A400A20685 /* l_icon2.png */; };
@@ -153,6 +154,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				73C76E011B986595008A3F8D /* PayUConstant.h in CopyFiles */,
 				73F1F6BB1B7B720400A20685 /* CustomActivityIndicator.xib in CopyFiles */,
 				73F1F6B51B7B71D500A20685 /* l_icon1.png in CopyFiles */,
 				73F1F6B61B7B71D500A20685 /* l_icon2.png in CopyFiles */,

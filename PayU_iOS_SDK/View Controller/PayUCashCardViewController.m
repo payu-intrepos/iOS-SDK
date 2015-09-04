@@ -66,6 +66,7 @@
 }
 
 -(IBAction) selectCashCard :(UIButton *)sender{
+    _payNow.hidden = YES;
     
     if(nil == _listOfBank){
         _listOfBank = [[UITableView alloc] initWithFrame:CGRectMake(sender.frame.origin.x, sender.frame.origin.y, sender.frame.size.width, sender.frame.size.height*4) style:UITableViewStylePlain];

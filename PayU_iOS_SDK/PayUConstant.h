@@ -32,7 +32,7 @@
 #define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION  @"https://info.payu.in/merchant/postservice.php?form=2"
 
 // 0 if pointing to payu production server, 1 for test server
-#define TEST_SERVER 1
+#define TEST_SERVER 0
 
 #if  TEST_SERVER
 #define PAYU_PAYMENT_BASE_URL                          PAYU_PAYMENT_BASE_URL_TEST
