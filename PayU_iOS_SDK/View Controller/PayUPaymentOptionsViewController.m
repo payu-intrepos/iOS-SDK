@@ -76,7 +76,7 @@ typedef enum : NSUInteger {
 
     _activityIndicator.hidden = NO;
     [_activityIndicator startAnimating];
-    
+    [self.view bringSubviewToFront:_activityIndicator];
     //setting up all required params and hash for future use in Singleton class.
     SharedDataManager *dataManager = [SharedDataManager sharedDataManager];
     dataManager.allInfoDict = [self createDictionaryWithAllParam];
