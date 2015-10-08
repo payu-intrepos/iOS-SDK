@@ -12,6 +12,7 @@
 #import "PayUPaymentResultViewController.h"
 #import "Utils.h"
 #import "PayUCardProcessViewController.h"
+#import "WKPayUPaymentResultViewController.h"
 
 #define PG_TYPE @"CASH"
 
@@ -289,25 +290,24 @@
     //set post data of request
     [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
     
-    PayUPaymentResultViewController *resultViewController = [[PayUPaymentResultViewController alloc] initWithNibName:@"PayUPaymentResultViewController" bundle:nil];
-    resultViewController.request = theRequest;
+    if(IS_WKWEBVIEW && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
+    {
+        WKPayUPaymentResultViewController *resultViewController = [[WKPayUPaymentResultViewController alloc] initWithNibName:@"WKPayUPaymentResultViewController" bundle:nil];
+        resultViewController.urlString = PAYU_PAYMENT_BASE_URL;
+        resultViewController.postData = postData;
+        [self.navigationController pushViewController:resultViewController animated:YES];
+    }
+    else
+    {
+        PayUPaymentResultViewController *resultViewController = [[PayUPaymentResultViewController alloc] initWithNibName:@"PayUPaymentResultViewController" bundle:nil];
+        resultViewController.request = theRequest;
+        [self.navigationController pushViewController:resultViewController animated:YES];
+    }
+    
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
-        CGSize result = [[UIScreen mainScreen] bounds].size;
-        if(result.height == IPHONE_3_5)
-        {
-            resultViewController.flag = YES;
-            
-        }
-        else{
-            resultViewController.flag = NO;
-        }
-        
-        
         _payNow.hidden=YES;
-
     }
-   [self.navigationController pushViewController:resultViewController animated:YES];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

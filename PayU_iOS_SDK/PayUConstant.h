@@ -31,6 +31,12 @@
 #define PAYU_PAYMENT_BASE_URL_PRODUCTION @"https://secure.payu.in/_payment"
 #define PAYU_PAYMENT_ALL_AVAILABLE_PAYMENT_OPTION_PRODUCTION  @"https://info.payu.in/merchant/postservice.php?form=2"
 
+// 0 for UIWebView, 1 for WKWebView
+#define IS_WKWEBVIEW 0
+
+// 0 for Test server, 1 for MobileTest server and 2 for Production server
+#define CB_SERVER_ID 2
+
 // 0 if pointing to payu production server, 1 for test server
 #define TEST_SERVER 0
 
@@ -49,6 +55,7 @@
  */
 
 #define HASH_KEY_GENERATION_FROM_SERVER 1
+
 
 
 // Different Hash KEYS

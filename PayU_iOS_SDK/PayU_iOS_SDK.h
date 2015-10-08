@@ -11,10 +11,6 @@
 //Model Classes
 #import "PayUPaymentOptionsViewController.h"
 #import "PayUConstant.h"
-#import "PayUConnectionHandlerController.h"
-#import "PayUPaymentResultViewController.h"
 
-
-//  SDK_VERSION_NAME    2.2.2
-//  Features            Minor Fixes
-//                      Implemented SURL & FURL data
+//  SDK_VERSION_NAME    2.2.4
+//  Features            CB enabled

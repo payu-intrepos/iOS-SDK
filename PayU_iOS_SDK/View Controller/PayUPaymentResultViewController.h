@@ -19,10 +19,8 @@
 @interface PayUPaymentResultViewController : UIViewController //<JSCallBackToObjC>
 
 @property (nonatomic,strong) NSURLRequest *request;
-@property (assign, nonatomic) BOOL flag;
-@property (assign, nonatomic) BOOL isBackOrDoneNeeded;
-
--(void) loadJavascript;
-
+//@property (assign, nonatomic) BOOL flag;
+//@property (assign, nonatomic) BOOL isBackOrDoneNeeded;
+//-(void) loadJavascript;
 
 @end

@@ -17,6 +17,7 @@
 #import "Utils.h"
 #import "PayUCashCardViewController.h"
 #import "PayUConnectionHandlerController.h"
+#import "WKPayUPaymentResultViewController.h"
 
 #define CASH_CARD               @"cashcard"
 
@@ -289,25 +290,22 @@ typedef enum : NSUInteger {
 - (void) payWithPayUMoney{
     
     PayUConnectionHandlerController *connectionHandler = [[PayUConnectionHandlerController alloc] init:nil];
+    NSURLRequest *theRequest = [connectionHandler URLRequestForPayWithPayUMoney];
+    NSString *postData = [[NSString alloc] initWithData:theRequest.HTTPBody encoding:NSUTF8StringEncoding];
     
-    PayUPaymentResultViewController *resultViewController = [[PayUPaymentResultViewController alloc] initWithNibName:@"PayUPaymentResultViewController" bundle:nil];
-    resultViewController.request = [connectionHandler URLRequestForPayWithPayUMoney];;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    if(IS_WKWEBVIEW && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
     {
-        CGSize result = [[UIScreen mainScreen] bounds].size;
-        if(result.height == IPHONE_3_5)
-        {
-            resultViewController.flag = YES;
-            
-        }
-        else{
-            resultViewController.flag = NO;
-        }
-        
+        WKPayUPaymentResultViewController *resultViewController = [[WKPayUPaymentResultViewController alloc] initWithNibName:@"WKPayUPaymentResultViewController" bundle:nil];
+        resultViewController.urlString = PAYU_PAYMENT_BASE_URL;
+        resultViewController.postData = postData;
+        [self.navigationController pushViewController:resultViewController animated:YES];
     }
-    
-    [self.navigationController pushViewController:resultViewController animated:YES];
-
+    else
+    {
+        PayUPaymentResultViewController *resultViewController = [[PayUPaymentResultViewController alloc] initWithNibName:@"PayUPaymentResultViewController" bundle:nil];
+        resultViewController.request = theRequest;
+        [self.navigationController pushViewController:resultViewController animated:YES];
+    }
 }
 
 -(NSDictionary *) createDictionaryWithAllParam{

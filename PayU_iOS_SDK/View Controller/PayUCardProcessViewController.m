@@ -12,6 +12,7 @@
 #import "SharedDataManager.h"
 #import "Utils.h"
 #import "PayUPaymentResultViewController.h"
+#import "WKPayUPaymentResultViewController.h"
 
 
 #define DEBIT_CARD   @"Enter your card details"
@@ -393,23 +394,20 @@
     //set post data of request
     [theRequest setHTTPBody:[postData dataUsingEncoding:NSUTF8StringEncoding]];
     
-    PayUPaymentResultViewController *resultViewController = [[PayUPaymentResultViewController alloc] initWithNibName:@"PayUPaymentResultViewController" bundle:nil];
-    resultViewController.request = theRequest;
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    if(IS_WKWEBVIEW && SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0"))
     {
-        CGSize result = [[UIScreen mainScreen] bounds].size;
-        if(result.height == IPHONE_3_5)
-        {
-            resultViewController.flag = YES;
-            
-        }
-        else{
-            resultViewController.flag = NO;
-        }
-        
+        WKPayUPaymentResultViewController *resultViewController = [[WKPayUPaymentResultViewController alloc] initWithNibName:@"WKPayUPaymentResultViewController" bundle:nil];
+        resultViewController.urlString = PAYU_PAYMENT_BASE_URL;
+        resultViewController.postData = postData;
+        [self.navigationController pushViewController:resultViewController animated:YES];
     }
-    
-    [self.navigationController pushViewController:resultViewController animated:YES];
+    else
+    {
+        PayUPaymentResultViewController *resultViewController = [[PayUPaymentResultViewController alloc] initWithNibName:@"PayUPaymentResultViewController" bundle:nil];
+        resultViewController.request = theRequest;
+        [self.navigationController pushViewController:resultViewController animated:YES];
+    }
+
 }
 
 - (void) checkOfferKey:(NSString *) cardNumber{
@@ -717,8 +715,8 @@
 
     if(result.height == IPHONE_3_5)
     {
-        checkBoxFrame = CGRectMake(8, 174+40, 18, 18);
-        lblBoxFrame   = CGRectMake(8+18+5, 174+40, 120, 18);
+        checkBoxFrame = CGRectMake(8, 174+30, 18, 18);
+        lblBoxFrame   = CGRectMake(8+18+5, 174+30, 120, 18);
     }
     else
     {
