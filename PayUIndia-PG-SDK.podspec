@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
   s.source_files        = "PayU_iOS_CoreSDK/*.{h,plist}"
   s.public_header_files = "PayU_iOS_CoreSDK/*.{h}"
   s.preserve_paths      = "*.a"
+  s.resources           = "PayU_iOS_CoreSDK/Assets/*.plist"
   s.vendored_libraries  = "libPayU_iOS_CoreSDK.a"
 
   #Run time config
