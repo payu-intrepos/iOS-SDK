@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                = "PayUIndia-PG-SDK"
-  s.version             = "3.7.2.1"
+  s.version             = "3.7.2.2"
   s.license             = "MIT"
   s.homepage            = "https://github.com/payu-intrepos/iOS-SDK"
   s.author              = { "PayUbiz" => "contact@payu.in"  }
@@ -12,10 +12,10 @@ Pod::Spec.new do |s|
                             :branch => "temp/podspec_testing" }
   s.documentation_url   = "https://github.com/payu-intrepos/Documentations/wiki/8.-iOS-SDK-integration"
   s.platform            = :ios , "6.0"
-  s.source_files        = "PayU_iOS_CoreSDK/*.{h,plist}"
-  s.public_header_files = "PayU_iOS_CoreSDK/*.{h}"
+  s.source_files        = "PayU_iOS_CoreSDK/*.h"
+  s.public_header_files = "PayU_iOS_CoreSDK/*.h"
   s.preserve_paths      = "*.a"
-  s.resources           = "PayU_iOS_CoreSDK/Assets/*"
+  s.resources           = "PayU_iOS_CoreSDK/*.plist"
   s.vendored_libraries  = "libPayU_iOS_CoreSDK.a"
 
   #Run time config
