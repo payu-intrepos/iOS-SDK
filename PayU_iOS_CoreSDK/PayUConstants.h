@@ -302,6 +302,7 @@
 #define     KEY_IS_EXPIRED                                      @"is_expired"
 #define     KEY_ISSUINGBANK                                     @"issuingBank"
 #define     KEY_NAME_ON_CARD                                    @"name_on_card"
+#define     DUPLICATE_CARD_COUNT                                @"duplicate_cards_count"
 
 // OfferStatus parsing elements
 #define     KEY_CATEGORY                                        @"category"

@@ -110,4 +110,7 @@
 @property (strong, nonatomic) NSString *startTime;
 @property (strong, nonatomic) NSString *endTime;
 
+//This param is for SaveuserCard API
+@property (strong, nonatomic) NSString *duplicateCheck;
+@property (strong, nonatomic) NSString *encryptionData;
 @end

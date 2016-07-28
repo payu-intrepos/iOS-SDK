@@ -27,6 +27,7 @@
 @property (nonatomic, strong) NSString * isExpired;
 @property (nonatomic, strong) NSString * issuingBank;
 @property (nonatomic, strong) NSString * nameOnCard;
+@property (nonatomic, strong) NSString * duplicateCardCount;
 
 /*!
  * This method returns storedCard dictionary.
