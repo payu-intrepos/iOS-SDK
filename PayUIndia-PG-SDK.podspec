@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.description         = "iOS PG SDK provides easy payment flow."
 
   s.source              = { :git => "https://github.com/payu-intrepos/iOS-SDK.git", 
-                            :branch => "temp/podspec_testing" }
+                            :tag => "v3.7.3" }
   s.documentation_url   = "https://github.com/payu-intrepos/Documentations/wiki/8.-iOS-SDK-integration"
   s.platform            = :ios , "6.0"
   s.source_files        = "PayU_iOS_CoreSDK/*.h"
