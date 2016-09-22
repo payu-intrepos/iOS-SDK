@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                = "PayUIndia-PG-SDK"
-  s.version             = "3.7.3"
+  s.version             = "3.7.4"
   s.license             = "MIT"
   s.homepage            = "https://github.com/payu-intrepos/iOS-SDK"
   s.author              = { "PayUbiz" => "contact@payu.in"  }
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.description         = "iOS PG SDK provides easy payment flow."
 
   s.source              = { :git => "https://github.com/payu-intrepos/iOS-SDK.git", 
-                            :tag => "v3.7.3" }
+                            :tag => "v3.7.4" }
   s.documentation_url   = "https://github.com/payu-intrepos/Documentations/wiki/8.-iOS-SDK-integration"
   s.platform            = :ios , "6.0"
   s.source_files        = "PayU_iOS_CoreSDK/*.h"
