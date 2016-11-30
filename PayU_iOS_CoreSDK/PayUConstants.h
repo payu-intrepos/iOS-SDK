@@ -145,6 +145,9 @@
 
 #define ERROR_MEMORY_ISSUE                                      @"Memory Issue"
 
+#define ERROR_SUBVENTION_AMOUNT_IS_MISSING                      @"Subvention Amount is missing, "
+#define ERROR_SUBVENTION_AMOUNT_IS_NONNUMERIC                   @"Subvention Amount should be a Double value example 5.00, "
+#define ERROR_SUBVENTION_AMOUNT_GREATER_THAN_AMOUNT             @"Subvention Amount should be less than or equal to the transaction amount, "
 //#define ERROR_FREE                                            @"Error free"
 
 
@@ -246,6 +249,9 @@
 #define     PARAM_SHIPPING_PHONE                                @"shipping_phone"
 #define     PARAM_OFFER_KEY                                     @"offer_key"
 #define     PARAM_USER_CREDENTIALS                              @"user_credentials"
+#define     PARAM_SUBVENTION_AMOUNT                             @"subvention_amount"
+#define     PARAM_SUBVENTION_ELIGIBILITY                        @"subvention_eligibility"
+#define     PARAM_IS_SUBVENT                                    @"is_subvent"
 
 #define     PARAM_DEVICE_TYPE                                   @"device_type"
 #define     PARAM_INSTRUMENT_TYPE                               @"instrument_type"
@@ -276,6 +282,7 @@
 #define     KEY_DEBITCARD                                       @"debitcard"
 #define     KEY_CREDITCARD                                      @"creditcard"
 #define     KEY_PAISAWALLET                                     @"paisawallet"
+#define     KEY_NO_COST_EMI                                     @"no_cost_emi"
 //NetBanking parsing elements
 #define     KEY_BANK_ID                                         @"bank_id"
 #define     KEY_PGID                                            @"pgId"
@@ -285,6 +292,7 @@
 
 //EMI parsing elements
 #define     KEY_BANK                                            @"bank"
+#define     KEY_MIN_AMOUNT                                      @"min_amount"
 
 //Stored Card parsing elements
 #define     KEY_USER_CARDS                                      @"user_cards"
@@ -369,6 +377,7 @@
 #define     PAYMENT_PG_NET_BANKING                              @"Net Banking"
 #define     PAYMENT_PG_CASHCARD                                 @"Cash Card"
 #define     PAYMENT_PG_EMI                                      @"EMI"
+#define     PAYMENT_PG_NO_COST_EMI                              @"No Cost EMI"
 #define     PAYMENT_PG_PAYU_MONEY                               @"PayU Money"
 
 
@@ -414,7 +423,7 @@
 #define     KEY_PAYMENT_GATEWAY                                 @"payment_gateway"
 #define     KEY_PG_MID                                          @"pg_mid"
 #define     KEY_TRANSACTION_FEE                                 @"transaction_fee"
-
+#define     KEY_MERCHANT_SUBVENTION_AMOUNT                      @"merchant_subvention_amount"
 // SaveUserCard & EditUserCard API parsing elements
 #define     KEY_CARDTOKEN                                       @"cardToken"
 #define     KEY_CARD_LABEL                                      @"card_label"

@@ -40,6 +40,7 @@
 @property (nonatomic, strong) NSString * Udf4;
 @property (nonatomic, strong) NSString * Udf5;
 @property (nonatomic, strong) NSString * UnmappedStatus;
+@property (strong, nonatomic) NSString * merchantSubventionAmount;
 
 +(NSDictionary *) prepareDictFromVerifyPaymentAPI:(id)JSON;
 

@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSArray *netBankingArray;
 @property (nonatomic, strong) NSArray *cashCardArray;
 @property (nonatomic, strong) NSArray *EMIArray;
+@property (nonatomic, strong) NSArray *NoCostEMIArray;
 
 @property (nonatomic, strong) NSMutableArray *availablePaymentOptionsArray;
 

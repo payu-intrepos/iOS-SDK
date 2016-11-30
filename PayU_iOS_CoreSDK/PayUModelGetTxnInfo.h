@@ -46,6 +46,7 @@
 @property (strong, nonatomic) NSString * transactionFee;
 @property (strong, nonatomic) NSString * txnID;
 @property (strong, nonatomic) NSString * udf1;
+@property (strong, nonatomic) NSString * merchantSubventionAmount;
 
 @end
 

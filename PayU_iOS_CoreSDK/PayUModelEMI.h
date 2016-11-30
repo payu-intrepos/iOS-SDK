@@ -20,6 +20,7 @@
 @property (strong, nonatomic) NSString * showForm;
 @property (strong, nonatomic) NSString * emiTitle;
 @property (strong, nonatomic) NSString * bankCode;
+@property (strong, nonatomic) NSString * minAmount;
 
 /*!
  * This method returns model objects array.
@@ -27,5 +28,18 @@
  * @param  [Json]      [NSDictionary type]
  */
 + (NSArray *)prepareEMIArrayFromDict:(id)JSON;
+
+
+/*!
+ * This method returns model objects of No cost EMI.
+ * @return [obj array] [NSArray type]
+ * @param  [Json]      [NSDictionary type]
+ */
++ (NSArray *)prepareNoCostEMIArrayFromDict:(id)JSON;
+
+
++ (NSDictionary *)getEMIDictFromEMIModelArray:(NSArray *)emiArray;
+
++ (NSDictionary *)getEligibleNoCostEMIDictFromEMIModelArray:(NSArray *)emiArray WRTToAmount:(NSString *) amount;
 
 @end

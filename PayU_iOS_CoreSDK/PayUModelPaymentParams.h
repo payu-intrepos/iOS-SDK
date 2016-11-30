@@ -113,4 +113,9 @@
 //This param is for SaveuserCard API
 @property (strong, nonatomic) NSString *duplicateCheck;
 @property (strong, nonatomic) NSString *encryptionData;
+
+//This param is used while doing payment via subvention mode of EMI
+@property (strong, nonatomic) NSString *subventionAmount;
+@property (strong, nonatomic) NSString *subventionEligibility;
+
 @end
