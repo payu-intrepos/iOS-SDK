@@ -129,4 +129,6 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 +(BOOL)isKindOfNSDictionary:(id) dict;
 
++(NSString *)encodeURLString:(NSString *) urlString;
+
 @end

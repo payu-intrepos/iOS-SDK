@@ -118,4 +118,7 @@
 @property (strong, nonatomic) NSString *subventionAmount;
 @property (strong, nonatomic) NSString *subventionEligibility;
 
+//This param is for LazyPay
+@property (strong, nonatomic) NSString *notifyURL;
+
 @end

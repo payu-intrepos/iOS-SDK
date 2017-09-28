@@ -252,6 +252,7 @@
 #define     PARAM_SUBVENTION_AMOUNT                             @"subvention_amount"
 #define     PARAM_SUBVENTION_ELIGIBILITY                        @"subvention_eligibility"
 #define     PARAM_IS_SUBVENT                                    @"is_subvent"
+#define     PARAM_NOTIFYURL                                     @"notifyurl"
 
 #define     PARAM_DEVICE_TYPE                                   @"device_type"
 #define     PARAM_INSTRUMENT_TYPE                               @"instrument_type"
@@ -282,6 +283,7 @@
 #define     KEY_DEBITCARD                                       @"debitcard"
 #define     KEY_CREDITCARD                                      @"creditcard"
 #define     KEY_PAISAWALLET                                     @"paisawallet"
+#define     KEY_LAZYPAY                                         @"lazypay"
 #define     KEY_NO_COST_EMI                                     @"no_cost_emi"
 //NetBanking parsing elements
 #define     KEY_BANK_ID                                         @"bank_id"
@@ -379,7 +381,7 @@
 #define     PAYMENT_PG_EMI                                      @"EMI"
 #define     PAYMENT_PG_NO_COST_EMI                              @"No Cost EMI"
 #define     PAYMENT_PG_PAYU_MONEY                               @"PayU Money"
-
+#define     PAYMENT_PG_LAZYPAY                                  @"LazyPay"
 
 // PG Type
 

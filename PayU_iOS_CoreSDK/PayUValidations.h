@@ -308,4 +308,5 @@
 
 -(NSString *)validateCardNumberForCheckIsDomestic:(NSString *) cardNumber;
 
+-(NSString *)validateLazyPayParams:(PayUModelPaymentParams *) paymentParam;
 @end
