@@ -11,6 +11,7 @@
  */
 #import <Foundation/Foundation.h>
 #import "PayUConstants.h"
+#import "PayUModelPaymentParams.h"
 
 @interface PayUUtils : NSObject
 
@@ -22,14 +23,18 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
  * @param  [paramURL]  [NSUrl type]
  * @return [request]   [NSMutableURLRequest type]
  */
--(NSMutableURLRequest *)getURLRequestWithPostParam:(NSString *) postParam withURL:(NSURL *) paramURL;
+-(NSMutableURLRequest *)getURLRequestWithPostParam:(NSString *) postParam
+                                           withURL:(NSURL *) paramURL
+                                   httpHeaderField:(NSDictionary *) headerFields
+                                        httpMethod:(NSString*)httpMethod;
 
 /*!
  * This method gives response callback to block that is passed to it .
  * @param [webServiceRequest] [NSMutableURLRequest type]
  * @param [block]
  */
--(void)getWebServiceResponse:(NSMutableURLRequest *) webServiceRequest withCompletionBlock:(completionBlockForWebServiceResponse) completionBlock;
+-(void)getWebServiceResponse:(NSMutableURLRequest *) webServiceRequest
+         withCompletionBlock:(completionBlockForWebServiceResponse) completionBlock;
 
 /*!
  * This method is used to store TransactionId to NSUserDefaults.
@@ -130,5 +135,9 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 +(BOOL)isKindOfNSDictionary:(id) dict;
 
 +(NSString *)encodeURLString:(NSString *) urlString;
+
++(NSMutableDictionary *)getHTTPHeaderFieldsForV2:(PayUModelPaymentParams *) postParamModel;
+
++(NSString *)getStringifyDict:(NSDictionary *) dict;
 
 @end

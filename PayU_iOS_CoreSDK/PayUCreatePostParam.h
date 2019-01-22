@@ -11,10 +11,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "PayUConstants.h"
 #import "PayUModelPaymentParams.h"
-#import "PayUFileManager.h"
-
 
 @interface PayUCreatePostParam : NSObject
 
@@ -28,5 +25,7 @@
  * @see    [getCardName]
  */
 -(NSString *)createPostParam:(PayUModelPaymentParams *) paramPaymentParam withType:(NSString *) type;
+
++ (NSString *)getV2PostParamForDeleteSC:(PayUModelPaymentParams *) paramPaymentParam;
 
 @end

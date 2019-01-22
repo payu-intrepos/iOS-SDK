@@ -15,8 +15,10 @@
 #import "PayUModelOfferStatus.h"
 #import "PayUModelOfferDetails.h"
 #import "PayUModelEMIDetails.h"
+#import "PayUModelUPI.h"
 #import "PayUModelCheckIsDomestic.h"
 #import "PayUModelGetTxnInfo.h"
+#import "PayUConstants.h"
 
 @interface PayUJSONParser : NSObject
 
@@ -52,18 +54,25 @@ typedef void (^completionBlockForJSONParserForSaveUserCard)(PayUModelStoredCard 
  * @param [JSON] [id - object returned from "JSONObjectWithData" method of NSJSONSerialization]
  * @param [block]
  */
--(void)JSONParserforPaymentRelatedDetailForMobileSDK:(id) JSON andOneTapTokenDictionary:(NSDictionary *) OneTapTokenDictionary withCompletionBlock:(completionBlockForJSONParserforPaymentRelatedDetailForMobileSDK) paramCompletionBlock;
+-(void)JSONParserforPaymentRelatedDetailForMobileSDK:(id) JSON
+                            andOneTapTokenDictionary:(NSDictionary *) oneTapTokenDictionary
+                                          apiVersion:(PayUAPIVersion) apiVersion
+                                 withCompletionBlock:(completionBlockForJSONParserforPaymentRelatedDetailForMobileSDK) paramCompletionBlock;
 
 /*!
  * This method parse the JSON for deleteStoredCard.
  * @param [JSON] [id - object returned from "JSONObjectWithData" method of NSJSONSerialization]
  * @param [block]
  */
--(void)JSONParserForDeleteStoredCard:(id) JSON withCompletionBlock:(completionBlockForJSONParserForDeleteStoredCard) paramCompletionBlock;
+-(void)JSONParserForDeleteStoredCard:(id) JSON
+                          apiVersion:(PayUAPIVersion) apiVersion
+                 withCompletionBlock:(completionBlockForJSONParserForDeleteStoredCard) paramCompletionBlock;
 
 -(void)JSONParserForGetEMIAmountAccordingToInterest:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGetEMIAmountAccordingToInterest) paramCompletionBlock;
 
--(void)JSONParserForGetUserCards:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGetUserCards) paramCompletionBlock;
+-(void)JSONParserForGetUserCards:(id) JSON
+                      apiVersion:(PayUAPIVersion) apiVersion
+             withCompletionBlock:(completionBlockForJSONParserForGetUserCards) paramCompletionBlock;
 
 -(void)JSONParserForVerifyPayment:(id) JSON withCompletionBlock:(completionBlockForJSONParserForVerifyPayment) paramCompletionBlock;
 

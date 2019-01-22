@@ -36,6 +36,7 @@ typedef void (^completionBlockForGetVASStatusForCardBinOrBankCode)(id ResponseMe
 typedef void (^completionBlockForGetEMIAmountAccordingToInterest)(NSDictionary *dictEMIDetails ,NSString *errorMessage, id extraParam);
 
 typedef void (^completionBlockForGetUserCards)(NSDictionary *dictStoredCard ,NSString *errorMessage, id extraParam);
+
 typedef void (^completionBlockForVerifyPayment)(NSDictionary *dictVerifyPayment ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForDeleteOneTapToken)(NSString *deleteOneTapTokenMsg ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForCheckIsDomestic)(PayUModelCheckIsDomestic *checkIsDomestic , NSString *errorMessage, id extraParam);
@@ -50,7 +51,8 @@ typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCar
  * @see   [getWebServiceResponse - PayUUtils]
  * @see   [JSONParserforPaymentRelatedDetailForMobileSDK - PayUJSONParser]
  */
--(void)getPayUPaymentRelatedDetailForMobileSDK:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForPayUPaymentRelatedDetail) paramCompletionBlock;
+-(void)getPayUPaymentRelatedDetailForMobileSDK:(PayUModelPaymentParams *) paymentParam
+                           withCompletionBlock:(completionBlockForPayUPaymentRelatedDetail) paramCompletionBlock;
 
 /*!
  * This method gives webService response callback for OfferStatus.

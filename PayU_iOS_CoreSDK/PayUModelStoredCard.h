@@ -28,6 +28,8 @@
 @property (nonatomic, strong) NSString * issuingBank;
 @property (nonatomic, strong) NSString * nameOnCard;
 @property (nonatomic, strong) NSString * duplicateCardCount;
+@property (nonatomic, strong) NSString * userCredential;
+
 
 /*!
  * This method returns storedCard dictionary.
@@ -46,6 +48,8 @@
 
 
 +(NSDictionary *)prepareStoredCardDictFromGetUserCardResponse:(id)JSON;
+
++(NSDictionary *)prepareStoredCardDictFromGetUserCardResponseForV2:(id)JSON;
 
 +(instancetype)prepareStoredCardForEditSaveUserCardFromJSON:(NSDictionary *)JSON;
 

@@ -10,15 +10,12 @@
  * This class declares the properties that holds NetBanking information.
  */
 #import <Foundation/Foundation.h>
+#import "PayUConstants.h"
+#import "PayUBasePaymentModel.h"
 
-@interface PayUModelNetBanking : NSObject
+@interface PayUModelNetBanking : PayUBasePaymentModel
 
-@property (strong, nonatomic) NSString * bankID;
-@property (strong, nonatomic) NSString * pgID;
-@property (strong, nonatomic) NSString * ptPriority;
-@property (strong, nonatomic) NSString * showForm;
 @property (strong, nonatomic) NSString * netBankingTitle;
-@property (strong, nonatomic) NSString * bankCode;
 
 /*!
  * This method returns model objects array.
