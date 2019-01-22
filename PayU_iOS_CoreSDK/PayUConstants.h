@@ -10,29 +10,28 @@
 #define PayUConstants_h
 
 //Device Analytics constants
-#define DEVICE_ANALYTICS @"DeviceAnalytics"
-#define ANALYTICS_TIMEOUT_INTERVAL 5
-//#define KEY_DADATA_SENT @"deviceAnalyticsDataSent"
-#define DA_URL_PATH @"mobileWebService.php"
-#define iOS_MANUFACTURER         @"apple"
+#define DEVICE_ANALYTICS                                        @"DeviceAnalytics"
+#define ANALYTICS_TIMEOUT_INTERVAL                              5
+#define DA_URL_PATH                                             @"mobileWebService.php"
+#define iOS_MANUFACTURER                                        @"apple"
 
 //Device Analytics Keys
-#define KEY_SDK_VERSION_NAME @"sdk_version"
-#define KEY_CB_VERSION_NAME @"cb_version"
-#define KEY_IOS_VERSION @"os_version"
-#define KEY_NETWORK_INFO @"network_info"
-#define KEY_NETWORK_STRENGTH @"network_strength"
-#define KEY_DEVICE_RESOLUTION @"resolution"
-#define KEY_DEVICE_MANUFACTURER @"device_manufacturer"
-#define KEY_DEVICE_MODEL @"device_model"
-#define KEY_MERCHANT_ID @"merchant_key"
-#define KEY_TXNID @"txnid"
+#define KEY_SDK_VERSION_NAME                                    @"sdk_version"
+#define KEY_CB_VERSION_NAME                                     @"cb_version"
+#define KEY_IOS_VERSION                                         @"os_version"
+#define KEY_NETWORK_INFO                                        @"network_info"
+#define KEY_NETWORK_STRENGTH                                    @"network_strength"
+#define KEY_DEVICE_RESOLUTION                                   @"resolution"
+#define KEY_DEVICE_MANUFACTURER                                 @"device_manufacturer"
+#define KEY_DEVICE_MODEL                                        @"device_model"
+#define KEY_MERCHANT_ID                                         @"merchant_key"
+#define KEY_TXNID                                               @"txnid"
 
-#define ANALYTICS_PRODUCTION_URL                @"https://info.payu.in/merchant/"
-#define ANALYTICS_MOBILE_DEV_URL                @"https://mobiledev.payu.in/merchant/"
-#define ANALYTICS_MOBILE_TEST_URL               @"https://mobiletest.payu.in/merchant/"
-#define ANALYTICS_DEMOTEST_URL                  @"https://demotest.payu.in/merchant/"
-#define ANALYTICS_TEST_URL                      @"https://test.payu.in/merchant/"
+#define ANALYTICS_PRODUCTION_URL                                @"https://info.payu.in/merchant/"
+#define ANALYTICS_MOBILE_DEV_URL                                @"https://mobiledev.payu.in/merchant/"
+#define ANALYTICS_MOBILE_TEST_URL                               @"https://mobiletest.payu.in/merchant/"
+#define ANALYTICS_DEMOTEST_URL                                  @"https://demotest.payu.in/merchant/"
+#define ANALYTICS_TEST_URL                                      @"https://test.payu.in/merchant/"
 
 #define PAYU_PAYMENT_PRODUCTION_URL                             @"https://secure.payu.in/_payment"
 #define PAYU_PAYMENT_MOBILETEST_URL                             @"https://mobiletest.payu.in/_payment"
@@ -40,13 +39,13 @@
 #define PAYU_PAYMENT_DEMOTEST_URL                               @"https://demotest.payu.in/_payment"
 #define PAYU_PAYMENT_TEST_URL                                   @"https://test.payu.in/_payment"
 
-
 #define PAYU_WEBSERVICE_PRODUCTION_URL                          @"https://info.payu.in/merchant/postservice.php?form=2"
 #define PAYU_WEBSERVICE_MOBILETEST_URL                          @"https://mobiletest.payu.in/merchant/postservice?form=2"
 #define PAYU_WEBSERVICE_MOBILEDEV_URL                           @"https://mobiledev.payu.in/merchant/postservice?form=2"
 #define PAYU_WEBSERVICE_DEMOTEST_URL                            @"https://demotest.payu.in/merchant/postservice?form=2"
 #define PAYU_WEBSERVICE_TEST_URL                                @"https://test.payu.in/merchant/postservice?form=2"
-
+#define PAYU_WEBSERVICE_V2_PRODUCTION_URL                       @"https://api.payu.in"
+#define PAYU_WEBSERVICE_V2_SANDBOX_URL                          @"https://sandbox.payu.in"
 
 #define ENVIRONMENT_PRODUCTION                                  @"Production"
 #define ENVIRONMENT_MOBILETEST                                  @"MobileTest"
@@ -148,12 +147,14 @@
 #define ERROR_SUBVENTION_AMOUNT_IS_MISSING                      @"Subvention Amount is missing, "
 #define ERROR_SUBVENTION_AMOUNT_IS_NONNUMERIC                   @"Subvention Amount should be a Double value example 5.00, "
 #define ERROR_SUBVENTION_AMOUNT_GREATER_THAN_AMOUNT             @"Subvention Amount should be less than or equal to the transaction amount, "
+#define ERROR_INVALID_VPA                                       @"Invalid VPA, "
 //#define ERROR_FREE                                            @"Error free"
 
 
 // Regex
 
 #define EMAIL_REGEX                                             @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+#define VPA_REGEX                                               @".+@.+"
 
 
 // Payment Type
@@ -182,6 +183,20 @@
 #define COMMAND_DELETE_ONE_TAP_TOKEN                            @"delete_one_tap_token"
 #define COMMAND_CHECK_IS_DOMESTIC                               @"check_isDomestic"
 #define COMMAND_GET_TRANSACTION_INFO                            @"get_transaction_info"
+
+// Endpoints for webservice
+
+#define PAYMENTS                                                @"/payments"
+#define PAYMENT_METHODS                                         @"/paymentmethods"
+#define SELLERS                                                 @"/sellers"
+#define STORECARDS                                              @"/storecards"
+#define URL_EMIS                                                @"/paymentmethods/emis/amounttable"
+
+
+// HTTP MEthods
+#define HTTP_METHOD_GET                                         @"GET"
+#define HTTP_METHOD_POST                                        @"POST"
+#define HTTP_METHOD_DELETE                                      @"DELETE"
 
 
 #define     PARAM_COMMAND                                       @"command"
@@ -213,8 +228,11 @@
 #define     PARAM_TXNID                                         @"txnid"
 #define     PARAM_AMOUNT                                        @"amount"
 #define     PARAM_PRODUCT_INFO                                  @"productinfo"
+#define     PARAM_PRODUCT_INFO_V2                               @"productInfo"
 #define     PARAM_FIRST_NAME                                    @"firstname"
+#define     PARAM_FIRST_NAME_V2                                 @"firstName"
 #define     PARAM_LAST_NAME                                     @"lastname"
+#define     PARAM_LAST_NAME_V2                                  @"lastName"
 #define     PARAM_EMAIL                                         @"email"
 #define     PARAM_PHONE                                         @"phone"
 #define     PARAM_ADDRESS_1                                     @"address1"
@@ -223,6 +241,7 @@
 #define     PARAM_STATE                                         @"state"
 #define     PARAM_COUNTRY                                       @"country"
 #define     PARAM_ZIPCODE                                       @"zipcode"
+#define     PARAM_ZIPCODE_V2                                    @"zipCode"
 #define     PARAM_UDF_1                                         @"udf1"
 #define     PARAM_UDF_2                                         @"udf2"
 #define     PARAM_UDF_3                                         @"udf3"
@@ -234,10 +253,10 @@
 #define     PARAM_HASH                                          @"hash"
 #define     PARAM_CODURL                                        @"codurl"
 #define     PARAM_DROP_CATEGORY                                 @"drop_category"
+#define     PARAM_DROP_CATEGORY_V2                              @"dropCategory"
 #define     PARAM_ENFORCE_PAY_METHOD                            @"enforce_paymethod"
 #define     PARAM_CUSTOM_NOTE                                   @"custom_note"
 #define     PARAM_NOTE_CATEGORY                                 @"note_category"
-#define     PARAM_API_VERSION                                   @"api_version"
 #define     PARAM_SHIPPING_FIRSTNAME                            @"shipping_firstname"
 #define     PARAM_SHIPPING_LASTNAME                             @"shipping_lastname"
 #define     PARAM_SHIPPING_ADDRESS_1                            @"shipping_address1"
@@ -264,6 +283,8 @@
 
 #define     PARAM_PG                                            @"pg"
 #define     PARAM_BANK_CODE                                     @"bankcode"
+#define     PARAM_BANK_CODE_V2                                  @"bankCode"
+#define     PARAM_NAME                                          @"name"
 
 #define     PARAM_CCNUM                                         @"ccnum"
 #define     PARAM_CCNAME                                        @"ccname"
@@ -273,21 +294,27 @@
 #define     PARAM_STORE_CARD                                    @"store_card"
 #define     PARAM_STORE_CARD_NAME                               @"card_name"
 #define     PARAM_BANK_CODE_CCDC                                @"CC"
+#define     PARAM_BANK_CODE_UPI                                 @"UPI"
 #define     PARAM_ONE_CLICK_CHECKOUT                            @"one_click_checkout"
 #define     PARAM_CARD_MERCHANT_PARAM                           @"card_merchant_param"
 #define     KEY_IBIBOCODES                                      @"ibiboCodes"
 #define     KEY_USERCARDS                                       @"userCards"
 #define     KEY_NETBANKING                                      @"netbanking"
+#define     KEY_NETBANKING_V2                                   @"NetBanking"
 #define     KEY_CASHCARD                                        @"cashcard"
+#define     KEY_CASHCARD_V2                                     @"CashCard"
 #define     KEY_EMI                                             @"emi"
 #define     KEY_DEBITCARD                                       @"debitcard"
 #define     KEY_CREDITCARD                                      @"creditcard"
+#define     KEY_CREDITCARD_V2                                   @"CreditCard"
 #define     KEY_PAISAWALLET                                     @"paisawallet"
 #define     KEY_LAZYPAY                                         @"lazypay"
 #define     KEY_NO_COST_EMI                                     @"no_cost_emi"
+#define     KEY_UPI                                             @"upi"
 //NetBanking parsing elements
 #define     KEY_BANK_ID                                         @"bank_id"
 #define     KEY_PGID                                            @"pgId"
+#define     KEY_PAYMENTGATEWAYID                                @"paymentGatewayId"
 #define     KEY_PT_PRIORITY                                     @"pt_priority"
 #define     KEY_SHOW_FORM                                       @"show_form"
 #define     KEY_TITLE                                           @"title"
@@ -336,6 +363,14 @@
 // Payment Param for PayUMoney
 #define     PARAM_BANK_CODE_PAYU_MONEY                          @"payuw"
 
+#define     KEY_USERCREDENTIALS                                 @"userCredentials"
+#define     KEY_PAYMENTCARD                                     @"paymentCard"
+#define     KEY_BIN                                             @"bin"
+#define     KEY_BRAND                                           @"brand"
+#define     KEY_CARDNUMBER                                      @"cardNumber"
+#define     KEY_OWNERNAME                                       @"ownerName"
+#define     KEY_VALIDTHROUGH                                    @"validThrough"
+#define     KEY_USERCREDENTIAL                                  @"userCredential"
 
 #define     NO_NETBANKING                                       @"NetBanking is unavailable"
 #define     NO_STORED_CARDS                                     @"No Stored cards available"
@@ -370,7 +405,6 @@
 #define     KEY_TRANSACTION_AMOUNT                              @"transaction_amount"
 #define     KEY_UNMAPPEDSTATUS                                  @"unmappedstatus"
 
-
 // Available Payment Option
 
 #define     PAYMENT_PG_ONE_TAP_STOREDCARD                       @"One Tap Stored Card"
@@ -382,6 +416,7 @@
 #define     PAYMENT_PG_NO_COST_EMI                              @"No Cost EMI"
 #define     PAYMENT_PG_PAYU_MONEY                               @"PayU Money"
 #define     PAYMENT_PG_LAZYPAY                                  @"LazyPay"
+#define     PAYMENT_PG_UPI                                      @"UPI"
 
 // PG Type
 
@@ -400,7 +435,16 @@
 #define     KEY_BANKRATE                                        @"bankRate"
 #define     KEY_BANKCHARGE                                      @"bankCharge"
 #define     KEY_EMI_VALUE                                       @"emi_value"
+#define     KEY_EMIVALUE                                        @"emiValue"
 #define     KEY_EMI_INTEREST_PAID                               @"emi_interest_paid"
+#define     KEY_EMIINTERESTPAID                                 @"emiInterestPaid"
+#define     KEY_ADDITIONALCOST                                  @"additionalCost"
+#define     KEY_EMIAMOUNT                                       @"emiAmount"
+#define     KEY_EMIMDRNOTE                                      @"emiMdrNote"
+#define     KEY_LOANAMOUNT                                      @"loanAmount"
+#define     KEY_PAYBACKAMOUNT                                   @"paybackAmount"
+#define     KEY_TENURE                                          @"tenure"
+#define     KEY_TRANSACTIONAMOUNT                               @"transactionAmount"
 
 // Check_isDomestic API parsing elements
 
@@ -455,6 +499,90 @@
 #else
 #   define PayUSDKLog(...)
 #endif
+
+#pragma mark - API V2 Constants -
+
+typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
+    version_1,
+    version_2
+};
+
+#define     KEY_PAYMENT_ID                                      @"paymentId"
+#define     KEY_ACCOUNT_ID                                      @"accountId"
+#define     KEY_REFERENCE_ID                                    @"referenceId"
+#define     KEY_PAYMENT_STATUS                                  @"paymentStatus"
+#define     KEY_AMOUNT                                          @"amount"
+#define     KEY_CURRENCY                                        @"currency"
+#define     KEY_PAYMENT_SOURCE                                  @"paymentSource"
+#define     KEY_PAYMENT_METHOD                                  @"paymentMethod"
+#define     KEY_ORDER                                           @"order"
+
+#define     KEY_PAYMENTCARD                                     @"paymentCard"
+#define     KEY_VALID_THROUGH                                   @"validThrough"
+#define     KEY_OWNER_NAME                                      @"ownerName"
+#define     KEY_ALTERNATE_NAME                                  @"alternateName"
+#define     KEY_CVV                                             @"cvv"
+#define     KEY_BRAND                                           @"brand"
+#define     KEY_CATEGORY                                        @"category"
+#define     KEY_ISSUER                                          @"issuer"
+#define     KEY_BIN                                             @"bin"
+#define     KEY_LAST4DIGITS                                     @"last4Digits"
+#define     KEY_CARD_HASH                                       @"cardHash"
+#define     KEY_ORDERED_ITEM                                    @"orderedItem"
+#define     KEY_ITEMID                                          @"itemId"
+#define     KEY_DESCRIPTION                                     @"description"
+#define     KEY_QUANTITY                                        @"quantity"
+#define     KEY_USER_DEFINED_FIELDS                             @"userDefinedFields"
+#define     KEY_PAYMENT_CHARGE_SPECIFICATION                    @"paymentChargeSpecification"
+#define     KEY_PRICE                                           @"price"
+#define     KEY_TAX_SPECIFICATION                               @"taxSpecification"
+#define     KEY_CONVENIENCE_FEE                                 @"convenienceFee"
+#define     KEY_TDR                                             @"tdr"
+#define     KEY_OFFERS                                          @"offers"
+#define     KEY_APPLIED                                         @"applied"
+#define     KEY_AVAILED                                         @"availed"
+#define     KEY_OFFER_ID                                        @"offerId"
+#define     KEY_TYPE                                            @"type"
+#define     KEY_ENFORCE_PAYMENT                                 @"enforcePaymethod"
+#define     KEY_SI                                              @"si"
+#define     KEY_FORCE_PG_ID                                     @"forcePgid"
+#define     KEY_CARD_MERCHANT_PARAM                             @"cardMerchantParam"
+#define     KEY_SUBVENTION_AMOUNT                               @"subventionAmount"
+#define     KEY_SUBVENTION_ELIGIBILITY                          @"subventionEligibility"
+#define     KEY_AUTH_ONLY                                       @"authOnly"
+#define     KEY_VPA                                             @"vpa"
+#define     KEY_VISA_CALL_ID                                    @"visaCallId"
+#define     KEY_SODEXO_SOURCE_ID                                @"sodexoSoureId"
+#define     KEY_CITI_REWARDS                                    @"citiReward"
+#define     KEY_PARTNER_HOLD_TIME                               @"partnerHoldTime"
+#define     KEY_CONSENT_SHARED                                  @"consentShared"
+#define     KEY_ITEMS                                           @"items"
+#define     KEY_BIRTHDAY                                        @"birthday"
+#define     KEY_GENDER                                          @"gender"
+#define     KEY_STORE_CARD                                      @"storeCard"
+#define     KEY_ONE_CLICK_CHECKOUT                              @"oneClickCheckout"
+#define     KEY_TXN_S2S_FLOW                                    @"txnS2sFlow"
+
+#define     KEY_CALLBACK_ACTIONS                                @"callBackActions"
+#define     KEY_SUCCESS_ACTION                                  @"successAction"
+#define     KEY_FAILURE_ACTION                                  @"failureAction"
+#define     KEY_CANCELACTION                                    @"cancelAction"
+#define     KEY_COD_ACTION                                      @"codAction"
+#define     KEY_TERM_ACTION                                     @"termAction"
+#define     KEY_TIMEOUT_ACTION                                  @"timeOutAction"
+#define     KEY_RETURN_ACTION                                   @"returnAction"
+
+#define     KEY_BILLING_DETAILS                                 @"billingDetails"
+#define     KEY_AUTHORIZATION                                   @"authorization"
+
+#define     KEY_BANK_DATA                                       @"bankData"
+#define     KEY_MESSAGE_DIGEST                                  @"messageDigest"
+#define     KEY_PARES                                           @"pares"
+#define     KEY_ADDITIONAL_INFO                                 @"additionalInfo"
+
+#define     KEY_PAYMENT_GATEWAY_IDENTIFIER                      @"paymentGatewayIdentifier"
+#define     KEY_AUTH_UDF1                                       @"authUdf1"
+#define     KEY_AUTH_UDF2                                       @"authUdf2"
 
 
 #endif /* PayUConstants_h */

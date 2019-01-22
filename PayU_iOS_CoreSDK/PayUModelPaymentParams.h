@@ -12,6 +12,7 @@
 #import <Foundation/Foundation.h>
 #import "PayUModelHashes.h"
 #import "PayUModelStoredCard.h"
+#import "PayUConstants.h"
 
 @interface PayUModelPaymentParams : NSObject <NSCopying>
 
@@ -56,7 +57,6 @@
 @property (strong, nonatomic) NSString * enforcePayMethod;
 @property (strong, nonatomic) NSString * customNote;
 @property (strong, nonatomic) NSString * noteCategory;
-@property (strong, nonatomic) NSString * apiVersion;
 @property (strong, nonatomic) NSString * shippingFirstname;
 @property (strong, nonatomic) NSString * shippingLastname;
 @property (strong, nonatomic) NSString * shippingAddress1;
@@ -68,7 +68,7 @@
 @property (strong, nonatomic) NSString * shippingPhone;
 @property (strong, nonatomic) NSString * offerKey;
 
-
+@property (assign, nonatomic) PayUAPIVersion apiVersion;
 
 // Param for Stored card
 @property (nonatomic, strong) NSString * cardBin;
@@ -121,4 +121,85 @@
 //This param is for LazyPay
 @property (strong, nonatomic) NSString *notifyURL;
 
+
+
+
+//API v2 properties
+@property (strong, nonatomic) NSString *paymentId;
+@property (strong, nonatomic) NSString *paymentStatus;
+@property (strong, nonatomic) NSString *currency;
+@property (strong, nonatomic) NSString *date;
+@property (strong, nonatomic) NSString *digest;
+@property (strong, nonatomic) NSString *authorization;
+
+@property (strong, nonatomic) NSString * ownerName;
+@property (strong, nonatomic) NSString * alternateName;
+@property (strong, nonatomic) NSString * category; //"CreditCard" "DebitCard"
+@property (strong, nonatomic) NSString * last4Digits;
+@property (strong, nonatomic) NSString * cardHash;
+
+/*
+ //In array of orderItem, the array contains objects. Each object has this format
+ {
+ "itemId": null,
+ "description": "AAA",
+ "quantity": null
+ }
+ */
+@property (strong, nonatomic) NSArray * orderItem;
+
+@property (strong, nonatomic) NSDictionary * taxSpecification;
+@property (strong, nonatomic) NSString * convenienceFee;
+@property (strong, nonatomic) NSString * tdr;
+
+
+/*
+ //In array of offers, the array contains objects. Each object has this format
+ {
+ "offerId": "no_offer",
+ "amount": null
+ }
+ */
+@property (strong, nonatomic) NSArray * appliedOffers;
+@property (strong, nonatomic) NSArray * availedOffers;
+
+@property (strong, nonatomic) NSString * offerType;
+@property (strong, nonatomic) NSString * failureReason;
+
+@property (strong, nonatomic) NSString * si;
+@property (strong, nonatomic) NSString * forcePgid;
+@property (strong, nonatomic) NSString * cardMerchantParam;
+@property (strong, nonatomic) NSString * authOnly;
+@property (strong, nonatomic) NSString * vpa;
+@property (strong, nonatomic) NSString * visaCallId;
+@property (strong, nonatomic) NSString * sodexoSourceId;
+@property (strong, nonatomic) NSString * citiReward;
+@property (strong, nonatomic) NSString * partnerHoldTime;
+@property (strong, nonatomic) NSString * consentShared;
+@property (strong, nonatomic) NSString * items;
+@property (strong, nonatomic) NSString * birthday;
+@property (strong, nonatomic) NSString * gender;
+@property (strong, nonatomic) NSString * oneClickCheckout;
+@property (strong, nonatomic) NSString * txnS2SFlow;
+
+@property (strong, nonatomic) NSString * cancelAction;
+@property (strong, nonatomic) NSString * codAction;
+@property (strong, nonatomic) NSString * termAction;
+@property (strong, nonatomic) NSString * timeOutAction;
+@property (strong, nonatomic) NSString * returnAction;
+
+@property (strong, nonatomic) NSString * bankData;
+@property (strong, nonatomic) NSString * messageDigest;
+@property (strong, nonatomic) NSString * pares;
+@property (strong, nonatomic) NSString * paymentGatewayIdentifier;
+@property (strong, nonatomic) NSString * authUdf1;
+@property (strong, nonatomic) NSString * authUdf2;
+
+@property (strong, nonatomic) NSString * lastName;
+
+
+- (NSString *)getValidThrough;
+- (BOOL)isCardToBeStored;
+
 @end
+

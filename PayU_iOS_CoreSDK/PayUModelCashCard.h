@@ -10,15 +10,11 @@
  * This class declares the properties that holds CachCard information.
  */
 #import <Foundation/Foundation.h>
+#import "PayUBasePaymentModel.h"
 
-@interface PayUModelCashCard : NSObject
+@interface PayUModelCashCard : PayUBasePaymentModel
 
-@property (strong, nonatomic) NSString * bankID;
-@property (strong, nonatomic) NSString * pgID;
-@property (strong, nonatomic) NSString * ptPriority;
-@property (strong, nonatomic) NSString * showForm;
 @property (strong, nonatomic) NSString * cashCardTitle;
-@property (strong, nonatomic) NSString * bankCode;
 
 /*!
  * This method returns model objects array.

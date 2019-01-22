@@ -309,4 +309,9 @@
 -(NSString *)validateCardNumberForCheckIsDomestic:(NSString *) cardNumber;
 
 -(NSString *)validateLazyPayParams:(PayUModelPaymentParams *) paymentParam;
+
+-(NSString *)validateUPIParams: (PayUModelPaymentParams *) paymentParam;
+
+-(BOOL)isValidVPA:(NSString *) vpa;
+
 @end

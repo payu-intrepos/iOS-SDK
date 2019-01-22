@@ -31,5 +31,15 @@ typedef void (^completionBlockForgetPayUHashesWithPaymentParam)(PayUModelHashes 
 
 - (NSString *) getHash:(NSString *)input;
 
++ (NSString*)getCurrentDateForAPIV2;
 
++ (id) getDigestForString:(NSString*)input;
+
++ (NSString*) getAuthStringForPostData:(NSString *) str
+                              withDate:(NSString *) date
+                                digest:(NSString *) digest
+                                  salt:(NSString *) salt
+                                   key:(NSString *) key;
+
++ (NSString *) getDeleteStoredCardPostParamString:(PayUModelPaymentParams *) paymentParam;
 @end
