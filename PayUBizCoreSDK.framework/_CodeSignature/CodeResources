@@ -8,6 +8,10 @@
 		<data>
 		jucOZ3CIrOqA2kXD5d86sbEfhkw=
 		</data>
+		<key>Headers/PayUBizCoreSDK.h</key>
+		<data>
+		e9T9yXeRFV+Ncmothg8+1ptBV1w=
+		</data>
 		<key>Headers/PayUConstants.h</key>
 		<data>
 		SCw/xuip7ULO0gC0IkrMIxtuRz8=
@@ -120,6 +124,10 @@
 		<data>
 		pUWx0Titje5CLoQ154oJpfz4qno=
 		</data>
+		<key>Modules/module.modulemap</key>
+		<data>
+		GPp9vPgKUdySWSLHLjGmVJhCaxU=
+		</data>
 		<key>PayUSDKInfo.plist</key>
 		<data>
 		5L83yFyZhioO1H3GUb2YRH2VogY=
@@ -136,6 +144,17 @@
 			<key>hash2</key>
 			<data>
 			caKUkuxeHng84CPI4JgtbCNAlG4ahuXqRVd+63mwONE=
+			</data>
+		</dict>
+		<key>Headers/PayUBizCoreSDK.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			e9T9yXeRFV+Ncmothg8+1ptBV1w=
+			</data>
+			<key>hash2</key>
+			<data>
+			DUt9T32frrwuj7+gHUOPMYjq1qcq53vnJbf8vj2HKKw=
 			</data>
 		</dict>
 		<key>Headers/PayUConstants.h</key>
@@ -433,6 +452,17 @@
 			<key>hash2</key>
 			<data>
 			v7O0eJ13Qw6loaF3bjJ6QEqZp9WnsJBeuzYDKnXyaMc=
+			</data>
+		</dict>
+		<key>Modules/module.modulemap</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			GPp9vPgKUdySWSLHLjGmVJhCaxU=
+			</data>
+			<key>hash2</key>
+			<data>
+			qM8Apc5EUBDqARsdRppShcN8pW8mMWbphfR7aaTcNCI=
 			</data>
 		</dict>
 		<key>PayUSDKInfo.plist</key>
