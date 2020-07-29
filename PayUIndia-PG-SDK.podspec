@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
                             :tag => "#{s.name}_#{s.version}"
                           }
   s.documentation_url   = "https://github.com/payu-intrepos/Documentations/wiki/8.-iOS-SDK-integration"
-  s.platform            = :ios , "6.0"
+  s.platform            = :ios , "8.0"
   s.vendored_frameworks = 'PayUBizCoreSDK.framework'
 
 end
