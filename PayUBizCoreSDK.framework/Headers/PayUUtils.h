@@ -140,6 +140,8 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 +(NSString *)getStringifyDict:(NSDictionary *) dict;
 
++ (NSString *)getStringifyDict:(NSDictionary *) dict options:(NSJSONWritingOptions) options;
+
 + (BOOL)validateRegex:(NSString *) regex on:(NSString *) param;
 
 @end

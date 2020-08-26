@@ -121,6 +121,9 @@
 //This param is for LazyPay
 @property (strong, nonatomic) NSString *notifyURL;
 
+//This param is for TPV transactions
+@property (strong, nonatomic) NSString *beneficiaryAccountNumbers;
+
 
 
 

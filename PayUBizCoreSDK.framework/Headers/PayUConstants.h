@@ -154,7 +154,7 @@
 #define ERROR_SUBVENTION_AMOUNT_IS_NONNUMERIC                   @"Subvention Amount should be a Double value example 5.00, "
 #define ERROR_SUBVENTION_AMOUNT_GREATER_THAN_AMOUNT             @"Subvention Amount should be less than or equal to the transaction amount, "
 #define ERROR_INVALID_VPA                                       @"Invalid VPA, "
-//#define ERROR_FREE                                            @"Error free"
+#define ERROR_BENEFECIARY_DETAIL_MISSING                        @"Beneficiary detail mandatory for TPV txn, "
 
 
 // Regex
@@ -302,6 +302,7 @@
 #define     PARAM_STORE_CARD_NAME                               @"card_name"
 #define     PARAM_BANK_CODE_CCDC                                @"CC"
 #define     PARAM_BANK_CODE_UPI                                 @"UPI"
+#define     PARAM_BANK_CODE_UPI_TPV                             @"UPITPV"
 #define     PARAM_ONE_CLICK_CHECKOUT                            @"one_click_checkout"
 #define     PARAM_CARD_MERCHANT_PARAM                           @"card_merchant_param"
 #define     KEY_IBIBOCODES                                      @"ibiboCodes"
@@ -384,6 +385,9 @@
 #define     NO_CASH_CARDS                                       @"No cash cards available"
 #define     NO_EMI                                              @"No EMI available"
 
+// Payment Param for TPV Transactions
+#define     KEY_BENEFICIARYDETAIL                               @"beneficiarydetail"
+#define     KEY_BENEFICIARYACCOUNTNUMBER                        @"beneficiaryAccountNumber"
 
 // Keys for VAS Parsing
 
