@@ -1,6 +1,0 @@
-framework module PayUBizCoreSDK {
-  umbrella header "PayUBizCoreSDK.h"
-
-  export *
-  module * { export * }
-}
