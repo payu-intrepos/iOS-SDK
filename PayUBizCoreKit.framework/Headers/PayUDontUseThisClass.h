@@ -42,4 +42,7 @@ typedef void (^completionBlockForgetPayUHashesWithPaymentParam)(PayUModelHashes 
                                    key:(NSString *) key;
 
 + (NSString *) getDeleteStoredCardPostParamString:(PayUModelPaymentParams *) paymentParam;
+
+@property (strong, nonatomic) NSString *subventionPaymentHashString;
+@property (strong, nonatomic) NSString *subventionPaymentHash;
 @end

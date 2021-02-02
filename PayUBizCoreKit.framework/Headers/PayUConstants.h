@@ -276,8 +276,6 @@
 #define     PARAM_OFFER_KEY                                     @"offer_key"
 #define     PARAM_USER_CREDENTIALS                              @"user_credentials"
 #define     PARAM_SUBVENTION_AMOUNT                             @"subvention_amount"
-#define     PARAM_SUBVENTION_ELIGIBILITY                        @"subvention_eligibility"
-#define     PARAM_IS_SUBVENT                                    @"is_subvent"
 #define     PARAM_NOTIFYURL                                     @"notifyurl"
 
 #define     PARAM_DEVICE_TYPE                                   @"device_type"

@@ -141,6 +141,8 @@
  */
 -(NSString *)validateEMIParams: (PayUModelPaymentParams *) paymentParam;
 
+-(NSString *)validateNoCostEMIParams:(PayUModelPaymentParams *) paymentParam;
+
 /*!
  * This method validates user credentials.
  * @param  [userCredentials]               [NSString type]
