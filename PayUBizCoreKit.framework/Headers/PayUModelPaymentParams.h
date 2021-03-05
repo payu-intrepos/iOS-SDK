@@ -13,6 +13,7 @@
 #import "PayUModelHashes.h"
 #import "PayUModelStoredCard.h"
 #import "PayUConstants.h"
+#import <PayUParamsKit/PayUParamsKit.h>
 
 @interface PayUModelPaymentParams : NSObject <NSCopying>
 
@@ -67,6 +68,7 @@
 @property (strong, nonatomic) NSString * shippingZipcode;
 @property (strong, nonatomic) NSString * shippingPhone;
 @property (strong, nonatomic) NSString * offerKey;
+@property BOOL isSIInfo;
 
 @property (assign, nonatomic) PayUAPIVersion apiVersion;
 
@@ -203,6 +205,9 @@
 
 - (NSString *)getValidThrough;
 - (BOOL)isCardToBeStored;
+
+@property (strong, nonatomic) PayUSIParams *siParams;
+@property (strong, nonatomic) PayUBeneficiaryParams *beneficiaryParams;
 
 @end
 

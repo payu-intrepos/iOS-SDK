@@ -45,6 +45,7 @@ typedef void (^completionBlockForGetUserCards)(NSDictionary *dictStoredCard ,NSS
 typedef void (^completionBlockForVerifyPayment)(NSDictionary *dictVerifyPayment ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForDeleteOneTapToken)(NSString *deleteOneTapTokenMsg ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForCheckIsDomestic)(PayUModelCheckIsDomestic *checkIsDomestic , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForGetBinInfo)(NSArray<PayUModelCheckIsDomestic*> *allBin , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForGetTransactionInfo)(NSArray *arrOfGetTxnInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
 
@@ -165,6 +166,8 @@ typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCar
 -(void)deleteOneTapToken:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForDeleteOneTapToken) paramCompletionBlock;
 
 -(void)checkIsDomestic:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForCheckIsDomestic) paramCompletionBlock;
+
+-(void)getBinInfo:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForGetBinInfo) paramCompletionBlock;
 
 -(void)getTransactionInfo:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForGetTransactionInfo) paramCompletionBlock;
 

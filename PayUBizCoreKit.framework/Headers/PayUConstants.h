@@ -66,9 +66,11 @@
 #define ERROR_TRANSACTIONID_GREATER_THAN_25                     @"Transaction ID greater than 25 character, "
 
 #define ERROR_AMOUNT_IS_MISSING                                 @"Amount is missing, "
-#define ERROR_AMOUNT_IS_NONNUMERIC                              @"Amount is non-numeric, "
+#define ERROR_AMOUNT_IS_NONNUMERIC                              @" is non-numeric, "
 #define ERROR_AMOUNT_CONTAIN_MORE_THAN_ONE_DECIMAL              @"Amount contain more than one decimal, "
-#define ERROR_AMOUNT_IS_LESS_THAN_MINIMUM_AMOUNT                @"Amount is less than minimum amount, "
+#define ERROR_AMOUNT_IS_LESS_THAN_MINIMUM_AMOUNT                @" is less than minimum amount, "
+#define ERROR_AMOUNT_IS_LESS_THAN                               @"is less than"
+
 
 
 #define ERROR_PRODUCTINFO_IS_MISSING                            @"Product Info is missing, "
@@ -156,7 +158,23 @@
 #define ERROR_INVALID_VPA                                       @"Invalid VPA, "
 #define ERROR_BENEFECIARY_DETAIL_MISSING                        @"Beneficiary detail mandatory for TPV txn, "
 
+// SI Errors
+#define ERROR_SI_PARAM_MISSING                                  @"SI Param missing, "
+#define ERROR_INVALID_BILLING_INTERVAL                          @"Billing interval should be 1 for billing cycle ADHOC and ONCE, "
+#define ERROR_INVALID_BILLING_CYCLE                             @"Invalid billing cycle value passed, "
+#define ERROR_INVALID_BILLING_AMOUNT_FOR_ADHOC                  @"Billing amount should not be greater than amount passed in subscription call, "
+#define ERROR_INVALID_START_DATE                                @"Invalid SI start date, "
+#define ERROR_INVALID_END_DATE                                  @"Invalid SI end date, "
 
+#define ERROR_BENFECIARY_DETAIL_PARAM_MISSING                   @"Beneficiary details missing, "
+#define ERROR_BENFECIARY_ACCOUNT_NAME_PARAM_MISSING             @"Beneficiary account holder name is missing, "
+#define ERROR_BENFECIARY_ACCOUNT_NUMBER_PARAM_MISSING           @"Beneficiary account holder number is missing, "
+#define ERROR_INVALID_ACCOUNT_NUMBER                            @"Please enter atleast 8 digit account number, "
+#define ERROR_INVALID_BENFECIARY_ACCOUNT_TYPE                   @"Beneficiary account type is invalid, "
+
+#define BILLING_AMOUNT                                          @"Billing amount"
+#define MIN_TXN_AMOUNT                                          @"Min transaction amount"
+#define TRANSACTION_AMOUNT                                      @"Transaction Amount"
 // Regex
 
 #define EMAIL_REGEX                                             @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
@@ -189,6 +207,7 @@
 #define COMMAND_VERIFY_PAYMENT                                  @"verify_payment"
 #define COMMAND_DELETE_ONE_TAP_TOKEN                            @"delete_one_tap_token"
 #define COMMAND_CHECK_IS_DOMESTIC                               @"check_isDomestic"
+#define COMMAND_GET_BIN_INFO                                    @"getBinInfo"
 #define COMMAND_GET_TRANSACTION_INFO                            @"get_transaction_info"
 
 // Endpoints for webservice
@@ -285,8 +304,6 @@
 #define     DEVICE_TYPE_IOS                                     @"2"
 #define     PARAM_SDK_PLATFORM                                  @"sdk_platform"
 
-
-
 #define     PARAM_PG                                            @"pg"
 #define     PARAM_BANK_CODE                                     @"bankcode"
 #define     PARAM_BANK_CODE_V2                                  @"bankCode"
@@ -307,6 +324,8 @@
 #define     KEY_IBIBOCODES                                      @"ibiboCodes"
 #define     KEY_USERCARDS                                       @"userCards"
 #define     KEY_NETBANKING                                      @"netbanking"
+#define     KEY_ENACH                                           @"enach"
+#define     KEY_STANDINGINSTRUCTION                             @"standinginstruction"
 #define     KEY_NETBANKING_V2                                   @"NetBanking"
 #define     KEY_CASHCARD                                        @"cashcard"
 #define     KEY_CASHCARD_V2                                     @"CashCard"
@@ -344,8 +363,10 @@
 #define     KEY_EXPIRY_MONTH                                    @"expiry_month"
 #define     KEY_EXPIRY_YEAR                                     @"expiry_year"
 #define     KEY_ISDOMESTIC                                      @"isDomestic"
+#define     KEY_IS_DOMESTIC                                     @"is_domestic"
 #define     KEY_IS_EXPIRED                                      @"is_expired"
 #define     KEY_ISSUINGBANK                                     @"issuingBank"
+#define     KEY_ISSUING_BANK                                     @"issuing_bank"
 #define     KEY_NAME_ON_CARD                                    @"name_on_card"
 #define     DUPLICATE_CARD_COUNT                                @"duplicate_cards_count"
 
@@ -360,6 +381,8 @@
 #define     KEY_OFFER_TYPE                                      @"offer_type"
 #define     KEY_STATUS                                          @"status"
 #define     KEY_ALLOWED_ON                                      @"allowed_on"
+#define     KEY_DATA                                            @"data"
+#define     KEY_BINS_DATA                                        @"bins_data"
 #define     KEY_OFFER_DATA                                      @"offer_data"
 #define     KEY_CARD_DATA                                       @"card_data"
 #define     KEY_CARD_TOKENS                                     @"card_tokens"
@@ -388,6 +411,23 @@
 // Payment Param for TPV Transactions
 #define     KEY_BENEFICIARYDETAIL                               @"beneficiarydetail"
 #define     KEY_BENEFICIARYACCOUNTNUMBER                        @"beneficiaryAccountNumber"
+
+// SI PARAM
+#define     PARAM_API_VERSION                                   @"api_version"
+#define     PARAM_SI                                            @"si"
+#define     PARAM_SI_DETAILS                                    @"si_details"
+#define     PARAM_BILLING_AMOUNT                                @"billingAmount"
+#define     PARAM_BILLING_CURRENCY                              @"billingCurrency"
+#define     PARAM_BILLING_CYCLE                                 @"billingCycle"
+#define     PARAM_BILLING_INTERVAL                              @"billingInterval"
+#define     PARAM_PAYMENT_START_DATE                            @"paymentStartDate"
+#define     PARAM_PAYMENT_END_DATE                              @"paymentEndDate"
+#define     PARAM_REMARKS                                       @"remarks"
+#define     PARAM_FREE_TRIAL                                    @"free_trial"
+
+// BENEFICIARY PARAM
+#define     PARAM_BENEFICIARY_NAME                              @"beneficiaryName"
+#define     PARAM_BENEFICIARY_ACCOUNT_TYPE                      @"beneficiaryAccountType"
 
 // Keys for VAS Parsing
 
@@ -437,6 +477,7 @@
 #define     PG_EMI                                              @"EMI"
 #define     PG_CASHCARD                                         @"CASH"
 #define     PG_PAYU_MONEY                                       @"wallet"
+#define     PG_ENACH                                            @"ENACH"
 
 // getOfferDetail callback dictionary key
 #define     KEY_POST_PARAM                                      @"PostParam"
@@ -464,10 +505,10 @@
 #define     KEY_CARDBINS                                        @"cardBins"
 
 // Check_isDomestic API parsing elements
-
+#define     KEY_CATEGORY                                        @"category"
 #define     KEY_CARDCATEGORY                                    @"cardCategory"
 #define     KEY_CARDTYPE                                        @"cardType"
-
+#define     KEY_CARD_TYPE                                       @"card_type"
 // GetTransactionInfo API parsing elements
 #define     KEY_TRANSACTION_DETAILS_INFO                        @"Transaction_details"
 #define     KEY_ACTION                                          @"action"
@@ -562,6 +603,8 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_TYPE                                            @"type"
 #define     KEY_ENFORCE_PAYMENT                                 @"enforcePaymethod"
 #define     KEY_SI                                              @"si"
+#define     KEY_DCSI                                            @"DCSI"
+#define     KEY_CCSI                                            @"CCSI"
 #define     KEY_FORCE_PG_ID                                     @"forcePgid"
 #define     KEY_CARD_MERCHANT_PARAM                             @"cardMerchantParam"
 #define     KEY_SUBVENTION_AMOUNT                               @"subventionAmount"
@@ -600,6 +643,11 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_PAYMENT_GATEWAY_IDENTIFIER                      @"paymentGatewayIdentifier"
 #define     KEY_AUTH_UDF1                                       @"authUdf1"
 #define     KEY_AUTH_UDF2                                       @"authUdf2"
+#define     KEY_IS_ATMPIN_CARD                                  @"is_atmpin_card"
+#define     KEY_IS_OTP_ON_THE_FLY                               @"is_otp_on_the_fly"
+#define     KEY_IS_SI_SUPPORTED                                 @"is_si_supported"
+#define     KEY_IS_ZERO_REDIRECT_SUPPORTED                      @"is_zero_redirect_supported"
 
-
+// Date Format Constant
+#define     DATE_FORMAT                                         @"yyyy-MM-dd"
 #endif /* PayUConstants_h */

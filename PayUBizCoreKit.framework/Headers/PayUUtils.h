@@ -142,6 +142,31 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 + (NSString *)getStringifyDict:(NSDictionary *) dict options:(NSJSONWritingOptions) options;
 
++(id)getValue:(NSDictionary *) dict forKey:(NSString *)key;
+
 + (BOOL)validateRegex:(NSString *) regex on:(NSString *) param;
+
++ (BOOL)isForAllBin:(PayUModelPaymentParams *) param;
+
++(BOOL)isSITxn:(PayUModelPaymentParams *) paymentParam;
+
++ (NSDate*)getFormattedDate:(NSString *) dateString;
+
++ (NSString*)getFormattedDateString:(NSDate *) date;
+
++ (BOOL)isDate:(NSString *) dateString greaterThan:(NSString *) minDateString;
+
++ (BOOL)isDate:(NSString *) dateString greaterThanEqual:(NSString *) minDateString;
+
++ (BOOL)isEmpty:(NSString *) string;
+
++ (NSString *)getJSONIndividualObjectForKey:(NSString *) key value:(NSString *) value;
+
++ (NSString *)siDetailsFromPaymentParam:(PayUModelPaymentParams *) paymentParam;
+
++ (NSString *)cardBinFrom:(PayUModelPaymentParams *) cardNumber;
+
++(NSString *)convertNumberToString:(id) numberString;
+
 
 @end

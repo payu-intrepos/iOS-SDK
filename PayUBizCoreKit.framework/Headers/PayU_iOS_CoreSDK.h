@@ -11,6 +11,7 @@
 #import "PayUCreateRequest.h"
 #import "PayUWebServiceResponse.h"
 #import "PayUModelNetBanking.h"
+#import "PayUModelEnach.h"
 #import "PayUModelPaymentRelatedDetail.h"
 #import "PayUModelOfferStatus.h"
 #import "PayUModelStoredCard.h"

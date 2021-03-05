@@ -314,10 +314,18 @@
 
 -(NSString *)validateCardNumberForCheckIsDomestic:(NSString *) cardNumber;
 
+-(NSMutableString *)validateGetBinInfoParam:(PayUModelPaymentParams *) paymentParam;
+
+-(NSMutableString *)validateGetBinInfo:(PayUModelPaymentParams *) paymentParam;
+
 -(NSString *)validateLazyPayParams:(PayUModelPaymentParams *) paymentParam;
 
 -(NSString *)validateUPIParams: (PayUModelPaymentParams *) paymentParam;
 
 -(BOOL)isValidVPA:(NSString *) vpa;
+
+-(NSString *)validateSIParams:(PayUModelPaymentParams *) paymentParam;
+
+-(NSString *)validateBeneficiaryParams:(PayUModelPaymentParams *) paymentParam;
 
 @end

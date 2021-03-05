@@ -32,6 +32,7 @@ typedef void (^completionBlockForJSONParserForGetUserCards)(NSDictionary *dictSt
 typedef void (^completionBlockForJSONParserForVerifyPayment)(NSDictionary *dictVerifyPayment ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForDeleteOneTapToken)(NSString *deleteOneTapTokenMsg ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForCheckIsDomestic)(PayUModelCheckIsDomestic *checkIsDomestic , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForGetBinInfo)(NSArray<PayUModelCheckIsDomestic*> *arrAllBin , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForGetTransactionInfo)(NSArray *arrOfGetTxnInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
 
@@ -82,6 +83,7 @@ typedef void (^completionBlockForJSONParserForSaveUserCard)(PayUModelStoredCard 
 -(void)JSONParserForDeleteOneTapToken:(id) JSON withCompletionBlock:(completionBlockForJSONParserForDeleteOneTapToken) paramCompletionBlock;
 
 -(void)JSONParserForCheckIsDomestic:(id) JSON withCompletionBlock:(completionBlockForJSONParserForCheckIsDomestic) paramCompletionBlock;
+-(void)JSONParserForGetBinInfo:(id) JSON of: (BOOL) isAllBin withCompletionBlock:(completionBlockForJSONParserForGetBinInfo) paramCompletionBlock;
 
 -(void)JSONParserForGetTransactionInfo:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGetTransactionInfo) paramCompletionBlock;
 

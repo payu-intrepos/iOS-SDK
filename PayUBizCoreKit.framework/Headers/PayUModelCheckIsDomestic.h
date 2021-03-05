@@ -14,6 +14,11 @@
 @property (nonatomic, strong) NSString * issuingBank;
 @property (nonatomic, strong) NSString * cardType;
 @property (nonatomic, strong) NSString * cardCategory;
+@property (nonatomic, strong) NSString * bin;
+@property (nonatomic, strong) NSString * isAtmPinCard;
+@property (nonatomic, strong) NSNumber * isSISupported;
+@property (nonatomic, strong) NSNumber * isZeroRedirectSupported;
++ (instancetype)prepareGetBinInfoObejctFromDict:(NSDictionary *)JSON;
 
 + (instancetype)prepareCheckIsDomesticObejctFromDict:(NSDictionary *)JSON;
 

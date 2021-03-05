@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                = "PayUIndia-PG-SDK"
-  s.version             = "5.1.0"
+  s.version             = "5.2.0"
   s.license             = "MIT"
   s.homepage            = "https://github.com/payu-intrepos/iOS-SDK"
   s.author              = { "PayUbiz" => "contact@payu.in"  }
@@ -14,5 +14,7 @@ Pod::Spec.new do |s|
   s.documentation_url   = "https://app.gitbook.com/@payumobile/s/sdk-integration/ios/core/core-sdk"
   s.platform            = :ios , "8.0"
   s.vendored_frameworks = 'PayUBizCoreKit.framework'
+
+  s.dependency            'PayUIndia-PayUParams', '1.0.0'
 
 end
