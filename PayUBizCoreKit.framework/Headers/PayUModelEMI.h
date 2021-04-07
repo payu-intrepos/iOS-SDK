@@ -10,18 +10,14 @@
  * This class declares the properties that holds EMI related information.
  */
 #import <Foundation/Foundation.h>
-
-@interface PayUModelEMI : NSObject
+#import "PayUBasePaymentModel.h"
+@interface PayUModelEMI : PayUBasePaymentModel
 
 @property (strong, nonatomic) NSString * bankName;
-@property (strong, nonatomic) NSString * bankID;
-@property (strong, nonatomic) NSString * pgID;
-@property (strong, nonatomic) NSString * ptPriority;
-@property (strong, nonatomic) NSString * showForm;
 @property (strong, nonatomic) NSString * emiTitle;
-@property (strong, nonatomic) NSString * bankCode;
 @property (strong, nonatomic) NSString * minAmount;
-
+@property (strong, nonatomic) NSString * paymentType;
+@property (strong, nonatomic) NSNumber * tenure;
 /*!
  * This method returns model objects array.
  * @return [obj array] [NSArray type]
@@ -37,6 +33,7 @@
  */
 + (NSArray *)prepareNoCostEMIArrayFromDict:(id)JSON;
 
++(NSArray *)getEMIArrayForCFFromDict:(NSDictionary *) JSON withDownStaus:(NSDictionary *)downJSON;
 
 + (NSDictionary *)getEMIDictFromEMIModelArray:(NSArray *)emiArray;
 

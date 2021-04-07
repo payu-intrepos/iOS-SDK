@@ -69,7 +69,10 @@
 @property (strong, nonatomic) NSString * shippingPhone;
 @property (strong, nonatomic) NSString * offerKey;
 @property BOOL isSIInfo;
-
+@property BOOL checkAdditionalCharges;
+@property BOOL checkDownStatus;
+@property BOOL checkOfferDetails;
+@property BOOL checkTaxSpecification;
 @property (assign, nonatomic) PayUAPIVersion apiVersion;
 
 // Param for Stored card
@@ -142,6 +145,7 @@
 @property (strong, nonatomic) NSString * category; //"CreditCard" "DebitCard"
 @property (strong, nonatomic) NSString * last4Digits;
 @property (strong, nonatomic) NSString * cardHash;
+@property (strong, nonatomic) NSString * twidCustomerHash;
 
 /*
  //In array of orderItem, the array contains objects. Each object has this format

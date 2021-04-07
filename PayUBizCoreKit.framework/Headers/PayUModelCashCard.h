@@ -22,5 +22,6 @@
  * @param  [Json]      [NSDictionary type]
  */
 + (NSArray *)prepareCashCardArrayFromDict:(id)JSON;
++ (NSArray *)prepareCashCardArrayForCFFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
 
 @end

@@ -168,5 +168,12 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 +(NSString *)convertNumberToString:(id) numberString;
 
++(NSString*) getJsonStringFromDict:(NSDictionary*) dict;
+
++ (NSMutableDictionary *)getCheckoutDetailRequestDict:(PayUModelPaymentParams *)paymentParam;
+
++ (NSString *)getCheckoutDetailRequestString:(PayUModelPaymentParams *)paymentParam;
+
++ (NSString *)getCurrentTimeMiliSecond;
 
 @end

@@ -46,6 +46,7 @@ typedef void (^completionBlockForVerifyPayment)(NSDictionary *dictVerifyPayment 
 typedef void (^completionBlockForDeleteOneTapToken)(NSString *deleteOneTapTokenMsg ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForCheckIsDomestic)(PayUModelCheckIsDomestic *checkIsDomestic , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForGetBinInfo)(NSArray<PayUModelCheckIsDomestic*> *allBin , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForRefund)(NSString *message , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForGetTransactionInfo)(NSArray *arrOfGetTxnInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
 
@@ -60,6 +61,16 @@ typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCar
 -(void)getPayUPaymentRelatedDetailForMobileSDK:(PayUModelPaymentParams *) paymentParam
                            withCompletionBlock:(completionBlockForPayUPaymentRelatedDetail) paramCompletionBlock;
 
+/*!
+ * This method gives websertvice response callback for CheckoutDetail(Server Downtime, additional charges).
+ * @param [paymentParam]    [PayUModelPaymentParams type]
+ * @param [block]
+ * @see   [createRequestWithPaymentParam - PayUCreateRequest]
+ * @see   [getWebServiceResponse - PayUUtils]
+ * @see   [JSONParserforCheckoutDetail - PayUJSONParser]
+ */
+-(void)getCheckoutDetail:(PayUModelPaymentParams *) paymentParam
+                           withCompletionBlock:(completionBlockForPayUPaymentRelatedDetail) paramCompletionBlock;
 /*!
  * This method gives webService response callback for OfferStatus.
  * @param [paymentParam]                                                    [PayUModelPaymentParams type]
@@ -166,11 +177,28 @@ typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCar
 -(void)deleteOneTapToken:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForDeleteOneTapToken) paramCompletionBlock;
 
 -(void)checkIsDomestic:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForCheckIsDomestic) paramCompletionBlock;
-
+/*!
+ * This method gives webService response callback for Card Bin Info.
+ * @param [paymentParam]    [PayUModelPaymentParams type]
+ * @param [block]
+ * @see   [createRequestWithPaymentParam - PayUCreateRequest]
+ * @see   [getWebServiceResponse - PayUUtils]
+ * @see   [JSONParserForGetBinInfo - PayUJSONParser]
+ */
 -(void)getBinInfo:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForGetBinInfo) paramCompletionBlock;
 
 -(void)getTransactionInfo:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForGetTransactionInfo) paramCompletionBlock;
 
 -(void)saveUserCard:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForSaveUserCard) paramCompletionBlock;
+
+/*!
+ * This method gives webService response callback for Refund
+ * @param [paymentParam]    [PayUModelPaymentParams type]
+ * @param [block]
+ * @see   [createRequestWithPaymentParam - PayUCreateRequest]
+ * @see   [getWebServiceResponse - PayUUtils]
+ * @see   [JSONParserForGetBinInfo - PayUJSONParser]
+ */
+-(void)refundTransaction:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForRefund) paramCompletionBlock;
 
 @end

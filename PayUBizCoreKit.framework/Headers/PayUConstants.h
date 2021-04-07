@@ -208,8 +208,9 @@
 #define COMMAND_DELETE_ONE_TAP_TOKEN                            @"delete_one_tap_token"
 #define COMMAND_CHECK_IS_DOMESTIC                               @"check_isDomestic"
 #define COMMAND_GET_BIN_INFO                                    @"getBinInfo"
+#define COMMAND_CANCEL_REFUND_TRANSACTION                       @"cancel_refund_transaction"
 #define COMMAND_GET_TRANSACTION_INFO                            @"get_transaction_info"
-
+#define COMMAND_GET_CHECKOUT_DETAILS                            @"get_checkout_details"
 // Endpoints for webservice
 
 #define PAYMENTS                                                @"/payments"
@@ -308,6 +309,8 @@
 #define     PARAM_BANK_CODE                                     @"bankcode"
 #define     PARAM_BANK_CODE_V2                                  @"bankCode"
 #define     PARAM_NAME                                          @"name"
+#define     PARAM_SALT_VERSION                                  @"salt_version"
+#define     PARAM_TWID_CUSTOMER_HASH                            @"twid_customer_hash"
 
 #define     PARAM_CCNUM                                         @"ccnum"
 #define     PARAM_CCNAME                                        @"ccname"
@@ -337,6 +340,8 @@
 #define     KEY_LAZYPAY                                         @"lazypay"
 #define     KEY_NO_COST_EMI                                     @"no_cost_emi"
 #define     KEY_UPI                                             @"upi"
+#define     KEY_ALL                                             @"all"
+#define     KEY_TENURE_OPTIONS                                  @"tenureOptions"
 //NetBanking parsing elements
 #define     KEY_BANK_ID                                         @"bank_id"
 #define     KEY_PGID                                            @"pgId"
@@ -444,6 +449,7 @@
 #define     KEY_SETTLED_AT                                      @"Settled_At"
 #define     KEY_ADDEDON                                         @"addedon"
 #define     KEY_ADDITIONAL_CHARGES                              @"additional_charges"
+#define     KEY_ADDITIONAL_CHARGE                               @"additionalCharge"
 #define     KEY_AMT                                             @"amt"
 #define     KEY_BANK_REF_NUM                                    @"bank_ref_num"
 #define     KEY_BANKCODE                                        @"bankcode"
@@ -498,6 +504,8 @@
 #define     KEY_PAYBACKAMOUNT                                   @"paybackAmount"
 #define     KEY_TENURE                                          @"tenure"
 #define     KEY_TRANSACTIONAMOUNT                               @"transactionAmount"
+#define     KEY_PAYMENT_OPTIONS                                 @"paymentOptions"
+#define     KEY_DOWN_INFO                                       @"downInfo"
 
 // eligibleBinForEMI
 #define     KEY_DETAILS                                         @"details"
@@ -549,6 +557,7 @@
 #define     DEFAULT_CARD_NAME                                   @"PayUUser"
 
 #define     CASH_CARD_CPMC                                      @"CPMC"
+#define     CASH_CARD_TWID                                      @"TWID"
 
 #define     NO_INTERNET_CONNECTION                              @"Seems you are not connected to internet"
 

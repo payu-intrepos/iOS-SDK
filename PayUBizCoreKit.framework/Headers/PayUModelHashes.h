@@ -28,7 +28,9 @@
 @property (strong, nonatomic) NSString * deleteOneTapTokenHash;
 @property (strong, nonatomic) NSString * checkIsDomesticHash;
 @property (strong, nonatomic) NSString * getBinInfoHash;
+@property (strong, nonatomic) NSString * getCheckoutDetailsHash;
 @property (strong, nonatomic) NSString * getTransactionInfoHash;
+@property (strong, nonatomic) NSString * refundTransactionHash;
 
 /*
  

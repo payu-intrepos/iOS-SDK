@@ -23,7 +23,7 @@
  * @param  [Json]      [NSDictionary type]
  */
 + (NSArray *)prepareNBArrayFromDict:(id)JSON;
-
++ (NSArray *)prepareNBArrayForCFFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
 @end
 /*
  {
@@ -41,4 +41,4 @@
  "show_form" = 0;
  title = "Bank of Baroda - Corporate Banking";
  };
-*/
+ */
