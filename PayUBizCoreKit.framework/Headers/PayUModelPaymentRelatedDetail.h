@@ -25,6 +25,8 @@
 @property (nonatomic, strong) NSArray *cashCardArray;
 @property (nonatomic, strong) NSArray *upiArray;
 @property (nonatomic, strong) NSArray *EMIArray;
+@property (nonatomic, strong) NSArray *ccArray;
+@property (nonatomic, strong) NSArray *dcArray;
 @property (nonatomic, strong) NSArray *NoCostEMIArray;
 @property BOOL isDCSI;
 @property BOOL isCCSI;

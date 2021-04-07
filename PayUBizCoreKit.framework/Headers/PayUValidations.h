@@ -57,6 +57,15 @@
 -(NSMutableString *)validateStoredCardParams: (PayUModelPaymentParams *) paymentParam;
 
 /*!
+ * This method validate get checkout details params and returns string value.
+ * @param  [paymentParam]                   [PayUModelPaymentParams type]
+ * @return [errorString]                    [NSMutableString type]
+ * @see    [validateAmount]
+ * @see    [validateHash]
+ */
+- (NSMutableString *)validateCheckOutDetailParams:(PayUModelPaymentParams *) paymentParam;
+
+/*!
  * This method validates Net Banking params.
  * @param  [paymentParam]                   [PayUModelPaymentParams type]
  * @return [errorString]                    [NSString type]
@@ -316,6 +325,13 @@
 
 -(NSMutableString *)validateGetBinInfoParam:(PayUModelPaymentParams *) paymentParam;
 
+/*!
+ * This method validate get Bin Info params and returns string value.
+ * @param  [paymentParam]                   [PayUModelPaymentParams type]
+ * @return [errorString]                    [NSMutableString type]
+ * @see    [validateCardNumberForCheckIsDomestic]
+ * @see    [validateHash]
+ */
 -(NSMutableString *)validateGetBinInfo:(PayUModelPaymentParams *) paymentParam;
 
 -(NSString *)validateLazyPayParams:(PayUModelPaymentParams *) paymentParam;
@@ -324,8 +340,26 @@
 
 -(BOOL)isValidVPA:(NSString *) vpa;
 
+/*!
+ * This method validate SI params and returns string value.
+ * @param  [paymentParam]                   [PayUModelPaymentParams type]
+ * @return [errorString]                    [NSMutableString type]
+ * @see    [validateBillingCycle]
+ * @see    [validateBillingAmount]
+ * @see    [validateDate]
+ */
 -(NSString *)validateSIParams:(PayUModelPaymentParams *) paymentParam;
 
 -(NSString *)validateBeneficiaryParams:(PayUModelPaymentParams *) paymentParam;
+
+/*!
+ * This method validate Refund params and returns string value.
+ * @param  [paymentParam]                   [PayUModelPaymentParams type]
+ * @return [errorString]                    [NSMutableString type]
+ * @see    [validateAmount]
+ * @see    [validateTransactionID]
+ */
+- (NSMutableString *)validateRefundParams:(PayUModelPaymentParams *) paymentParam ;
+- (NSMutableString *)validateRefund:(PayUModelPaymentParams *) paymentParam;
 
 @end

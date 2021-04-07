@@ -23,23 +23,23 @@
  * @param  [Json]      [NSDictionary type]
  */
 + (NSArray *)prepareEnachArrayFromDict:(id)JSON;
-
++ (NSArray *)prepareEnachArrayForCFFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
 @end
 /*
  "enach" : {
-   "KKBKENCC" : {
-     "show_form" : "0",
-     "title" : "Kotak Mahindra Bank",
-     "pgId" : "266",
-     "pt_priority" : "5",
-     "bank_id" : null
-   },
-   "ICICENCC" : {
-     "show_form" : "0",
-     "title" : "ICICI Bank",
-     "pgId" : "266",
-     "pt_priority" : "3",
-     "bank_id" : null
-   }
+ "KKBKENCC" : {
+ "show_form" : "0",
+ "title" : "Kotak Mahindra Bank",
+ "pgId" : "266",
+ "pt_priority" : "5",
+ "bank_id" : null
+ },
+ "ICICENCC" : {
+ "show_form" : "0",
+ "title" : "ICICI Bank",
+ "pgId" : "266",
+ "pt_priority" : "3",
+ "bank_id" : null
  }
-*/
+ }
+ */

@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray *)prepareUPIArrayFromDict:(id)JSON;
 
++ (NSArray *)prepareUPIArrayForCFFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
+
 @end
 
 NS_ASSUME_NONNULL_END

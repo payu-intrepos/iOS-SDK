@@ -35,6 +35,7 @@ typedef void (^completionBlockForJSONParserForCheckIsDomestic)(PayUModelCheckIsD
 typedef void (^completionBlockForJSONParserForGetBinInfo)(NSArray<PayUModelCheckIsDomestic*> *arrAllBin , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForGetTransactionInfo)(NSArray *arrOfGetTxnInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForRefund)(NSString *message , NSString *errorMessage, id extraParam);
 
 /*!
  * This method parse the JSON for CCDC/NetBanking Offer.
@@ -60,6 +61,15 @@ typedef void (^completionBlockForJSONParserForSaveUserCard)(PayUModelStoredCard 
                             andOneTapTokenDictionary:(NSDictionary *) oneTapTokenDictionary
                                           apiVersion:(PayUAPIVersion) apiVersion
                                  withCompletionBlock:(completionBlockForJSONParserforPaymentRelatedDetailForMobileSDK) paramCompletionBlock;
+/*!
+ * This method parse the JSON for Checkout detail. It parses the JSON and prepares array of model classes for all payment options.
+ * @param [JSON] [id - object returned from "JSONObjectWithData" method of NSJSONSerialization]
+ * @param [block]
+ */
+-(void)JSONParserforCheckoutDetails:(id) JSON
+                            andOneTapTokenDictionary:(NSDictionary *) oneTapTokenDictionary
+                                          apiVersion:(PayUAPIVersion) apiVersion
+                withCompletionBlock:(completionBlockForJSONParserforPaymentRelatedDetailForMobileSDK) paramCompletionBlock;
 
 /*!
  * This method parse the JSON for deleteStoredCard.
@@ -88,5 +98,7 @@ typedef void (^completionBlockForJSONParserForSaveUserCard)(PayUModelStoredCard 
 -(void)JSONParserForGetTransactionInfo:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGetTransactionInfo) paramCompletionBlock;
 
 -(void)JSONParserForSaveUserCard:(id) JSON withCompletionBlock:(completionBlockForJSONParserForSaveUserCard) paramCompletionBlock;
+
+-(void)JSONParserForRefundTransaction:(id) JSON withCompletionBlock:(completionBlockForJSONParserForRefund) paramCompletionBlock;
 
 @end
