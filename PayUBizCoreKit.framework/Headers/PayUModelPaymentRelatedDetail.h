@@ -30,6 +30,8 @@
 @property (nonatomic, strong) NSArray *NoCostEMIArray;
 @property BOOL isDCSI;
 @property BOOL isCCSI;
+@property (nonatomic, strong) NSMutableArray *otherArray;
+@property (nonatomic, strong) NSArray *downIssuingBanks;
 @property (nonatomic, strong) NSMutableArray *availablePaymentOptionsArray;
 
 @end

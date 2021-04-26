@@ -176,4 +176,6 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 + (NSString *)getCurrentTimeMiliSecond;
 
++(BOOL)isKindOfNSNumber:(id) value;
+
 @end

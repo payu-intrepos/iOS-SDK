@@ -328,6 +328,8 @@
 #define     KEY_USERCARDS                                       @"userCards"
 #define     KEY_NETBANKING                                      @"netbanking"
 #define     KEY_ENACH                                           @"enach"
+#define     KEY_NB                                              @"nb"
+#define     KEY_CASH                                            @"cash"
 #define     KEY_STANDINGINSTRUCTION                             @"standinginstruction"
 #define     KEY_NETBANKING_V2                                   @"NetBanking"
 #define     KEY_CASHCARD                                        @"cashcard"
@@ -573,7 +575,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
     version_1,
     version_2
 };
-
+#define     KEY_CONFIG                                          @"config"
 #define     KEY_PAYMENT_ID                                      @"paymentId"
 #define     KEY_ACCOUNT_ID                                      @"accountId"
 #define     KEY_REFERENCE_ID                                    @"referenceId"
@@ -604,6 +606,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_PRICE                                           @"price"
 #define     KEY_TAX_SPECIFICATION                               @"taxSpecification"
 #define     KEY_CONVENIENCE_FEE                                 @"convenienceFee"
+#define     KEY_ISSUING_BANKS                                   @"issuingBanks"
 #define     KEY_TDR                                             @"tdr"
 #define     KEY_OFFERS                                          @"offers"
 #define     KEY_APPLIED                                         @"applied"
