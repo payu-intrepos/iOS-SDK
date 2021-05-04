@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
                           }
   s.documentation_url   = "https://app.gitbook.com/@payumobile/s/sdk-integration/ios/core/core-sdk"
   s.platform            = :ios , "10.0"
-  s.vendored_frameworks = 'PayUBizCoreKit.framework'
+  s.vendored_frameworks = 'PayUBizCoreKit.xcframework'
 
   s.dependency            'PayUIndia-PayUParams', '1.0.0'
 
