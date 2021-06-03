@@ -351,7 +351,9 @@
 -(NSString *)validateSIParams:(PayUModelPaymentParams *) paymentParam;
 
 -(NSString *)validateBeneficiaryParams:(PayUModelPaymentParams *) paymentParam;
-
+// * This method validate MCP lookup params and returns string value.
+- (NSMutableString *)validateMCPLookupParams:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateMCPLookup:(PayUModelPaymentParams *) paymentParam;
 /*!
  * This method validate Refund params and returns string value.
  * @param  [paymentParam]                   [PayUModelPaymentParams type]

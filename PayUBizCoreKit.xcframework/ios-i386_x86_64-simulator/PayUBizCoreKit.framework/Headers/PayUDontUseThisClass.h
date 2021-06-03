@@ -29,6 +29,9 @@ typedef void (^completionBlockForgetPayUHashesWithPaymentParam)(PayUModelHashes 
  */
 -(void)getPayUHashesWithPaymentParam:(PayUModelPaymentParams *) paymentParam merchantSalt:(NSString *) salt withCompletionBlock:(completionBlockForgetPayUHashesWithPaymentParam) completionBlock;
 
+-(void)getPayUHashesWithPaymentParam:(PayUModelPaymentParams *) paymentParam merchantSalt:(NSString *) salt merchantSecret:(NSString *) secret withCompletionBlock:(completionBlockForgetPayUHashesWithPaymentParam) completionBlock;
+
+
 - (NSString *) getHash:(NSString *)input;
 
 + (NSString*)getCurrentDateForAPIV2;
@@ -42,6 +45,7 @@ typedef void (^completionBlockForgetPayUHashesWithPaymentParam)(PayUModelHashes 
                                    key:(NSString *) key;
 
 + (NSString *) getDeleteStoredCardPostParamString:(PayUModelPaymentParams *) paymentParam;
++ (NSString *)hmacsha1:(NSString *)data secret:(NSString *)key;
 
 @property (strong, nonatomic) NSString *subventionPaymentHashString;
 @property (strong, nonatomic) NSString *subventionPaymentHash;

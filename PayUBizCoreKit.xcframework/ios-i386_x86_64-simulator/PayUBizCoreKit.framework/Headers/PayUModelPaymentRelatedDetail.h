@@ -14,6 +14,7 @@
 #import "PayUModelStoredCard.h"
 #import "PayUModelCashCard.h"
 #import "PayUModelEMI.h"
+#import "PayUModelTaxSpecification.h"
 
 @interface PayUModelPaymentRelatedDetail : NSObject
 
@@ -33,6 +34,8 @@
 @property (nonatomic, strong) NSMutableArray *otherArray;
 @property (nonatomic, strong) NSArray *downIssuingBanks;
 @property (nonatomic, strong) NSMutableArray *availablePaymentOptionsArray;
+@property (nonatomic, strong) PayUModelTaxSpecification *taxSpecification;
+@property (nonatomic, strong) NSArray *offers;
 
 @end
 

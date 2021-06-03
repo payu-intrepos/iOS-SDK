@@ -13,7 +13,7 @@
 #import "PayUModelHashes.h"
 #import "PayUModelStoredCard.h"
 #import "PayUConstants.h"
-@import PayUParamsKit;
+#import <PayUParamsKit/PayUParamsKit.h>
 
 @interface PayUModelPaymentParams : NSObject <NSCopying>
 
@@ -26,13 +26,14 @@
 @property (strong, nonatomic) NSString * transactionID;
 @property (strong, nonatomic) NSString * SURL;
 @property (strong, nonatomic) NSString * FURL;
+@property (strong, nonatomic) NSString * merchantAccessKey;
 // For setting Environment
 //  ENVIRONMENT_PRODUCTION   is for Production
 //  ENVIRONMENT_TEST   is for Test
 @property (strong, nonatomic) NSString * environment;
 // Hashes
 @property (strong, nonatomic) PayUModelHashes *hashes;
-
+@property (strong, nonatomic) NSString * lookupRequestId;
 
 
 // Other Parameters
@@ -205,7 +206,7 @@
 @property (strong, nonatomic) NSString * authUdf2;
 
 @property (strong, nonatomic) NSString * lastName;
-
+@property (strong, nonatomic) NSString * lookupId;
 
 - (NSString *)getValidThrough;
 - (BOOL)isCardToBeStored;

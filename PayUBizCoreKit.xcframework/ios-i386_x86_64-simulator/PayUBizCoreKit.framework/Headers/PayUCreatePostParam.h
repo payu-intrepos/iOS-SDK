@@ -26,6 +26,8 @@
  */
 -(NSString *)createPostParam:(PayUModelPaymentParams *) paramPaymentParam withType:(NSString *) type;
 
+-(NSString *)createCitrusPostParam:(PayUModelPaymentParams *)paramPaymentParam
+                    withType:(NSString *)type;
 + (NSString *)getV2PostParamForDeleteSC:(PayUModelPaymentParams *) paramPaymentParam;
 
 @end

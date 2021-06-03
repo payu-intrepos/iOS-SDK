@@ -19,6 +19,7 @@
 #import "PayUModelCheckIsDomestic.h"
 #import "PayUModelGetTxnInfo.h"
 #import "PayUConstants.h"
+@import PayUParamsKit;
 
 @interface PayUJSONParser : NSObject
 
@@ -33,8 +34,10 @@ typedef void (^completionBlockForJSONParserForVerifyPayment)(NSDictionary *dictV
 typedef void (^completionBlockForJSONParserForDeleteOneTapToken)(NSString *deleteOneTapTokenMsg ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForCheckIsDomestic)(PayUModelCheckIsDomestic *checkIsDomestic , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForGetBinInfo)(NSArray<PayUModelCheckIsDomestic*> *arrAllBin , NSString *errorMessage, id extraParam);
+
 typedef void (^completionBlockForJSONParserForGetTransactionInfo)(NSArray *arrOfGetTxnInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForMCPLookup)(PayUModelMultiCurrencyPayment *mcpInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForRefund)(NSString *message , NSString *errorMessage, id extraParam);
 
 /*!
@@ -98,6 +101,9 @@ typedef void (^completionBlockForJSONParserForRefund)(NSString *message , NSStri
 -(void)JSONParserForGetTransactionInfo:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGetTransactionInfo) paramCompletionBlock;
 
 -(void)JSONParserForSaveUserCard:(id) JSON withCompletionBlock:(completionBlockForJSONParserForSaveUserCard) paramCompletionBlock;
+
+
+-(void)JSONParserForMCPLookUP:(id) JSON withCompletionBlock:(completionBlockForJSONParserForMCPLookup) paramCompletionBlock;
 
 -(void)JSONParserForRefundTransaction:(id) JSON withCompletionBlock:(completionBlockForJSONParserForRefund) paramCompletionBlock;
 

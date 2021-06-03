@@ -21,7 +21,7 @@
 #import "PayUModelEMIDetails.h"
 #import "PayUModelGetTxnInfo.h"
 #import "PayUModelVAS.h"
-
+@import PayUParamsKit;
 @interface PayUWebServiceResponse : NSObject
 
 typedef void (^completionBlockForPayUPaymentRelatedDetail)(PayUModelPaymentRelatedDetail *paymentRelatedDetails ,NSString *errorMessage, id extraParam);
@@ -49,6 +49,7 @@ typedef void (^completionBlockForGetBinInfo)(NSArray<PayUModelCheckIsDomestic*> 
 typedef void (^completionBlockForRefund)(NSString *message , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForGetTransactionInfo)(NSArray *arrOfGetTxnInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForMCPLookup)(PayUModelMultiCurrencyPayment *mcpInfo , NSString *errorMessage, id extraParam);
 
 /*!
  * This method gives webService response callback for MobileSDK.
@@ -191,6 +192,7 @@ typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCar
 
 -(void)saveUserCard:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForSaveUserCard) paramCompletionBlock;
 
+-(void)mcpLookup:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForMCPLookup) paramCompletionBlock;
 /*!
  * This method gives webService response callback for Refund
  * @param [paymentParam]    [PayUModelPaymentParams type]
