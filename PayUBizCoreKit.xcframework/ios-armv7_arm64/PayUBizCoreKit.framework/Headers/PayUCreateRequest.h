@@ -49,4 +49,6 @@ typedef void (^completionBlockForCreateRequestWithPaymentParam)(NSMutableURLRequ
 
 -(void)createCitrusRequestWithPaymentParam:(PayUModelPaymentParams *) paymentParam forServiceType: (NSString *)serviceType withCompletionBlock:(completionBlockForCreateRequestWithPaymentParam) paramCompletionBlock;
 
+-(void)createCheckoutXRequestWithPaymentParam:(PayUModelPaymentParams *) paymentParam forServiceType: (NSString *)serviceType withCompletionBlock:(completionBlockForCreateRequestWithPaymentParam) paramCompletionBlock;
+
 @end

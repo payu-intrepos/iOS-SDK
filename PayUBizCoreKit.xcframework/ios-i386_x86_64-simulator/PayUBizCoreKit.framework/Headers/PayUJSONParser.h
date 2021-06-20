@@ -39,6 +39,7 @@ typedef void (^completionBlockForJSONParserForGetTransactionInfo)(NSArray *arrOf
 typedef void (^completionBlockForJSONParserForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForMCPLookup)(PayUModelMultiCurrencyPayment *mcpInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForRefund)(NSString *message , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForVerifyIFSC)(PayUModelIFSCInfo *ifscInfo , NSString *errorMessage, id extraParam);
 
 /*!
  * This method parse the JSON for CCDC/NetBanking Offer.
@@ -106,5 +107,7 @@ typedef void (^completionBlockForJSONParserForRefund)(NSString *message , NSStri
 -(void)JSONParserForMCPLookUP:(id) JSON withCompletionBlock:(completionBlockForJSONParserForMCPLookup) paramCompletionBlock;
 
 -(void)JSONParserForRefundTransaction:(id) JSON withCompletionBlock:(completionBlockForJSONParserForRefund) paramCompletionBlock;
+
+-(void)JSONParserForVerifyIFSC:(id) JSON withCompletionBlock:(completionBlockForJSONParserForVerifyIFSC) paramCompletionBlock;
 
 @end

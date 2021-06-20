@@ -175,7 +175,6 @@
 
 @property (strong, nonatomic) NSString * offerType;
 @property (strong, nonatomic) NSString * failureReason;
-
 @property (strong, nonatomic) NSString * si;
 @property (strong, nonatomic) NSString * forcePgid;
 @property (strong, nonatomic) NSString * cardMerchantParam;
