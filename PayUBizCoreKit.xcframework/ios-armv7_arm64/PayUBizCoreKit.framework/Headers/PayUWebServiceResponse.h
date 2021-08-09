@@ -50,6 +50,7 @@ typedef void (^completionBlockForRefund)(NSString *message , NSString *errorMess
 typedef void (^completionBlockForGetTransactionInfo)(NSArray *arrOfGetTxnInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForMCPLookup)(PayUModelMultiCurrencyPayment *mcpInfo , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForIFSC)(PayUModelIFSCInfo *isfcInfo , NSString *errorMessage, id extraParam);
 
 /*!
  * This method gives webService response callback for MobileSDK.
@@ -202,5 +203,7 @@ typedef void (^completionBlockForMCPLookup)(PayUModelMultiCurrencyPayment *mcpIn
  * @see   [JSONParserForGetBinInfo - PayUJSONParser]
  */
 -(void)refundTransaction:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForRefund) paramCompletionBlock;
+
+-(void)fetchIFSCDetails:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForIFSC) paramCompletionBlock;
 
 @end

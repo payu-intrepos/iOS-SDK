@@ -50,7 +50,7 @@
 #define CITRUS_WEBSERVICE_PRODUCTION_URL                        @"https://mercury.citruspay.com/"
 #define CITRUS_WEBSERVICE_TEST_URL                              @"https://sboxmercury.citruspay.com/"
 #define CITRUS_MCP_LOOKUP_URL                                   @"multi-currency-pricing/mcp/lookup"
-
+#define CHECKOUTX_IFSC_URL                                      @"checkoutx/verifyIFSC"
 #define PAYU_WEBSERVICE_V2_PRODUCTION_URL                       @"https://api.payu.in"
 #define PAYU_WEBSERVICE_V2_SANDBOX_URL                          @"https://sandbox.payu.in"
 
@@ -155,6 +155,10 @@
 #define ERROR_EMI_NOT_SUPPORTED_WITH_THIS_CARD                  @"EMI not supported with this card"
 #define ERROR_MEMORY_ISSUE                                      @"Memory Issue"
 
+#define API_RATE_LIMITER_GENERIC_MESSAGE                        @"Oops! Too many requests. Please try after sometime."
+#define IFSC_NOT_FOUND                                          @"IFSC not found."
+#define INVALID_IFSC_CODE                                       @"Invalid IFSC code."
+
 #define ERROR_SUBVENTION_AMOUNT_IS_MISSING                      @"Subvention Amount is missing, "
 #define ERROR_SUBVENTION_AMOUNT_IS_NONNUMERIC                   @"Subvention Amount should be a Double value example 5.00, "
 #define ERROR_SUBVENTION_AMOUNT_GREATER_THAN_AMOUNT             @"Subvention Amount should be less than or equal to the transaction amount, "
@@ -165,7 +169,7 @@
 #define ERROR_SI_PARAM_MISSING                                  @"SI Param missing, "
 #define ERROR_INVALID_BILLING_INTERVAL                          @"Billing interval should be 1 for billing cycle ADHOC and ONCE, "
 #define ERROR_INVALID_BILLING_CYCLE                             @"Invalid billing cycle value passed, "
-#define ERROR_INVALID_BILLING_AMOUNT_FOR_ADHOC                  @"Billing amount should not be greater than amount passed in subscription call, "
+#define ERROR_INVALID_BILLING_AMOUNT_FOR_ADHOC                  @"Billing amount should not be greater than amount passed in subscription call."
 #define ERROR_INVALID_START_DATE                                @"Invalid SI start date, "
 #define ERROR_INVALID_END_DATE                                  @"Invalid SI end date, "
 
@@ -178,6 +182,8 @@
 #define BILLING_AMOUNT                                          @"Billing amount"
 #define MIN_TXN_AMOUNT                                          @"Min transaction amount"
 #define TRANSACTION_AMOUNT                                      @"Transaction Amount"
+#define ERROR_IFSC_IS_MISSING                                   @"IFSC is missing, "
+
 // Regex
 
 #define EMAIL_REGEX                                             @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
@@ -215,6 +221,7 @@
 #define COMMAND_CANCEL_REFUND_TRANSACTION                       @"cancel_refund_transaction"
 #define COMMAND_GET_TRANSACTION_INFO                            @"get_transaction_info"
 #define COMMAND_GET_CHECKOUT_DETAILS                            @"get_checkout_details"
+#define COMMAND_CHECKOUTX_IFSC                                  @"checkoutx_IFSC"
 // Endpoints for webservice
 
 #define PAYMENTS                                                @"/payments"
@@ -402,7 +409,7 @@
 #define     KEY_OFFER_DATA                                      @"offer_data"
 #define     KEY_CARD_DATA                                       @"card_data"
 #define     KEY_CARD_TOKENS                                     @"card_tokens"
-
+#define     KEY_HTTP_STATUS                                     @"http_status"
 
 // Payment Param for Stored Card
 #define     KEY_STORE_CARD_TOKEN                                @"store_card_token"
@@ -440,6 +447,7 @@
 #define     PARAM_PAYMENT_END_DATE                              @"paymentEndDate"
 #define     PARAM_REMARKS                                       @"remarks"
 #define     PARAM_FREE_TRIAL                                    @"free_trial"
+#define     PARAM_IFSC_CODE                                     @"ifscCode"
 
 // BENEFICIARY PARAM
 #define     PARAM_BENEFICIARY_NAME                              @"beneficiaryName"
@@ -658,6 +666,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 
 #define     KEY_BANK_DATA                                       @"bankData"
 #define     KEY_MESSAGE_DIGEST                                  @"messageDigest"
+#define     KEY_MESSAGE                                         @"message"
 #define     KEY_PARES                                           @"pares"
 #define     KEY_ADDITIONAL_INFO                                 @"additionalInfo"
 

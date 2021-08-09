@@ -363,5 +363,6 @@
  */
 - (NSMutableString *)validateRefundParams:(PayUModelPaymentParams *) paymentParam ;
 - (NSMutableString *)validateRefund:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateIFSCParams:(PayUModelPaymentParams *) paymentParam;
 
 @end
