@@ -493,6 +493,7 @@
 #define     PAYMENT_PG_NO_COST_EMI                              @"No Cost EMI"
 #define     PAYMENT_PG_PAYU_MONEY                               @"PayU Money"
 #define     PAYMENT_PG_LAZYPAY                                  @"LazyPay"
+#define     PAYMENT_PG_ZESTMONEY                                @"ZESTMON"
 #define     PAYMENT_PG_UPI                                      @"UPI"
 
 // PG Type
@@ -543,6 +544,7 @@
 #define     KEY_BANK_REF_NO                                     @"bank_ref_no"
 #define     KEY_CARDTYPE_INFO                                   @"cardtype"
 #define     KEY_FAILURE_REASON                                  @"failure_reason"
+#define     KEY_REASON                                          @"reason"
 #define     KEY_FIELD2                                          @"field2"
 #define     KEY_IBIBO_CODE                                      @"ibibo_code"
 #define     KEY_ID                                              @"id"
@@ -638,6 +640,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_CARD_MERCHANT_PARAM                             @"cardMerchantParam"
 #define     KEY_SUBVENTION_AMOUNT                               @"subventionAmount"
 #define     KEY_SUBVENTION_ELIGIBILITY                          @"subventionEligibility"
+#define     KEY_ELIGIBILITY                                     @"eligibility"
 #define     KEY_AUTH_ONLY                                       @"authOnly"
 #define     KEY_VPA                                             @"vpa"
 #define     KEY_VISA_CALL_ID                                    @"visaCallId"

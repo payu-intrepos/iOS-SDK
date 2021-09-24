@@ -74,6 +74,8 @@
 @property BOOL checkDownStatus;
 @property BOOL checkOfferDetails;
 @property BOOL checkTaxSpecification;
+@property BOOL checkCustomerEligibility;
+@property BOOL isCardlessEMI;
 @property (assign, nonatomic) PayUAPIVersion apiVersion;
 
 // Param for Stored card
