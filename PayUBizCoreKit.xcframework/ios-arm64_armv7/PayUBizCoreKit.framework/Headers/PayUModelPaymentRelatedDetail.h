@@ -11,6 +11,7 @@
  */
 #import <Foundation/Foundation.h>
 #import "PayUModelNetBanking.h"
+#import "PayUModelNeftRtgs.h"
 #import "PayUModelStoredCard.h"
 #import "PayUModelCashCard.h"
 #import "PayUModelEMI.h"
@@ -21,11 +22,13 @@
 @property (nonatomic, strong) NSArray *oneTapStoredCardArray;
 @property (nonatomic, strong) NSArray *storedCardArray;
 @property (nonatomic, strong) NSArray *netBankingArray;
+@property (nonatomic, strong) NSArray *neftrtgsArray;
 @property (nonatomic, strong) NSArray *enachArray;
 @property (nonatomic, strong) NSArray *siArray;
 @property (nonatomic, strong) NSArray *cashCardArray;
 @property (nonatomic, strong) NSArray *upiArray;
 @property (nonatomic, strong) NSArray *EMIArray;
+@property (nonatomic, strong) NSDictionary *EMIDictionary;
 @property (nonatomic, strong) NSArray *ccArray;
 @property (nonatomic, strong) NSArray *dcArray;
 @property (nonatomic, strong) NSArray *NoCostEMIArray;

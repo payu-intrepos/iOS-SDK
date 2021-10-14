@@ -37,8 +37,10 @@
 
 +(NSArray *)getEMIArrayForCFFromDict:(NSDictionary *) JSON withDownStaus:(NSDictionary *)downJSON;
 
-+ (NSDictionary *)getEMIDictFromEMIModelArray:(NSArray *)emiArray;
++(NSDictionary *)getEMIDictionaryForCFFromDict:(NSDictionary *) JSON withDownStaus:(NSDictionary *)downJSON;
 
-+ (NSDictionary *)getEligibleNoCostEMIDictFromEMIModelArray:(NSArray *)emiArray WRTToAmount:(NSString *) amount;
++(NSDictionary *)getEMIDictFromEMIModelArray:(NSArray *)emiArray;
+
++(NSDictionary *)getEligibleNoCostEMIDictFromEMIModelArray:(NSArray *)emiArray WRTToAmount:(NSString *) amount;
 
 @end

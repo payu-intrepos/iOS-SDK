@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString * bankCode;
 @property (strong, nonatomic) NSNumber * additionalCharge;
 @property (nonatomic, strong) NSArray *offers;
+@property (nonatomic, strong) NSArray *verificationModes;
 @property BOOL isDown;
 
 + (NSArray *)prepareArrayFromDict:(id)JSON withKey:(NSString *)key ;

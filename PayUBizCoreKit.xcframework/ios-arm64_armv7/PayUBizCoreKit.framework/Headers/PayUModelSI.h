@@ -27,6 +27,8 @@
 + (NSArray *)prepareSIArrayForCFFromDict:(id)JSON;
 + (BOOL) checkDCSI:(id)JSON;
 + (BOOL) checkCCSI:(id)JSON;
++ (BOOL) checkDCSIForCF:(id)JSON;
++ (BOOL) checkCCSIForCF:(id)JSON;
 
 @end
 /*

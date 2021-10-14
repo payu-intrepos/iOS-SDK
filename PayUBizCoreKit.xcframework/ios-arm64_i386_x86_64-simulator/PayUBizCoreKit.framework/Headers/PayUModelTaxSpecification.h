@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSNumber *ccTaxValue;
 @property (nonatomic, strong) NSNumber *dcTaxValue;
 @property (nonatomic, strong) NSNumber *nbTaxValue;
+@property (nonatomic, strong) NSNumber *neftRtgsTaxValue;
 @property (nonatomic, strong) NSNumber *emiTaxValue;
 @property (nonatomic, strong) NSNumber *cashTaxValue;
 @property (nonatomic, strong) NSNumber *upiTaxValue;

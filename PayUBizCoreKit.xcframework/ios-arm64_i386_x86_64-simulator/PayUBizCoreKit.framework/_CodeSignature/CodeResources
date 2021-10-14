@@ -6,15 +6,15 @@
 	<dict>
 		<key>Headers/PayUBasePaymentModel.h</key>
 		<data>
-		CJxmiqQAkxsrQDk2Ht6Pborc+h4=
+		bwzzO8CbJKgfNqGwuLoamVmunAE=
 		</data>
 		<key>Headers/PayUBizCoreKit.h</key>
 		<data>
-		Cr2V0o1pO3EQJgtvXnn0h4F1HBc=
+		T3kQhhltB9wvb7IbTNpeDkxncRM=
 		</data>
 		<key>Headers/PayUConstants.h</key>
 		<data>
-		/VYwmgAg5worIHKJCPqTycir44E=
+		na5iZfYy16TnANIogDnMFTdDd74=
 		</data>
 		<key>Headers/PayUCreatePostParam.h</key>
 		<data>
@@ -54,7 +54,7 @@
 		</data>
 		<key>Headers/PayUModelEMI.h</key>
 		<data>
-		LMfiFbHrNeGnjd73+MH65UTxBtM=
+		ScKqBO22ONXrdvrbos418NBTQhE=
 		</data>
 		<key>Headers/PayUModelEMIDetails.h</key>
 		<data>
@@ -72,6 +72,10 @@
 		<data>
 		7AJ7FQOEtaFUyXvoqp7JSAinZoc=
 		</data>
+		<key>Headers/PayUModelNeftRtgs.h</key>
+		<data>
+		UD7VcmQ53i9jYIK8lMXkKxB4nxQ=
+		</data>
 		<key>Headers/PayUModelNetBanking.h</key>
 		<data>
 		fNlPj2U4AWXbagJ3O0xUNm6GoMs=
@@ -86,15 +90,15 @@
 		</data>
 		<key>Headers/PayUModelPaymentParams.h</key>
 		<data>
-		4h0sF7VUl/czUNc3PtWeIf9aocY=
+		WH4tFGw1FTzJch4AKzBlsHcHqkE=
 		</data>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
 		<data>
-		7pctVcHrL/lYGNy2BwVIMavgpv4=
+		BiPsbevTFxy6IfqiPUwW3DEUZyE=
 		</data>
 		<key>Headers/PayUModelSI.h</key>
 		<data>
-		8H/kX7oV8sl+6dIDbBIhQJIkGp4=
+		7bRPECNAhDBxITMJ2COW05ensaw=
 		</data>
 		<key>Headers/PayUModelStoredCard.h</key>
 		<data>
@@ -102,7 +106,7 @@
 		</data>
 		<key>Headers/PayUModelTaxSpecification.h</key>
 		<data>
-		GgLJ/wea2wPyuyBi4BDhSRYO//g=
+		HMAuXdn2iL+UHbjDHsRB4xZdnEE=
 		</data>
 		<key>Headers/PayUModelUPI.h</key>
 		<data>
@@ -130,7 +134,7 @@
 		</data>
 		<key>Headers/PayUValidations.h</key>
 		<data>
-		KxyK0ld+SB0KMzKsA6bSGPC+oZM=
+		YA/U5nz5gsOvGgZ3q4LzBiG18Dg=
 		</data>
 		<key>Headers/PayUWSManager.h</key>
 		<data>
@@ -142,7 +146,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		jCDFG3FOcQyT1Kmr6UsxYJS4lqE=
+		RbztYXr2JBVApMwse1e6l+MUo44=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -159,33 +163,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			CJxmiqQAkxsrQDk2Ht6Pborc+h4=
+			bwzzO8CbJKgfNqGwuLoamVmunAE=
 			</data>
 			<key>hash2</key>
 			<data>
-			JYm6fhGPvIuW4LzuAzOu6+X2/k+PihVDQ3bANyLEKrA=
+			65v6Q3qnvfhdoS31KCtrJmJ+mqp50TVe/m8Mg6egveg=
 			</data>
 		</dict>
 		<key>Headers/PayUBizCoreKit.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Cr2V0o1pO3EQJgtvXnn0h4F1HBc=
+			T3kQhhltB9wvb7IbTNpeDkxncRM=
 			</data>
 			<key>hash2</key>
 			<data>
-			DEkdvgNE5430T3JQq8FSvV+RJEZvxT7BevuXeVgX7aw=
+			D9HwheyoFQwTThkgTUDl1EeEk1tgHW/w8DcH4Svllog=
 			</data>
 		</dict>
 		<key>Headers/PayUConstants.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			/VYwmgAg5worIHKJCPqTycir44E=
+			na5iZfYy16TnANIogDnMFTdDd74=
 			</data>
 			<key>hash2</key>
 			<data>
-			cOYWO0hjEMg9EQqt+EkX86a+BjwhkXqZYITEFn/z9hU=
+			zLpZxA57PH2quTJC8AG0jz0beaMoBw3iILidoA+y1N0=
 			</data>
 		</dict>
 		<key>Headers/PayUCreatePostParam.h</key>
@@ -291,11 +295,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			LMfiFbHrNeGnjd73+MH65UTxBtM=
+			ScKqBO22ONXrdvrbos418NBTQhE=
 			</data>
 			<key>hash2</key>
 			<data>
-			5vqHcY1sV3EkOXJ7eczcI6UxePtoxVkQMmnvBQssQG8=
+			IVs5hJcmyfPiz7S8JzfMBYqAIY+9DECmhBdt2Gade7c=
 			</data>
 		</dict>
 		<key>Headers/PayUModelEMIDetails.h</key>
@@ -342,6 +346,17 @@
 			fxuIQByfsLi5qM8n5Nnanf/XbSlL/xMmnNcEMqZjK+I=
 			</data>
 		</dict>
+		<key>Headers/PayUModelNeftRtgs.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			UD7VcmQ53i9jYIK8lMXkKxB4nxQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			g4KSWxHUQZLg8nEeO+uJog8vXItuKUkDsfvAKho3DvQ=
+			</data>
+		</dict>
 		<key>Headers/PayUModelNetBanking.h</key>
 		<dict>
 			<key>hash</key>
@@ -379,33 +394,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			4h0sF7VUl/czUNc3PtWeIf9aocY=
+			WH4tFGw1FTzJch4AKzBlsHcHqkE=
 			</data>
 			<key>hash2</key>
 			<data>
-			o7BFvz/L9cK0UkVGjxZJBmFkXaI1d9u2LeFX/vywrq8=
+			kPeFO3j5aT/Q4rJMrLfDwtJf+PBipIeD3or551OaQr4=
 			</data>
 		</dict>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7pctVcHrL/lYGNy2BwVIMavgpv4=
+			BiPsbevTFxy6IfqiPUwW3DEUZyE=
 			</data>
 			<key>hash2</key>
 			<data>
-			lhnTR7lWOPd62hgmrc32mUvT31fkwoI8cO6U/fPpmxU=
+			4jAyhwwwPRyn3WvYk5+mc7wxYive2+jejPOrCtpGzyw=
 			</data>
 		</dict>
 		<key>Headers/PayUModelSI.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8H/kX7oV8sl+6dIDbBIhQJIkGp4=
+			7bRPECNAhDBxITMJ2COW05ensaw=
 			</data>
 			<key>hash2</key>
 			<data>
-			KsB2awQcUjVClcGweaeyqOcCuTLVfr1C9gkEXYPZ0MI=
+			8IQKnPr2zRSrtY3mubZeISwHLGATwbU1b8aVe7BrpeA=
 			</data>
 		</dict>
 		<key>Headers/PayUModelStoredCard.h</key>
@@ -423,11 +438,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			GgLJ/wea2wPyuyBi4BDhSRYO//g=
+			HMAuXdn2iL+UHbjDHsRB4xZdnEE=
 			</data>
 			<key>hash2</key>
 			<data>
-			goWvIW+mbqRzbIdPus7hZgmP2Z791miVD4i2GFUoFF8=
+			oTp+CfZzvyr/IuB2yWeB4T+a5UWNvm4X6Yyo0GJsv5U=
 			</data>
 		</dict>
 		<key>Headers/PayUModelUPI.h</key>
@@ -500,11 +515,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KxyK0ld+SB0KMzKsA6bSGPC+oZM=
+			YA/U5nz5gsOvGgZ3q4LzBiG18Dg=
 			</data>
 			<key>hash2</key>
 			<data>
-			n1O9VxBMuNgype5dYeM4sd/ePKSt4v6rRmiddxgBi0A=
+			XGQAE/Ri+Ax9w2ukeEEeq/pALdgPJPN5AqaSLEXrKsI=
 			</data>
 		</dict>
 		<key>Headers/PayUWSManager.h</key>
