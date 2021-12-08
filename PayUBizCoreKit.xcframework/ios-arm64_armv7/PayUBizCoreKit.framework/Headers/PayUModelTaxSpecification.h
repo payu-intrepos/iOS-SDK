@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSNumber *upiTaxValue;
 @property (nonatomic, strong) NSNumber *enachTaxValue;
 @property (nonatomic, strong) NSNumber *lazypayTaxValue;
+@property (nonatomic, strong) NSNumber *mcTaxValue;
 
 + (PayUModelTaxSpecification *)prepareTaxInfoFromDict:(NSDictionary *)JSON;
 + (NSNumber *)checkContainTaxValue:(id)taxValue withDefaultValue:(id)defaultValue;

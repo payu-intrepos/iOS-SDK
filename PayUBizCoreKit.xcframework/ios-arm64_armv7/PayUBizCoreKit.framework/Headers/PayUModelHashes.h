@@ -32,6 +32,7 @@
 @property (strong, nonatomic) NSString * getTransactionInfoHash;
 @property (strong, nonatomic) NSString * lookupApiHash;
 @property (strong, nonatomic) NSString * refundTransactionHash;
+@property (strong, nonatomic) NSString * checkBalanceApiHash;
 /*
  get_merchant_ibibo_codes_hash"
  payment_hash"

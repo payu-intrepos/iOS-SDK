@@ -21,8 +21,12 @@
 #import "PayUModelEMIDetails.h"
 #import "PayUModelGetTxnInfo.h"
 #import "PayUModelVAS.h"
+#import "PayUModelSodexoCardDetail.h"
 @import PayUParamsKit;
+
 @interface PayUWebServiceResponse : NSObject
+
+typedef void (^completionBlockForSodexoCardDetail)(PayUModelSodexoCardDetail *sodexoCardDetail, NSString *errorMessage, id extraParam);
 
 typedef void (^completionBlockForPayUPaymentRelatedDetail)(PayUModelPaymentRelatedDetail *paymentRelatedDetails ,NSString *errorMessage, id extraParam);
 
@@ -205,5 +209,8 @@ typedef void (^completionBlockForIFSC)(PayUModelIFSCInfo *isfcInfo , NSString *e
 -(void)refundTransaction:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForRefund) paramCompletionBlock;
 
 -(void)fetchIFSCDetails:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForIFSC) paramCompletionBlock;
+
+-(void)fetchSodexoCardDetails:(PayUModelPaymentParams *) paymentParam
+      withCompletionBlock:(completionBlockForSodexoCardDetail) paramCompletionBlock;
 
 @end

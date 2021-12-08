@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSArray *storedCardArray;
 @property (nonatomic, strong) NSArray *netBankingArray;
 @property (nonatomic, strong) NSArray *neftrtgsArray;
+@property (nonatomic, strong) NSArray *mealCardArray;
 @property (nonatomic, strong) NSArray *enachArray;
 @property (nonatomic, strong) NSArray *siArray;
 @property (nonatomic, strong) NSArray *cashCardArray;

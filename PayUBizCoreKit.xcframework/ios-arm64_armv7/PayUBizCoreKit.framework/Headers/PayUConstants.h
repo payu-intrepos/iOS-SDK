@@ -41,7 +41,7 @@
 #define PAYU_PAYMENT_TEST_URL                                   @"https://test.payu.in/_payment"
 #define PAYU_PAYMENT_BIZ_CHECKOUT_TEST_URL                      @"https://bizcheckouttest.payu.in/_payment"
 
-#define PAYU_WEBSERVICE_PRODUCTION_URL                          @"https://info.payu.in/merchant/postservice.php?form=2"
+#define PAYU_WEBSERVICE_PRODUCTION_URL                          @"https://info.payu.in/merchant/postservice?form=2"
 #define PAYU_WEBSERVICE_MOBILETEST_URL                          @"https://mobiletest.payu.in/merchant/postservice?form=2"
 #define PAYU_WEBSERVICE_MOBILEDEV_URL                           @"https://mobiledev.payu.in/merchant/postservice?form=2"
 #define PAYU_WEBSERVICE_DEMOTEST_URL                            @"https://demotest.payu.in/merchant/postservice?form=2"
@@ -64,7 +64,7 @@
 //Errors
 //Mandatory params error list
 #define ERROR_KEY_IS_MISSING                                    @"Key is missing, "
-
+#define ERROR_SODEXO_SOURCE_ID_IS_MISSING                       @"Sodexo sourde id is missing, "
 #define ERROR_TRANSACTIONID_IS_MISSING                          @"Transaction ID is missing, "
 #define ERROR_TRANSACTIONID_GREATER_THAN_25                     @"Transaction ID greater than 25 character, "
 
@@ -73,8 +73,6 @@
 #define ERROR_AMOUNT_CONTAIN_MORE_THAN_ONE_DECIMAL              @"Amount contain more than one decimal, "
 #define ERROR_AMOUNT_IS_LESS_THAN_MINIMUM_AMOUNT                @" is less than minimum amount, "
 #define ERROR_AMOUNT_IS_LESS_THAN                               @"is less than"
-
-
 
 #define ERROR_PRODUCTINFO_IS_MISSING                            @"Product Info is missing, "
 #define ERROR_PRODUCTINFO_GREATER_THAN_100                      @"Product Info greater than 100 character, "
@@ -175,6 +173,7 @@
 
 #define ERROR_BENFECIARY_DETAIL_PARAM_MISSING                   @"Beneficiary details missing, "
 #define ERROR_BENFECIARY_ACCOUNT_NAME_PARAM_MISSING             @"Beneficiary account holder name is missing, "
+#define ERROR_ACCOUNT_NAME_PARAM_MISSING                        @"Account holder name is missing, "
 #define ERROR_BENFECIARY_ACCOUNT_NUMBER_PARAM_MISSING           @"Beneficiary account holder number is missing, "
 #define ERROR_INVALID_ACCOUNT_NUMBER                            @"Please enter atleast 8 digit account number, "
 #define ERROR_INVALID_BENFECIARY_ACCOUNT_TYPE                   @"Beneficiary account type is invalid, "
@@ -222,6 +221,7 @@
 #define COMMAND_GET_TRANSACTION_INFO                            @"get_transaction_info"
 #define COMMAND_GET_CHECKOUT_DETAILS                            @"get_checkout_details"
 #define COMMAND_CHECKOUTX_IFSC                                  @"checkoutx_IFSC"
+#define COMMAND_CHECK_BALANCE                                   @"check_balance"
 // Endpoints for webservice
 
 #define PAYMENTS                                                @"/payments"
@@ -254,7 +254,7 @@
 #define     PARAM_VAR14                                         @"var14"
 #define     PARAM_VAR15                                         @"var15"
 #define     PARAM_DEFAULT                                       @"default"
-
+#define     PARAM_SODEXO_SOURCE_ID                              @"sodexoSourceId"
 #define     REQUEST_IDENTIFIER_1                                @"1"
 #define     REQUEST_IDENTIFIER_2                                @"2"
 #define     REQUEST_IDENTIFIER_3                                @"3"
@@ -329,6 +329,7 @@
 #define     PARAM_CC_EXP_MON                                    @"ccexpmon"
 #define     PARAM_CC_EXP_YR                                     @"ccexpyr"
 #define     PARAM_STORE_CARD                                    @"store_card"
+#define     PARAM_SAVE_SODEXO_CARD                              @"save_sodexo_card"
 #define     PARAM_STORE_CARD_NAME                               @"card_name"
 #define     PARAM_LOOKUP_ID                                     @"lookupId"
 #define     PARAM_BANK_CODE_CCDC                                @"CC"
@@ -340,6 +341,8 @@
 #define     KEY_USERCARDS                                       @"userCards"
 #define     KEY_NETBANKING                                      @"netbanking"
 #define     KEY_NEFT_RTGS                                       @"neftrtgs"
+#define     KEY_MEAL_CARD                                       @"mealcard"
+#define     KEY_SODEXO                                          @"sodexo"
 #define     KEY_ENACH                                           @"enach"
 #define     KEY_NB                                              @"nb"
 #define     KEY_DC                                              @"dc"
@@ -500,11 +503,13 @@
 #define     PAYMENT_PG_LAZYPAY                                  @"LazyPay"
 #define     PAYMENT_PG_ZESTMONEY                                @"ZESTMON"
 #define     PAYMENT_PG_UPI                                      @"UPI"
+#define     PAYMENT_PG_SODEXO                                   @"SODEXO"
 
 // PG Type
 
 #define     PG_NET_BANKING                                      @"NB"
 #define     PG_CCDC                                             @"CC"
+#define     PG_MC                                               @"MC"
 #define     PG_EMI                                              @"EMI"
 #define     PG_CASHCARD                                         @"CASH"
 #define     PG_PAYU_MONEY                                       @"wallet"
@@ -531,6 +536,7 @@
 #define     KEY_MINIMUM_AMOUNT                                  @"minimumAmount"
 #define     KEY_TRANSACTIONAMOUNT                               @"transactionAmount"
 #define     KEY_PAYMENT_OPTIONS                                 @"paymentOptions"
+#define     KEY_MC                                              @"mc"
 #define     KEY_DOWN_INFO                                       @"downInfo"
 
 // eligibleBinForEMI
@@ -580,6 +586,7 @@
 #define     ISSUER_DINR                                         @"DINR"
 #define     ISSUER_AMEX                                         @"AMEX"
 #define     ISSUER_JCB                                          @"JCB"
+#define     ISSUER_SODEXO                                       @"SODEXO"
 
 #define     DEFAULT_CARD_NAME                                   @"PayUUser"
 
@@ -650,7 +657,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_AUTH_ONLY                                       @"authOnly"
 #define     KEY_VPA                                             @"vpa"
 #define     KEY_VISA_CALL_ID                                    @"visaCallId"
-#define     KEY_SODEXO_SOURCE_ID                                @"sodexoSoureId"
+#define     KEY_SOURCE_ID                                       @"source_id"
 #define     KEY_CITI_REWARDS                                    @"citiReward"
 #define     KEY_PARTNER_HOLD_TIME                               @"partnerHoldTime"
 #define     KEY_CONSENT_SHARED                                  @"consentShared"
@@ -686,6 +693,11 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_IS_OTP_ON_THE_FLY                               @"is_otp_on_the_fly"
 #define     KEY_IS_SI_SUPPORTED                                 @"is_si_supported"
 #define     KEY_IS_ZERO_REDIRECT_SUPPORTED                      @"is_zero_redirect_supported"
+
+// Keys for Check Balance
+#define     KEY_CARD_No                                         @"cardNo"
+#define     KEY_CARD_BALANCE                                    @"cardBalance"
+#define     KEY_CARD_Name                                       @"cardName"
 
 // Date Format Constant
 #define     DATE_FORMAT                                         @"yyyy-MM-dd"

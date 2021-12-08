@@ -37,6 +37,15 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
          withCompletionBlock:(completionBlockForWebServiceResponse) completionBlock;
 
 /*!
+ * This method gives response callback to block that is passed to it .
+ * @param [webServiceRequest] [NSMutableURLRequest type]
+ * @param [timeoutIntervalForRequest] [NSString type]
+ * @param [block]
+ */
+-(void)getWebServiceResponse:(NSMutableURLRequest *) webServiceRequest
+          requestTimeout:(NSString *) timeoutIntervalForRequest  withCompletionBlock:(completionBlockForWebServiceResponse) completionBlock;
+
+/*!
  * This method is used to store TransactionId to NSUserDefaults.
  * @param [txnID] [NSString type]
  */

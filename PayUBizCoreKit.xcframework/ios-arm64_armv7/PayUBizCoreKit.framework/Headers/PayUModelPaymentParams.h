@@ -93,21 +93,18 @@
 @property (nonatomic, strong) NSString * isExpired;
 @property (nonatomic, strong) NSString * issuingBank;
 
-
-
-
-// Param for CCDC & Stored Card
+// Param for CCDC & Stored Card & Sodexo
 @property (strong, nonatomic) NSString * cardNumber;
 @property (strong, nonatomic) NSString * expiryMonth;
 @property (strong, nonatomic) NSString * expiryYear;
 @property (strong, nonatomic) NSString * CVV;
 @property (strong, nonatomic) NSString * nameOnCard;
 @property  BOOL isOneTap;
+@property  BOOL isNewSodexoCard;
+@property  BOOL shouldSaveCard;
 
 //Param for CCDC
 @property (strong, nonatomic) NSString * storeCardName;
-
-
 
 // Param for NetBanking, StoredCard, CashCard, EMI
 @property (strong, nonatomic) NSString * bankCode;
@@ -216,6 +213,8 @@
 
 @property (strong, nonatomic) PayUSIParams *siParams;
 @property (strong, nonatomic) PayUBeneficiaryParams *beneficiaryParams;
+
+@property (strong, nonatomic) NSString * merchantResponseTimeout;
 
 @end
 

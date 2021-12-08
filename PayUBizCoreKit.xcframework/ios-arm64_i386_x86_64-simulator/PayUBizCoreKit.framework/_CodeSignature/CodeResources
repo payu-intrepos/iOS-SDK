@@ -10,11 +10,11 @@
 		</data>
 		<key>Headers/PayUBizCoreKit.h</key>
 		<data>
-		T3kQhhltB9wvb7IbTNpeDkxncRM=
+		UMsHBtdtBc8mBvSoRsbpr3o3vDw=
 		</data>
 		<key>Headers/PayUConstants.h</key>
 		<data>
-		na5iZfYy16TnANIogDnMFTdDd74=
+		TKlTIIZOi2/8RsDVD7uXoFkFW5Y=
 		</data>
 		<key>Headers/PayUCreatePostParam.h</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Headers/PayUJSONParser.h</key>
 		<data>
-		2KfgHnQVKu/M881fIrtDX+/NBRc=
+		B7/8CUzzOCNRI4Ba8LCQzN3JvMw=
 		</data>
 		<key>Headers/PayUModelAdminOffer.h</key>
 		<data>
@@ -70,7 +70,11 @@
 		</data>
 		<key>Headers/PayUModelHashes.h</key>
 		<data>
-		7AJ7FQOEtaFUyXvoqp7JSAinZoc=
+		eukqzHF1Ly3zctczmHY6B/OPHeU=
+		</data>
+		<key>Headers/PayUModelMealCard.h</key>
+		<data>
+		HuXE/7cNPO3m1X8pMTdDI5jnlEI=
 		</data>
 		<key>Headers/PayUModelNeftRtgs.h</key>
 		<data>
@@ -90,15 +94,19 @@
 		</data>
 		<key>Headers/PayUModelPaymentParams.h</key>
 		<data>
-		WH4tFGw1FTzJch4AKzBlsHcHqkE=
+		K4P1jJd1eCF2dYXdfr4e2nKshxs=
 		</data>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
 		<data>
-		BiPsbevTFxy6IfqiPUwW3DEUZyE=
+		VAdWDn5awW30jLy0WoLrtjHWMuY=
 		</data>
 		<key>Headers/PayUModelSI.h</key>
 		<data>
 		7bRPECNAhDBxITMJ2COW05ensaw=
+		</data>
+		<key>Headers/PayUModelSodexoCardDetail.h</key>
+		<data>
+		j0/rI2w/vf8dQhbogjv3+xHLIOw=
 		</data>
 		<key>Headers/PayUModelStoredCard.h</key>
 		<data>
@@ -106,7 +114,7 @@
 		</data>
 		<key>Headers/PayUModelTaxSpecification.h</key>
 		<data>
-		HMAuXdn2iL+UHbjDHsRB4xZdnEE=
+		0yEP2zqFPw/CkRMArSRW/4ya7YQ=
 		</data>
 		<key>Headers/PayUModelUPI.h</key>
 		<data>
@@ -130,11 +138,11 @@
 		</data>
 		<key>Headers/PayUUtils.h</key>
 		<data>
-		//uy+8sQUsHXg/ues+1Tl3o7Hvw=
+		yazrOuCX59Qzr1TwtmKmoX1kESo=
 		</data>
 		<key>Headers/PayUValidations.h</key>
 		<data>
-		YA/U5nz5gsOvGgZ3q4LzBiG18Dg=
+		BPN4kRr/kvnIzf8tQ90iSdSe4Ok=
 		</data>
 		<key>Headers/PayUWSManager.h</key>
 		<data>
@@ -142,11 +150,11 @@
 		</data>
 		<key>Headers/PayUWebServiceResponse.h</key>
 		<data>
-		IrgWRqszo9v7LlZvMx6N/6bIxZQ=
+		KuBnpfr4o+6MemSFx36p+UMWkWI=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		pkHKVIF35IOYbV9/kVt5873JyzA=
+		UnqtM9J/Sztsl4pHwa2X+GtjoN4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -174,22 +182,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			T3kQhhltB9wvb7IbTNpeDkxncRM=
+			UMsHBtdtBc8mBvSoRsbpr3o3vDw=
 			</data>
 			<key>hash2</key>
 			<data>
-			D9HwheyoFQwTThkgTUDl1EeEk1tgHW/w8DcH4Svllog=
+			Wj2ONocxsGLM4L4MWVruvoWyLHg/zk9+2UQBv7z0CrU=
 			</data>
 		</dict>
 		<key>Headers/PayUConstants.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			na5iZfYy16TnANIogDnMFTdDd74=
+			TKlTIIZOi2/8RsDVD7uXoFkFW5Y=
 			</data>
 			<key>hash2</key>
 			<data>
-			zLpZxA57PH2quTJC8AG0jz0beaMoBw3iILidoA+y1N0=
+			H/xd65Sx6wSAJF0toIEw4Ji2kXiSDKcqyaTPZWVtaKA=
 			</data>
 		</dict>
 		<key>Headers/PayUCreatePostParam.h</key>
@@ -240,11 +248,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			2KfgHnQVKu/M881fIrtDX+/NBRc=
+			B7/8CUzzOCNRI4Ba8LCQzN3JvMw=
 			</data>
 			<key>hash2</key>
 			<data>
-			XGiqxJCS6VrMnAC8mam7p+MZBItS+bHCYhx/3njv5zg=
+			w4bcK5wImtRmklWYsYZCohRgii/rs5y45QAmXW2Jujo=
 			</data>
 		</dict>
 		<key>Headers/PayUModelAdminOffer.h</key>
@@ -339,11 +347,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7AJ7FQOEtaFUyXvoqp7JSAinZoc=
+			eukqzHF1Ly3zctczmHY6B/OPHeU=
 			</data>
 			<key>hash2</key>
 			<data>
-			fxuIQByfsLi5qM8n5Nnanf/XbSlL/xMmnNcEMqZjK+I=
+			0vCgS1ygVe2i7jDeQ9j9CPmpbpZyhnwEISuVLX6pY8k=
+			</data>
+		</dict>
+		<key>Headers/PayUModelMealCard.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			HuXE/7cNPO3m1X8pMTdDI5jnlEI=
+			</data>
+			<key>hash2</key>
+			<data>
+			Qw9k1xlbC3YgKPrEeXyLj7VrSz/Ls3aCCJ/gSssCIfA=
 			</data>
 		</dict>
 		<key>Headers/PayUModelNeftRtgs.h</key>
@@ -394,22 +413,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			WH4tFGw1FTzJch4AKzBlsHcHqkE=
+			K4P1jJd1eCF2dYXdfr4e2nKshxs=
 			</data>
 			<key>hash2</key>
 			<data>
-			kPeFO3j5aT/Q4rJMrLfDwtJf+PBipIeD3or551OaQr4=
+			vHxik3XddzKuv32crqSYhGjNDNhh7Gvm58k5rJtrP4E=
 			</data>
 		</dict>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			BiPsbevTFxy6IfqiPUwW3DEUZyE=
+			VAdWDn5awW30jLy0WoLrtjHWMuY=
 			</data>
 			<key>hash2</key>
 			<data>
-			4jAyhwwwPRyn3WvYk5+mc7wxYive2+jejPOrCtpGzyw=
+			D0Mri4KDhoabERNyAsaaFAkyemJ9Ah3rGbr0UQ33u9U=
 			</data>
 		</dict>
 		<key>Headers/PayUModelSI.h</key>
@@ -421,6 +440,17 @@
 			<key>hash2</key>
 			<data>
 			8IQKnPr2zRSrtY3mubZeISwHLGATwbU1b8aVe7BrpeA=
+			</data>
+		</dict>
+		<key>Headers/PayUModelSodexoCardDetail.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			j0/rI2w/vf8dQhbogjv3+xHLIOw=
+			</data>
+			<key>hash2</key>
+			<data>
+			vLG8I2X3e0aJo2jSggA3G69v25f5YlvZNOPyQjuIUU0=
 			</data>
 		</dict>
 		<key>Headers/PayUModelStoredCard.h</key>
@@ -438,11 +468,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			HMAuXdn2iL+UHbjDHsRB4xZdnEE=
+			0yEP2zqFPw/CkRMArSRW/4ya7YQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			oTp+CfZzvyr/IuB2yWeB4T+a5UWNvm4X6Yyo0GJsv5U=
+			3miX2h4bx8bo5KcNJmp2kvkD1qoXKxzXftckRCPe9aY=
 			</data>
 		</dict>
 		<key>Headers/PayUModelUPI.h</key>
@@ -504,22 +534,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			//uy+8sQUsHXg/ues+1Tl3o7Hvw=
+			yazrOuCX59Qzr1TwtmKmoX1kESo=
 			</data>
 			<key>hash2</key>
 			<data>
-			weY2xWwEDL6Zc+xs+hm/eETe+Xrt8iJ38QZ3CgdSFOo=
+			/31Czmn/wRNye1bp8wYwMuG0vo0Ith2cL/Ovl7dSRKg=
 			</data>
 		</dict>
 		<key>Headers/PayUValidations.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			YA/U5nz5gsOvGgZ3q4LzBiG18Dg=
+			BPN4kRr/kvnIzf8tQ90iSdSe4Ok=
 			</data>
 			<key>hash2</key>
 			<data>
-			XGQAE/Ri+Ax9w2ukeEEeq/pALdgPJPN5AqaSLEXrKsI=
+			BuUfTTq0Amb3IJ2NAYf82LI4KkXxlDJAKT7VM61CmgE=
 			</data>
 		</dict>
 		<key>Headers/PayUWSManager.h</key>
@@ -537,11 +567,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			IrgWRqszo9v7LlZvMx6N/6bIxZQ=
+			KuBnpfr4o+6MemSFx36p+UMWkWI=
 			</data>
 			<key>hash2</key>
 			<data>
-			NQCo4xU5i1vfUBPdP8SFNbB5ddudyV0VwPrkrl++PVc=
+			oSiK6JLdGCD4u+7zG1yN38YmsfU+cZGKfj/kRX8a/ls=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

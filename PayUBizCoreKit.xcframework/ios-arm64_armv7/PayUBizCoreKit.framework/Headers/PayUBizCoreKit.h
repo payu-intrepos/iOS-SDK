@@ -55,3 +55,5 @@ FOUNDATION_EXPORT const unsigned char PayUBizCoreKitVersionString[];
 #import "PayUModelVerifyPayment.h"
 #import "PayUDontUseThisClass.h"
 #import "PayUModelGetTxnInfo.h"
+#import "PayUModelSodexoCardDetail.h"
+#import "PayUModelMealCard.h"

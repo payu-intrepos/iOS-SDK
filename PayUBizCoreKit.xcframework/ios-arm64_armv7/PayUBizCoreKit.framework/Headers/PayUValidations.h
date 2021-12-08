@@ -364,6 +364,9 @@
 - (NSMutableString *)validateRefundParams:(PayUModelPaymentParams *) paymentParam ;
 - (NSMutableString *)validateRefund:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateIFSCParams:(PayUModelPaymentParams *) paymentParam;
--(NSString *)validateNeftParams: (PayUModelPaymentParams *) paymentParam;
+- (NSString *)validateNeftParams: (PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateCheckBalanceParams:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateSodexoStoredCardParams:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateSodexoNewCardParams: (PayUModelPaymentParams *) paymentParam;
 
 @end
