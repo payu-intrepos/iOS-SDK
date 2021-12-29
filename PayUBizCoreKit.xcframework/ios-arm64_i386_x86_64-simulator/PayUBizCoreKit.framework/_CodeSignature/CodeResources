@@ -138,7 +138,7 @@
 		</data>
 		<key>Headers/PayUUtils.h</key>
 		<data>
-		yazrOuCX59Qzr1TwtmKmoX1kESo=
+		auoRPSSIXb0+ghn6WSyA6MOv8us=
 		</data>
 		<key>Headers/PayUValidations.h</key>
 		<data>
@@ -150,11 +150,11 @@
 		</data>
 		<key>Headers/PayUWebServiceResponse.h</key>
 		<data>
-		KuBnpfr4o+6MemSFx36p+UMWkWI=
+		B6VUrcW1kiHjpEdMt29KO/PIqE0=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		UnqtM9J/Sztsl4pHwa2X+GtjoN4=
+		kfLsRzPOtU6US1OiAIi+86U9Cdo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -534,11 +534,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			yazrOuCX59Qzr1TwtmKmoX1kESo=
+			auoRPSSIXb0+ghn6WSyA6MOv8us=
 			</data>
 			<key>hash2</key>
 			<data>
-			/31Czmn/wRNye1bp8wYwMuG0vo0Ith2cL/Ovl7dSRKg=
+			a3xYpvBhVe7ZJcSuHSxBNN87WCfmazqLVsXUPMhDbYg=
 			</data>
 		</dict>
 		<key>Headers/PayUValidations.h</key>
@@ -567,11 +567,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KuBnpfr4o+6MemSFx36p+UMWkWI=
+			B6VUrcW1kiHjpEdMt29KO/PIqE0=
 			</data>
 			<key>hash2</key>
 			<data>
-			oSiK6JLdGCD4u+7zG1yN38YmsfU+cZGKfj/kRX8a/ls=
+			6/EsPRIuF9KopTk7zFRVO74x/9PrLxygUF8T6wr0Nuo=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

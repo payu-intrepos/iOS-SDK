@@ -56,6 +56,10 @@ typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCar
 typedef void (^completionBlockForMCPLookup)(PayUModelMultiCurrencyPayment *mcpInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForIFSC)(PayUModelIFSCInfo *isfcInfo , NSString *errorMessage, id extraParam);
 
+//MARK:- initailizer
+-(id)init;
+//MARK:- This method is to start crash reporting
++(void) start;
 /*!
  * This method gives webService response callback for MobileSDK.
  * @param [paymentParam]                                                    [PayUModelPaymentParams type]
