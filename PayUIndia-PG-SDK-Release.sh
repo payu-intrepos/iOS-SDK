@@ -50,10 +50,10 @@ podTrunkPush() {
 }
 
 podName="PayUIndia-PG-SDK"
-podVersion="6.6.0"
+podVersion="7.1.0"
 
 podSpec="${podName}.podspec"
-tag="${podName}_${podVersion}"
+tag="${podVersion}"
 
 podLibLint ${podSpec} &&
 createLocalTag ${tag} &&

@@ -334,6 +334,7 @@
 #define     PARAM_LOOKUP_ID                                     @"lookupId"
 #define     PARAM_BANK_CODE_CCDC                                @"CC"
 #define     PARAM_BANK_CODE_UPI                                 @"UPI"
+#define     PARAM_BANK_CODE_UPISI                               @"UPISI"
 #define     PARAM_BANK_CODE_UPI_TPV                             @"UPITPV"
 #define     PARAM_ONE_CLICK_CHECKOUT                            @"one_click_checkout"
 #define     PARAM_CARD_MERCHANT_PARAM                           @"card_merchant_param"
@@ -452,6 +453,8 @@
 #define     PARAM_BILLING_INTERVAL                              @"billingInterval"
 #define     PARAM_PAYMENT_START_DATE                            @"paymentStartDate"
 #define     PARAM_PAYMENT_END_DATE                              @"paymentEndDate"
+#define     PARAM_BILLING_RULE                                  @"billingRule"
+#define     PARAM_BILLING_LIMIT                                 @"billingLimit"
 #define     PARAM_REMARKS                                       @"remarks"
 #define     PARAM_FREE_TRIAL                                    @"free_trial"
 #define     PARAM_IFSC_CODE                                     @"ifscCode"
@@ -503,6 +506,7 @@
 #define     PAYMENT_PG_LAZYPAY                                  @"LazyPay"
 #define     PAYMENT_PG_ZESTMONEY                                @"ZESTMON"
 #define     PAYMENT_PG_UPI                                      @"UPI"
+#define     PAYMENT_PG_UPISI                                    @"UPISI"
 #define     PAYMENT_PG_SODEXO                                   @"SODEXO"
 
 // PG Type

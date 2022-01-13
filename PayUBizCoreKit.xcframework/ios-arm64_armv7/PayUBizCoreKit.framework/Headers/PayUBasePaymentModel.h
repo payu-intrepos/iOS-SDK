@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString * ptPriority;
 @property (strong, nonatomic) NSString * showForm;
 @property (strong, nonatomic) NSString * bankCode;
-@property (strong, nonatomic) NSNumber * additionalCharge;
+@property (strong, nonatomic) NSNumber * _Nullable additionalCharge;
 @property (nonatomic, strong) NSArray *offers;
 @property (nonatomic, strong) NSArray *verificationModes;
 @property BOOL isDown;
