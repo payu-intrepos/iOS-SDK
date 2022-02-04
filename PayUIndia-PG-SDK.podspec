@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.platform            = :ios , "10.0"
   s.vendored_frameworks = 'PayUBizCoreKit.xcframework'
 
-  s.dependency            'PayUIndia-PayUParams', '~> 3.1'
+  s.dependency            'PayUIndia-PayUParams', '~> 3.2'
   s.dependency            'PayUIndia-NetworkReachability', '~> 1.0'
   s.dependency            'PayUIndia-CrashReporter', '~> 1.0'
 
