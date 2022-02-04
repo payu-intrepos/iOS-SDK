@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
                             :tag => "#{s.version}"
                           }
   s.documentation_url   = "https://app.gitbook.com/@payumobile/s/sdk-integration/ios/core/core-sdk"
-  s.platform            = :ios , "10.0"
+  s.platform            = :ios , "11.0"
   s.vendored_frameworks = 'PayUBizCoreKit.xcframework'
 
   s.dependency            'PayUIndia-PayUParams', '~> 3.2'
