@@ -18,7 +18,7 @@
 
 
 typedef void (^completionBlockForgetPayUHashesWithPaymentParam)(PayUModelHashes *allHashes, PayUModelHashes *hashString, NSString *errorMessage);
-
+typedef void (^completionBlockgetPreSaltPayUHashesWithPaymentParam)(PayUModelHashes *hashString, NSString *errorMessage);
 /*!
  * This method gives callback for Hash.
  * @param [paymentParam]                                                      [PayUModelPaymentParams type]
@@ -28,6 +28,8 @@ typedef void (^completionBlockForgetPayUHashesWithPaymentParam)(PayUModelHashes 
  * @see   [validateMandatoryParamsForPaymentHashGeneration - PayUValidations]
  */
 -(void)getPayUHashesWithPaymentParam:(PayUModelPaymentParams *) paymentParam merchantSalt:(NSString *) salt withCompletionBlock:(completionBlockForgetPayUHashesWithPaymentParam) completionBlock;
+
+-(void)getPreSaltPayUHashesWithPaymentParam:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockgetPreSaltPayUHashesWithPaymentParam) completionBlock;
 
 -(void)getPayUHashesWithPaymentParam:(PayUModelPaymentParams *) paymentParam merchantSalt:(NSString *) salt merchantSecret:(NSString *) secret withCompletionBlock:(completionBlockForgetPayUHashesWithPaymentParam) completionBlock;
 

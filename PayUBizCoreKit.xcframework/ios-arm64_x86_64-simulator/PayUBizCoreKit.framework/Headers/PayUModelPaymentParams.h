@@ -64,6 +64,8 @@
 @property (strong, nonatomic) NSString * shippingLastname;
 @property (strong, nonatomic) NSString * shippingAddress1;
 @property (strong, nonatomic) NSString * shippingAddress2;
+@property (strong, nonatomic) NSString * splitPaymentDetails;
+
 @property (strong, nonatomic) NSString * shippingCity;
 @property (strong, nonatomic) NSString * shippingState;
 @property (strong, nonatomic) NSString * shippingCountry;
