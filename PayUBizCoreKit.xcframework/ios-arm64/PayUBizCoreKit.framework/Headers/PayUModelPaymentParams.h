@@ -74,6 +74,7 @@
 @property (strong, nonatomic) NSString * offerKey;
 @property BOOL isSIInfo;
 @property BOOL checkAdditionalCharges;
+@property BOOL getMerchantDetails;
 @property BOOL checkDownStatus;
 @property BOOL checkOfferDetails;
 @property BOOL checkTaxSpecification;
@@ -222,6 +223,7 @@
 @property (strong, nonatomic) PayUBeneficiaryParams *beneficiaryParams;
 
 @property (strong, nonatomic) NSString * merchantResponseTimeout;
+@property BOOL isRetryPayment;
 
 @end
 

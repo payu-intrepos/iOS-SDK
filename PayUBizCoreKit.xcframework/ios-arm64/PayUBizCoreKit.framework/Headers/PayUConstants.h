@@ -413,6 +413,11 @@
 #define     KEY_TRID                                            @"trid"
 #define     KEY_TOKEN_REFERENCE_ID                              @"token_refernce_id"
 
+// MerchantInfo parsing elements
+#define     KEY_MERCHANT                                      @"merchant"
+#define     KEY_RETRY_ALLOWED                                 @"retryAllowed"
+#define     KEY_DISPLAY_NAME                                  @"displayName"
+#define     KEY_LOGO                                          @"logo"
 
 // OfferStatus parsing elements
 #define     KEY_CATEGORY                                        @"category"
@@ -519,6 +524,8 @@
 #define     PAYMENT_PG_ONE_TAP_STOREDCARD                       @"One Tap Stored Card"
 #define     PAYMENT_PG_STOREDCARD                               @"Saved Cards"
 #define     PAYMENT_PG_CCDC                                     @"Credit / Debit Cards"
+#define     PAYMENT_PG_CC                                       @"Credit Card"
+#define     PAYMENT_PG_DC                                       @"Debit Card"
 #define     PAYMENT_PG_NET_BANKING                              @"Net Banking"
 #define     PAYMENT_PG_NEFT_RTGS                                @"NEFT/RTGS"
 #define     PAYMENT_PG_CASHCARD                                 @"Cash Card"

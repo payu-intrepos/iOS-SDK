@@ -14,7 +14,7 @@
 		</data>
 		<key>Headers/PayUConstants.h</key>
 		<data>
-		uvg+NhFSkGUZmBJkJ4rUYpqk36g=
+		3hW7ci2X7d3bvBb7JuuK7zRe1sU=
 		</data>
 		<key>Headers/PayUCreatePostParam.h</key>
 		<data>
@@ -76,6 +76,10 @@
 		<data>
 		HuXE/7cNPO3m1X8pMTdDI5jnlEI=
 		</data>
+		<key>Headers/PayUModelMerchantInfo.h</key>
+		<data>
+		TNfO4YmlxDiCpF/Lx4//pClfUKE=
+		</data>
 		<key>Headers/PayUModelNeftRtgs.h</key>
 		<data>
 		UD7VcmQ53i9jYIK8lMXkKxB4nxQ=
@@ -94,11 +98,11 @@
 		</data>
 		<key>Headers/PayUModelPaymentParams.h</key>
 		<data>
-		G0HggDG5wrD+2fIlTwYT2tfYGhI=
+		3CZ8OwdwIO9kwbV8rF7YQ+flBPo=
 		</data>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
 		<data>
-		VAdWDn5awW30jLy0WoLrtjHWMuY=
+		Eth9m4rbgOpbVJh81B+3AXhIVpM=
 		</data>
 		<key>Headers/PayUModelSI.h</key>
 		<data>
@@ -166,7 +170,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		AYA1mmMLy/0eV1f0G78Ab4KVoxw=
+		kU/5QA8ogI/H5KhVjBVc8bLi1a8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -197,7 +201,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Z02I7OizBFHKBpuhoy29cLR45UIR1XoCj3PUi4QFD5s=
+			jVl5pgikYg5ve07B4pwIo/CS+fmnlsSUsMQqAOmRMEI=
 			</data>
 		</dict>
 		<key>Headers/PayUCreatePostParam.h</key>
@@ -305,6 +309,13 @@
 			Qw9k1xlbC3YgKPrEeXyLj7VrSz/Ls3aCCJ/gSssCIfA=
 			</data>
 		</dict>
+		<key>Headers/PayUModelMerchantInfo.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			qerFXI+KIzKSfiiV7i7MtftZnClX26ynhogFCkUmDW4=
+			</data>
+		</dict>
 		<key>Headers/PayUModelNeftRtgs.h</key>
 		<dict>
 			<key>hash2</key>
@@ -337,14 +348,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			yuneyQFvmkdqn+ODXtrB0vh0pIOOrUdZv500VbKvAUY=
+			rYv+uFvQLjk8NgYtqGyGOZORQJSxK5ZZ3t+4jrlk1Pg=
 			</data>
 		</dict>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			D0Mri4KDhoabERNyAsaaFAkyemJ9Ah3rGbr0UQ33u9U=
+			vFS9t63y6N3byUANmXsSz3vzj+dqsy3LZvoKLztoaWs=
 			</data>
 		</dict>
 		<key>Headers/PayUModelSI.h</key>
