@@ -371,5 +371,8 @@
 - (NSMutableString *)validateDeleteTokenizedStoredCard: (PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateGetTokenizedStoredCardsParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateGetTokenizedPaymentDetailParams:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateGetAllOfferParams:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateValidateOfferParams:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateGetSDKConfigurationParams:(PayUModelPaymentParams *) paymentParam;
 
 @end

@@ -137,6 +137,11 @@
 #define ERROR_STORED_CARD_TYPE_IS_MISSING                       @"Stored card type is missing, "
 #define ERROR_STORED_CARD_MODE_IS_MISSING                       @"Stored card mode is missing, "
 
+#define ERROR_USER_TOKEN_IS_MISSING                             @"User token is missing, "
+#define ERROR_PAYMENT_CODE_IS_MISSING                           @"Payment code is missing, "
+#define ERROR_CATEGORY_IS_MISSING                               @"Category is missing, "
+#define ERROR_OFFER_KEYS_ARE_MISSING                            @"Offer keys are missing, "
+
 #define ERROR_ONE_TAP_STORED_CARD_TOKEN_MISSING                 @"Stored card Dictionary missing, "
 #define ERROR_ONE_TAP_MERCHANY_HASH_IS_MISSING                  @"Merchant hash is missing, "
 #define ERROR_ONE_TAP_CARD_CVV_MISSING                          @"This is not OneTap Card, "
@@ -181,6 +186,11 @@
 #define ERROR_BENFECIARY_ACCOUNT_NUMBER_PARAM_MISSING           @"Beneficiary account holder number is missing, "
 #define ERROR_INVALID_ACCOUNT_NUMBER                            @"Please enter atleast 8 digit account number, "
 #define ERROR_INVALID_BENFECIARY_ACCOUNT_TYPE                   @"Beneficiary account type is invalid, "
+#define ERROR_DATE_MISSING                                      @"Date is missing, "
+#define ERROR_DIGEST_MISSING                                    @"Digest is missing, "
+#define ERROR_SIGNING_STRING_MISSING                            @"Signing string is missing, "
+#define ERROR_SIGNATURE_MISSING                                 @"Signatue is missing, "
+#define ERROR_POST_PARAM_MISSING                                @"Post params are missing, "
 
 #define BILLING_AMOUNT                                          @"Billing amount"
 #define MIN_TXN_AMOUNT                                          @"Min transaction amount"
@@ -215,6 +225,7 @@
 #define COMMAND_SAVE_USER_CARD                                  @"save_user_card"
 #define COMMAND_GET_USER_CARDS                                  @"get_user_cards"
 #define COMMAND_GET_EMI_AMOUNT_ACCORDING_TO_INTEREST            @"getEmiAmountAccordingToInterest"
+#define COMMAND_GET_SDK_CONFIGURATION                           @"get_sdk_configuration"
 #define COMMAND_ELIGIBLE_BINS_FOR_EMI                           @"eligibleBinsForEMI"
 #define COMMAND_VERIFY_PAYMENT                                  @"verify_payment"
 #define COMMAND_MCP_LOOKUP                                      @"mcpLookup"
@@ -229,6 +240,8 @@
 #define COMMAND_GET_PAYMENT_INSTRUMENT                          @"get_payment_instrument"
 #define COMMAND_DELETE_PAYMENT_INSTRUMENT                       @"delete_payment_instrument"
 #define COMMAND_GET_PAYMENT_DETAILS                             @"get_payment_details"
+#define COMMAND_GET_ALL_OFFER_DETAILS                           @"get_all_offer_details"    // Used for local purpose
+#define COMMAND_VALIDATE_OFFER_DETAILS                          @"validate_offer_details"   // Used for local purpose
 
 // Endpoints for webservice
 
@@ -237,6 +250,8 @@
 #define SELLERS                                                 @"/sellers"
 #define STORECARDS                                              @"/storecards"
 #define URL_EMIS                                                @"/paymentmethods/emis/amounttable"
+#define GET_OFFER                                               @"/offers/transactions"
+#define VALIDATE_OFFER                                          @"/offers/transactions/validate"
 
 
 // HTTP MEthods
@@ -263,6 +278,7 @@
 #define     PARAM_VAR15                                         @"var15"
 #define     PARAM_DEFAULT                                       @"default"
 #define     PARAM_SODEXO_SOURCE_ID                              @"sodexoSourceId"
+#define     PARAM_GET                                           @"GET"
 #define     REQUEST_IDENTIFIER_1                                @"1"
 #define     REQUEST_IDENTIFIER_2                                @"2"
 #define     REQUEST_IDENTIFIER_3                                @"3"
@@ -431,6 +447,7 @@
 #define     KEY_OFFER_TYPE                                      @"offer_type"
 #define     KEY_STATUS                                          @"status"
 #define     KEY_RESULT_CODE                                     @"resultCode"
+#define     KEY_RESULT                                          @"result"
 #define     KEY_ALLOWED_ON                                      @"allowed_on"
 #define     KEY_DATA                                            @"data"
 #define     KEY_BINS_DATA                                       @"bins_data"
@@ -732,6 +749,14 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_CARD_BALANCE                                    @"cardBalance"
 #define     KEY_CARD_Name                                       @"cardName"
 
+// Keys for sdk configuration
+#define     KEY_RESULT                                          @"result"
+#define     KEY_ACTIVE                                          @"active"
+#define     KEY_CREATED_ON                                      @"createdOn"
+#define     KEY_KEY                                             @"key"
+#define     KEY_VALUE                                           @"value"
+#define     KEY_MERCHANT_Id                                     @"merchantId"
+
 // Deprecated Message
 #define DEPRECATED_DELETE_USER_CARD_MESSAGE                     @"The \"deleteStoredCard:withCompletionBlock\" method is deprecated right now, please use \"deleteTokenizedStoredCard:withCompletionBlock\" instead."
 
@@ -749,4 +774,22 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 
 // Date Format Constant
 #define     DATE_FORMAT                                         @"yyyy-MM-dd"
+#define     FULL_DATE_FORMAT                                    @"EEE, dd MMM yyyy HH:mm:ss"
+
+// Offer Details Constants
+#define     PARAM_USER_TOKEN                                    @"userToken"
+#define     PARAM_CLIENT_ID                                     @"clientId"
+#define     PARAM_OFFER_KEYS                                    @"offerKeys"
+#define     PARAM_PAYMENT_DETAIL                                @"paymentDetail"
+#define     PARAM_CARD_BIN                                      @"cardBin"
+#define     PARAM_CARD_MASK                                     @"cardMask"
+#define     PARAM_PAYMENT_CODE                                  @"paymentCode"
+#define     PARAM_PLATFORM_ID                                   @"platformId"
+#define     PARAM_USER_DETAILS                                  @"userDetail"
+#define     PARAM_PHONE_NO                                      @"phoneNo"
+
+// Has String Constants
+#define     KEY_SIGNING_STRING                                  @"signing_string"
+#define     KEY_SIGNATURE                                       @"signature"
+
 #endif /* PayUConstants_h */

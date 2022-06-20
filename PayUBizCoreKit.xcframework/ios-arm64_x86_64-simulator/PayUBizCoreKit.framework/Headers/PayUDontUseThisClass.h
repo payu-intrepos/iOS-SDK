@@ -48,6 +48,7 @@ typedef void (^completionBlockgetPreSaltPayUHashesWithPaymentParam)(PayUModelHas
 
 + (NSString *) getDeleteStoredCardPostParamString:(PayUModelPaymentParams *) paymentParam;
 + (NSString *)hmacsha1:(NSString *)data secret:(NSString *)key;
++ (NSString*)hmacSHA256:(NSString*)data withKey:(NSString *)key;
 
 @property (strong, nonatomic) NSString *subventionPaymentHashString;
 @property (strong, nonatomic) NSString *subventionPaymentHash;

@@ -201,4 +201,14 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 + (PayUPaymentParam *)getPayUPaymentParam:(PayUModelPaymentParams *)paymentParam withType:(NSString *)type;
 
++ (NSString *)getGMTFormattedDateString:(NSDate *) date;
+
++ (NSString*)getSigningStringWithDate:(NSString *) date digest:(NSString *) digest;
+
++ (NSString*)getAuthorizationTokenWithSignature:(NSString *) signature key:(NSString *) key;
+
++ (NSString*)getDigestForString:(NSString*)input;
+
++ (PayURequestHeaderParams *)getV2APIHeaderParams:(NSString *)body;
+
 @end

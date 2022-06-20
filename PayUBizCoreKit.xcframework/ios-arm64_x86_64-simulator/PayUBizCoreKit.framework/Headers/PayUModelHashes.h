@@ -36,6 +36,7 @@
 @property (strong, nonatomic) NSString * deleteTokenizedStoredCardHash;
 @property (strong, nonatomic) NSString * getTokenizedStoredCardHash;
 @property (strong, nonatomic) NSString * getTokenizedPaymentDetailHash;
+@property (strong, nonatomic) NSString * getSDKConfigurationHash;
 
 /*
  get_merchant_ibibo_codes_hash"

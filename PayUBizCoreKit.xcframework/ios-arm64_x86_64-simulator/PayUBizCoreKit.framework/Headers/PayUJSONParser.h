@@ -21,11 +21,13 @@
 #import "PayUConstants.h"
 #import "PayUModelSodexoCardDetail.h"
 #import "PayUModelTokenizedPaymentDetails.h"
-
 @import PayUParamsKit;
 
 @interface PayUJSONParser : NSObject
 
+typedef void (^completionBlockForJSONParserForAllOfferDetails)(PayUModelAllOfferDetail *offerDetails ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForValidateOfferDetails)(PayUModelOfferDetail *offerDetails ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForGETSDKConfiguration)(NSArray<PayUSDKConfiguration *> *configuration ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForGetTokenizedPaymentDetails)(PayUModelTokenizedPaymentDetails *tokenizedPaymentdetails, NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForSodexoCardDetail)(PayUModelSodexoCardDetail *sodexoCardDetail, NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserforPaymentRelatedDetailForMobileSDK)(PayUModelPaymentRelatedDetail *paymentRelatedDetails ,NSString *errorMessage, id extraParam);
@@ -120,5 +122,11 @@ typedef void (^completionBlockForJSONParserForVerifyIFSC)(PayUModelIFSCInfo *ifs
 -(void)JSONParserForSodexoCardDetail:(id) JSON withCompletionBlock:(completionBlockForJSONParserForSodexoCardDetail) paramCompletionBlock;
 
 -(void)JSONParserForGetTokenizedPaymentDetails:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGetTokenizedPaymentDetails) paramCompletionBlock;
+
+-(void)JSONParserforAllOfferDetails:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForAllOfferDetails) paramCompletionBlock;
+
+-(void)JSONParserforValidateOfferDetails:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForValidateOfferDetails) paramCompletionBlock;
+
+-(void)JSONParserForGetSDKConfiguration:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGETSDKConfiguration) paramCompletionBlock;
 
 @end
