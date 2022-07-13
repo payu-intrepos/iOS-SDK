@@ -552,6 +552,7 @@
 #define     PAYMENT_PG_LAZYPAY                                  @"LazyPay"
 #define     PAYMENT_PG_ZESTMONEY                                @"ZESTMON"
 #define     PAYMENT_PG_UPI                                      @"UPI"
+#define     PAYMENT_PG_TEZOMNI                                  @"TEZOMNI"
 #define     PAYMENT_PG_UPISI                                    @"UPISI"
 #define     PAYMENT_PG_SODEXO                                   @"SODEXO"
 
