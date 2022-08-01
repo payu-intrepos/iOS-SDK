@@ -227,5 +227,9 @@
 @property (strong, nonatomic) NSString * platformId;
 @property (strong, nonatomic) NSArray<NSString *>  * offerKeys;
 
+//Ads impression paramters
+@property (strong, nonatomic) NSString * requestId;
+@property (strong, nonatomic) NSString * payUId;
+
 @end
 

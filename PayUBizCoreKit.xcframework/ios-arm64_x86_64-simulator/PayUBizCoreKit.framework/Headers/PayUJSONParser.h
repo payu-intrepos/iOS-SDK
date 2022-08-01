@@ -24,7 +24,9 @@
 @import PayUParamsKit;
 
 @interface PayUJSONParser : NSObject
-
+typedef void (^completionBlockForJSONParserForFetchAsset)(PayUModelFetchAssets *assets ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForAddImpression)(NSString *successMessage,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForUpdatePayUId)(NSString *successMessage,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForAllOfferDetails)(PayUModelAllOfferDetail *offerDetails ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForValidateOfferDetails)(PayUModelOfferDetail *offerDetails ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForGETSDKConfiguration)(NSArray<PayUSDKConfiguration *> *configuration ,NSString *errorMessage, id extraParam);
@@ -128,5 +130,8 @@ typedef void (^completionBlockForJSONParserForVerifyIFSC)(PayUModelIFSCInfo *ifs
 -(void)JSONParserforValidateOfferDetails:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForValidateOfferDetails) paramCompletionBlock;
 
 -(void)JSONParserForGetSDKConfiguration:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGETSDKConfiguration) paramCompletionBlock;
+-(void)JSONParserforFetchAssets:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForFetchAsset) paramCompletionBlock;
 
+-(void)JSONParserforAdPostImpression:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForAddImpression) paramCompletionBlock;
+-(void)JSONParserforUpdatePayUId:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForUpdatePayUId) paramCompletionBlock ;
 @end

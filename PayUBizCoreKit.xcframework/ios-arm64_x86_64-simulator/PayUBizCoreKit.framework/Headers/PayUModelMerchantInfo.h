@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NSString *displayName;
 @property (nonatomic, strong) NSString *logo;
 @property (nonatomic) NSInteger retryCount;
-
+@property (nonatomic) BOOL isAdsEnabled;
 +(PayUModelMerchantInfo *)prepareMerchantInfo:(NSDictionary *)JSON;
 
 @end

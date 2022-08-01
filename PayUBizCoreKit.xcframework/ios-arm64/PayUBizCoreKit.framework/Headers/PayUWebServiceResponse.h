@@ -23,6 +23,7 @@
 #import "PayUModelVAS.h"
 #import "PayUModelSodexoCardDetail.h"
 #import "PayUModelTokenizedPaymentDetails.h"
+
 @import PayUParamsKit;
 
 @interface PayUWebServiceResponse : NSObject
@@ -71,6 +72,9 @@ typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCar
 typedef void (^completionBlockForMCPLookup)(PayUModelMultiCurrencyPayment *mcpInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForIFSC)(PayUModelIFSCInfo *isfcInfo , NSString *errorMessage, id extraParam);
 
+typedef void (^completionBlockForAdsFetch)(PayUModelFetchAssets *assets ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForAddImpression)(NSString *successMessage ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForUpdatePayUId)(NSString *successMessage ,NSString *errorMessage, id extraParam);
 //MARK:- initailizer
 -(id)init;
 //MARK:- This method is to start crash reporting
@@ -262,4 +266,11 @@ typedef void (^completionBlockForIFSC)(PayUModelIFSCInfo *isfcInfo , NSString *e
  */
 -(void)validateOfferDetails:(PayUModelPaymentParams *) paymentParam completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForValidateOfferDetails) responseCompletionBlock;
 
+
+-(void)fetchAdsDetails:(PayUModelPaymentParams *) paymentParam
+   withCompletionBlock:(completionBlockForAdsFetch) responseCompletionBlock;
+
+-(void)postAdsImpressionEvent:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForAddImpression) responseCompletionBlock;
+
+-(void)updateAdsPayUId:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForUpdatePayUId) responseCompletionBlock;
 @end

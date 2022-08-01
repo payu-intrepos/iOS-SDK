@@ -65,6 +65,8 @@
 #define ERROR                                                   @"Error"
 
 //Mandatory params error list
+#define ERROR_PAYU_ID_IS_MISSING                                @"PayU id is missing, "
+#define ERROR_REQUEST_ID_IS_MISSING                             @"Request id is missing, "
 #define ERROR_KEY_IS_MISSING                                    @"Key is missing, "
 #define ERROR_SODEXO_SOURCE_ID_IS_MISSING                       @"Sodexo sourde id is missing, "
 #define ERROR_TRANSACTIONID_IS_MISSING                          @"Transaction ID is missing, "
@@ -242,6 +244,9 @@
 #define COMMAND_GET_PAYMENT_DETAILS                             @"get_payment_details"
 #define COMMAND_GET_ALL_OFFER_DETAILS                           @"get_all_offer_details"    // Used for local purpose
 #define COMMAND_VALIDATE_OFFER_DETAILS                          @"validate_offer_details"   // Used for local purpose
+#define COMMAND_VALIDATE_FETCH_ASSETS                           @"validate_fetch_assets"
+#define COMMAND_POST_ADS_IMPRESSION                             @"post_ads_impression"
+#define COMMAND_UPDATE_PAYU_ID                                   @"update_payu_id"
 
 // Endpoints for webservice
 
@@ -252,12 +257,16 @@
 #define URL_EMIS                                                @"/paymentmethods/emis/amounttable"
 #define GET_OFFER                                               @"/offers/transactions"
 #define VALIDATE_OFFER                                          @"/offers/transactions/validate"
+#define FETCH_ASSETS                                            @"/ads/FetchAssets"
+#define POST_ADS_IMPRESSION                                     @"/ads/impression"
+#define UPDATE_PAYU_ID                                          @"/ads/update_payuId"
 
 
 // HTTP MEthods
 #define HTTP_METHOD_GET                                         @"GET"
 #define HTTP_METHOD_POST                                        @"POST"
 #define HTTP_METHOD_DELETE                                      @"DELETE"
+#define HTTP_METHOD_PUT                                         @"PUT"
 
 
 #define     PARAM_COMMAND                                       @"command"
@@ -285,6 +294,27 @@
 #define     REQUEST_IDENTIFIER_4                                @"4"
 #define     REQUEST_IDENTIFIER_5                                @"5"
 
+
+//Ad updatePayuId param
+
+
+#define     PARAM_PAYU_ID                                       @"payuId"
+//Ad impression param
+
+#define     PARAM_REQUEST_ID                                    @"requestId"
+#define     PARAM_EVENT                                         @"event"
+#define     PARAM_CLICK                                         @"click"
+
+//Ad Param
+
+#define     PARAM_MERCHANTKEY                                   @"merchantKey"
+#define     PARAM_SOURCE                                        @"source"
+#define     PARAM_MOBILE_FOOTER                                 @"mobile_footer"
+#define     PARAM_ASSETS                                        @"assets"
+//merchant param
+
+#define     PARAM_IS_AD_ENABLE                                  @"isAdsEnabled"
+#define     PARAM_MERCHANT                                      @"merchant_param"
 // payment params
 #define     PARAM_KEY                                           @"key"
 #define     PARAM_TXNID                                         @"txnid"
@@ -757,6 +787,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_KEY                                             @"key"
 #define     KEY_VALUE                                           @"value"
 #define     KEY_MERCHANT_Id                                     @"merchantId"
+#define     KEY_ASSSETS                                         @"assets"
 
 // Deprecated Message
 #define DEPRECATED_DELETE_USER_CARD_MESSAGE                     @"The \"deleteStoredCard:withCompletionBlock\" method is deprecated right now, please use \"deleteTokenizedStoredCard:withCompletionBlock\" instead."
@@ -790,7 +821,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     PARAM_PHONE_NO                                      @"phoneNo"
 
 // Has String Constants
-#define     KEY_SIGNING_STRING                                  @"signing_string"
-#define     KEY_SIGNATURE                                       @"signature"
+#define     KEY_HASH_NAME                                       @"hashName"
+#define     KEY_HASH_STRING                                     @"hashString"
 
 #endif /* PayUConstants_h */
