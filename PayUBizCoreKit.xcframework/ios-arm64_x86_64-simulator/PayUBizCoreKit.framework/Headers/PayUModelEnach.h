@@ -24,6 +24,7 @@
  */
 + (NSArray *)prepareEnachArrayFromDict:(id)JSON;
 + (NSArray *)prepareEnachArrayForCFFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
++ (NSArray *)prepareEnachArrayForCFDynamicFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
 @end
 /*
  "enach" : {

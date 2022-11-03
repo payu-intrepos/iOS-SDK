@@ -74,7 +74,9 @@
 @property (strong, nonatomic) NSString * offerKey;
 @property BOOL isSIInfo;
 @property BOOL checkAdditionalCharges;
+@property BOOL getSdkDetails;
 @property BOOL getMerchantDetails;
+@property BOOL getPaymentDetailsWithExtraFields;
 @property BOOL checkDownStatus;
 @property BOOL checkOfferDetails;
 @property BOOL checkTaxSpecification;
@@ -230,6 +232,8 @@
 //Ads impression paramters
 @property (strong, nonatomic) NSString * requestId;
 @property (strong, nonatomic) NSString * payUId;
+@property (strong, nonatomic) NSString * phoneOtp;
+@property (strong, nonatomic) NSString * loginUuid;
 
 @end
 

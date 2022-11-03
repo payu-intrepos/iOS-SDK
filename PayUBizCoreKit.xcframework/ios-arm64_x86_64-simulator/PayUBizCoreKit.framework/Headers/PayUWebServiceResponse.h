@@ -73,8 +73,8 @@ typedef void (^completionBlockForMCPLookup)(PayUModelMultiCurrencyPayment *mcpIn
 typedef void (^completionBlockForIFSC)(PayUModelIFSCInfo *isfcInfo , NSString *errorMessage, id extraParam);
 
 typedef void (^completionBlockForAdsFetch)(PayUModelFetchAssets *assets ,NSString *errorMessage, id extraParam);
-typedef void (^completionBlockForAddImpression)(NSString *successMessage ,NSString *errorMessage, id extraParam);
-typedef void (^completionBlockForUpdatePayUId)(NSString *successMessage ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForString)(NSString* responseString ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForQuickPayOption)(PayUQuickPayOption *otpVerifyModel ,NSString *errorMessage, id extraParam);
 //MARK:- initailizer
 -(id)init;
 //MARK:- This method is to start crash reporting
@@ -270,7 +270,12 @@ typedef void (^completionBlockForUpdatePayUId)(NSString *successMessage ,NSStrin
 -(void)fetchAdsDetails:(PayUModelPaymentParams *) paymentParam
    withCompletionBlock:(completionBlockForAdsFetch) responseCompletionBlock;
 
--(void)postAdsImpressionEvent:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForAddImpression) responseCompletionBlock;
+-(void)postAdsImpressionEvent:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
 
--(void)updateAdsPayUId:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForUpdatePayUId) responseCompletionBlock;
+-(void)updateAdsPayUId:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
+
+-(void)sendMobileVerificationCode:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
+-(void)verifyOtp:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
+- (void)resendMobileVerificationCode:(PayUModelPaymentParams *)paymentParam withCompletionBlock:(completionBlockForString)responseCompletionBlock;
+- (void)fetchQuickPayOption:(PayUModelPaymentParams *)paymentParam withCompletionBlock:(completionBlockForQuickPayOption)responseCompletionBlock;
 @end

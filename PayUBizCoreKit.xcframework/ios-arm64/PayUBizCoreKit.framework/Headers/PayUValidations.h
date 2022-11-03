@@ -377,5 +377,7 @@
 - (NSMutableString *)validateFetchAssetsParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateImpressionParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateUpdatePayUIdParam:(PayUModelPaymentParams *) paymentParam;
-
+- (NSMutableString *)validatePhoneNumberInParam:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateOtpParam:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateFetchPaymentOptionInParam:(PayUModelPaymentParams *) paymentParam;
 @end

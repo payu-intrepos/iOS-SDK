@@ -82,6 +82,7 @@ typedef void (^completionBlockForJSONParserForVerifyIFSC)(PayUModelIFSCInfo *ifs
 -(void)JSONParserforCheckoutDetails:(id) JSON
                             andOneTapTokenDictionary:(NSDictionary *) oneTapTokenDictionary
                                           apiVersion:(PayUAPIVersion) apiVersion
+                                          isForDynamic:(BOOL) isForDynamic
                 withCompletionBlock:(completionBlockForJSONParserforPaymentRelatedDetailForMobileSDK) paramCompletionBlock;
 
 /*!
@@ -119,7 +120,6 @@ typedef void (^completionBlockForJSONParserForVerifyIFSC)(PayUModelIFSCInfo *ifs
 
 -(void)JSONParserForRefundTransaction:(id) JSON withCompletionBlock:(completionBlockForJSONParserForRefund) paramCompletionBlock;
 
--(void)JSONParserForVerifyIFSC:(id) JSON withCompletionBlock:(completionBlockForJSONParserForVerifyIFSC) paramCompletionBlock;
 
 -(void)JSONParserForSodexoCardDetail:(id) JSON withCompletionBlock:(completionBlockForJSONParserForSodexoCardDetail) paramCompletionBlock;
 
@@ -130,8 +130,8 @@ typedef void (^completionBlockForJSONParserForVerifyIFSC)(PayUModelIFSCInfo *ifs
 -(void)JSONParserforValidateOfferDetails:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForValidateOfferDetails) paramCompletionBlock;
 
 -(void)JSONParserForGetSDKConfiguration:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGETSDKConfiguration) paramCompletionBlock;
--(void)JSONParserforFetchAssets:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForFetchAsset) paramCompletionBlock;
 
+-(void)JSONParserforFetchAssets:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForFetchAsset) paramCompletionBlock;
 -(void)JSONParserforAdPostImpression:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForAddImpression) paramCompletionBlock;
 -(void)JSONParserforUpdatePayUId:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForUpdatePayUId) paramCompletionBlock ;
 @end

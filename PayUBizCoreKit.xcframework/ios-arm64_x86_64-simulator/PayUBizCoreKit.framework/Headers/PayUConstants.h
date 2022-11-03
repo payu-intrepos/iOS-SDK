@@ -67,6 +67,8 @@
 //Mandatory params error list
 #define ERROR_PAYU_ID_IS_MISSING                                @"PayU id is missing, "
 #define ERROR_REQUEST_ID_IS_MISSING                             @"Request id is missing, "
+#define ERROR_OTP_IS_MISSING                                    @"OTP is missing, "
+#define ERROR_UUID_IS_MISSING                                   @"uuid is missing, "
 #define ERROR_KEY_IS_MISSING                                    @"Key is missing, "
 #define ERROR_SODEXO_SOURCE_ID_IS_MISSING                       @"Sodexo sourde id is missing, "
 #define ERROR_TRANSACTIONID_IS_MISSING                          @"Transaction ID is missing, "
@@ -89,6 +91,7 @@
 
 #define ERROR_PHONENUMBER_IS_MISSING                            @"Phone number is missing, "
 #define ERROR_PHONENUMBER_GREATER_THAN_50                       @"Phone number greater than 50 character, "
+#define ERROR_PHONENUMBER_INVALID                               @"Phone number is invalid, "
 
 #define ERROR_IS_MISSING                                        @"is missing, "
 
@@ -149,11 +152,13 @@
 #define ERROR_ONE_TAP_CARD_CVV_MISSING                          @"This is not OneTap Card, "
 
 #define ERROR_USER_CREDENTIAL_IS_MISSING                        @"User credentials is missing, "
+
+#define ERROR_SESSION_TIMEOUT                                   @"Session Timeout. Please try again!"
 #define ERROR_USER_CREDENTIAL_IS_INVALID                        @"Invalid User credentials, "
 
 #define ERROR_VAS_INVALID_CARDBIN_OR_BANKCODE                   @"Invalid cardbin or bank code"
 #define ERROR_VAS_API_NOT_CALLED                                @"VAS API not called"
-
+#define ERROR_SOMETHING_WENT_WRONG                              @"Something went wrong"
 #define VAS_DOWN_TIME_MESSAGE_FOR_NETBANKING                    @" Oops! %@ seems to be down. We recommend you to pay using any other means of payment."
 #define VAS_DOWN_TIME_MESSAGE_FOR_CARD                          @"We are experiencing high failures for %@ card at this time. We recommend you to pay using any other means of payment."
 #define ERROR_EMI_MODE_IS_MISSING                               @"EMI mode is missing, "
@@ -246,7 +251,11 @@
 #define COMMAND_VALIDATE_OFFER_DETAILS                          @"validate_offer_details"   // Used for local purpose
 #define COMMAND_VALIDATE_FETCH_ASSETS                           @"validate_fetch_assets"
 #define COMMAND_POST_ADS_IMPRESSION                             @"post_ads_impression"
-#define COMMAND_UPDATE_PAYU_ID                                   @"update_payu_id"
+#define COMMAND_UPDATE_PAYU_ID                                  @"update_payu_id"
+#define COMMAND_SEND_SIGN_IN_OTP                                @"send_sign_in_otp"
+#define COMMAND_VERIFY_SIGN_IN_OTP                              @"verify_sign_in_otp"
+#define COMMAND_RESEND_SIGN_IN_OTP                              @"resend_sign_in_otp"
+#define COMMAND_FETCH_QUICK_PAY_OPTION                          @"fetch_quick_pay_option"
 
 // Endpoints for webservice
 
@@ -260,8 +269,10 @@
 #define FETCH_ASSETS                                            @"/ads/FetchAssets"
 #define POST_ADS_IMPRESSION                                     @"/ads/impression"
 #define UPDATE_PAYU_ID                                          @"/ads/update_payuId"
-
-
+#define SIGNIN_REQUEST_FOR_MOBILE                               @"/otp/send"
+#define VERIFY_MOBILE_OTP                                       @"/otp/verify"
+#define RESEND_REQUEST_FOR_OTP                                  @"/otp/resend"
+#define QUICK_PAY_FETCH_REQUEST                                 @"/quickpay/fetch"
 // HTTP MEthods
 #define HTTP_METHOD_GET                                         @"GET"
 #define HTTP_METHOD_POST                                        @"POST"
@@ -314,7 +325,18 @@
 //merchant param
 
 #define     PARAM_IS_AD_ENABLE                                  @"isAdsEnabled"
+#define     PARAM_IS_QUICKPAY_ENABLE                            @"isQuickPayEnabled"
 #define     PARAM_MERCHANT                                      @"merchant_param"
+
+//Global vault
+#define     PARAM_CLIENT_SIMPL                                  @"simpl"
+#define     PARAM_CLIENT_TYPE                                   @"clientType"
+#define     PARAM_UUID                                          @"uuid"
+#define     PARAM_RESPONSE_CODE                                 @"responseCode"
+#define     PARAM_MOBILE_OTP                                    @"otp"
+#define     PARAM_BEARER                                        @"Bearer"
+#define     PARAM_TOKEN                                         @"token"
+#define     PARAM_RESPONSE_MESSAGE                              @"responseMessage"
 // payment params
 #define     PARAM_KEY                                           @"key"
 #define     PARAM_TXNID                                         @"txnid"
@@ -327,6 +349,7 @@
 #define     PARAM_LAST_NAME_V2                                  @"lastName"
 #define     PARAM_EMAIL                                         @"email"
 #define     PARAM_PHONE                                         @"phone"
+#define     PARAM_MOBILE_NUMBER                                 @"mobileNumber"
 #define     PARAM_ADDRESS_1                                     @"address1"
 #define     PARAM_ADDRESS_2                                     @"address2"
 #define     PARAM_CITY                                          @"city"
@@ -417,6 +440,7 @@
 #define     KEY_UPI                                             @"upi"
 #define     KEY_ALL                                             @"all"
 #define     KEY_TENURE_OPTIONS                                  @"tenureOptions"
+#define     KEY_SUPPORTED_APPS                                  @"supportedApps"
 //NetBanking parsing elements
 #define     KEY_BANK_ID                                         @"bank_id"
 #define     KEY_PGID                                            @"pgId"
@@ -427,6 +451,9 @@
 #define     KEY_TITLE                                           @"title"
 #define     KEY_SHORT_TITLE                                     @"shortTitle"
 #define     KEY_VERIFICATION_MODE                               @"verificationMode"
+#define     KEY_IBIBOCODE                                       @"ibiboCode"
+#define     KEY_IMAGE_URL                                       @"imageURL"
+#define     KEY_UPI_APP_NAME                                    @"upiAppName"
 
 //EMI parsing elements
 #define     KEY_BANK                                            @"bank"
@@ -553,6 +580,8 @@
 #define     KEY_ADDEDON                                         @"addedon"
 #define     KEY_ADDITIONAL_CHARGES                              @"additional_charges"
 #define     KEY_ADDITIONAL_CHARGE                               @"additionalCharge"
+#define     KEY_IMAGE_UPDATE_ON                                 @"imageUpdatedOn"
+#define     KEY_HAS_ELIGIBLE                                    @"hasEligible"
 #define     KEY_AMT                                             @"amt"
 #define     KEY_BANK_REF_NUM                                    @"bank_ref_num"
 #define     KEY_BANKCODE                                        @"bankcode"
@@ -585,7 +614,7 @@
 #define     PAYMENT_PG_TEZOMNI                                  @"TEZOMNI"
 #define     PAYMENT_PG_UPISI                                    @"UPISI"
 #define     PAYMENT_PG_SODEXO                                   @"SODEXO"
-
+#define     PAYMENT_PG_EFTAXIS                                  @"EFTAXIS"
 // PG Type
 
 #define     PG_NET_BANKING                                      @"NB"
@@ -615,6 +644,7 @@
 #define     KEY_PAYBACKAMOUNT                                   @"paybackAmount"
 #define     KEY_TENURE                                          @"tenure"
 #define     KEY_MINIMUM_AMOUNT                                  @"minimumAmount"
+#define     KEY_MAXIMUM_AMOUNT                                  @"maximumAmount"
 #define     KEY_TRANSACTIONAMOUNT                               @"transactionAmount"
 #define     KEY_PAYMENT_OPTIONS                                 @"paymentOptions"
 #define     KEY_MC                                              @"mc"
@@ -624,9 +654,10 @@
 #define     KEY_DETAILS                                         @"details"
 #define     KEY_MINAMOUNT                                       @"minAmount"
 #define     KEY_CARDBINS                                        @"cardBins"
+#define     KEY_APPS                                            @"apps"
+#define     KEY_HANDLES                                         @"handles"
 
 // Check_isDomestic API parsing elements
-#define     KEY_CATEGORY                                        @"category"
 #define     KEY_CARDCATEGORY                                    @"cardCategory"
 #define     KEY_CARDTYPE                                        @"cardType"
 #define     KEY_CARD_TYPE                                       @"card_type"
@@ -705,7 +736,6 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_ALTERNATE_NAME                                  @"alternateName"
 #define     KEY_CVV                                             @"cvv"
 #define     KEY_BRAND                                           @"brand"
-#define     KEY_CATEGORY                                        @"category"
 #define     KEY_ISSUER                                          @"issuer"
 #define     KEY_BIN                                             @"bin"
 #define     KEY_LAST4DIGITS                                     @"last4Digits"
@@ -726,6 +756,8 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_AVAILED                                         @"availed"
 #define     KEY_OFFER_ID                                        @"offerId"
 #define     KEY_TYPE                                            @"type"
+#define     KEY_URI                                             @"uri"
+#define     KEY_BANK_CODES                                      @"bankCodes"
 #define     KEY_ENFORCE_PAYMENT                                 @"enforcePaymethod"
 #define     KEY_SI                                              @"si"
 #define     KEY_DCSI                                            @"DCSI"
@@ -764,6 +796,8 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_BANK_DATA                                       @"bankData"
 #define     KEY_MESSAGE_DIGEST                                  @"messageDigest"
 #define     KEY_MESSAGE                                         @"message"
+#define     KEY_RESPONSE_MESSAGE                                @"responseMessage"
+#define     KEY_STATUS_CODE                                     @"httpStatusCode"
 #define     KEY_PARES                                           @"pares"
 #define     KEY_ADDITIONAL_INFO                                 @"additionalInfo"
 

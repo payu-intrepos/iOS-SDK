@@ -29,6 +29,8 @@
 @property (nonatomic, strong) NSArray *siArray;
 @property (nonatomic, strong) NSArray *cashCardArray;
 @property (nonatomic, strong) NSArray *upiArray;
+@property (nonatomic, strong) NSArray *upiSiApps;
+@property (nonatomic, strong) NSArray *upiSiHandles;
 @property (nonatomic, strong) NSArray *EMIArray;
 @property (nonatomic, strong) NSDictionary *EMIDictionary;
 @property (nonatomic, strong) NSArray *ccArray;

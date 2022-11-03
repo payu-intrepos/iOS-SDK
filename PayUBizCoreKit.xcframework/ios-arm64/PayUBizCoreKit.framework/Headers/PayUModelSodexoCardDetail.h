@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PayUUtils.h"
 
 @interface PayUModelSodexoCardDetail : NSObject
 
@@ -15,6 +16,8 @@
 @property (nonatomic, strong) NSString * cardBalance;
 @property (nonatomic, strong) NSString * cardName;
 @property (nonatomic, strong) NSString * msg;
+
++ (BOOL) checkSodexo:(id)JSON;
 
 @end
 

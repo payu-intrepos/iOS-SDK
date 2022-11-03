@@ -20,4 +20,5 @@
  */
 + (NSArray *)prepareNeftArrayFromDict:(id)JSON;
 + (NSArray *)prepareNeftArrayForCFFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
++ (NSArray *)prepareNeftArrayForCFDynamicFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
 @end

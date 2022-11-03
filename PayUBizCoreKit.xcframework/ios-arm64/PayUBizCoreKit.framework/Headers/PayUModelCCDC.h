@@ -17,6 +17,8 @@
 
 + (NSArray *)prepareDCArrayForCFFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
 + (NSArray *)prepareCCArrayForCFFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
++ (NSArray *)prepareDCArrayForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
++ (NSArray *)prepareCCArrayForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
 
 @end
 

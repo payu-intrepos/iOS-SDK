@@ -14,10 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PayUModelUPI : PayUBasePaymentModel
 
 @property (strong, nonatomic) NSString * upiTitle;
+@property (nonatomic, strong) NSArray *supportedApps;
 
 + (NSArray *)prepareUPIArrayFromDict:(id)JSON;
 
 + (NSArray *)prepareUPIArrayForCFFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
+
++ (NSArray *)prepareUPIArrayForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
+
++ (NSArray *)prepareUPISIAppsForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
+
++ (NSArray *)prepareUPISIHandlesForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
 
 @end
 

@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSString *logo;
 @property (nonatomic) NSInteger retryCount;
 @property (nonatomic) BOOL isAdsEnabled;
+@property (nonatomic) BOOL isQuickPayEnabled;
 +(PayUModelMerchantInfo *)prepareMerchantInfo:(NSDictionary *)JSON;
 
 @end
