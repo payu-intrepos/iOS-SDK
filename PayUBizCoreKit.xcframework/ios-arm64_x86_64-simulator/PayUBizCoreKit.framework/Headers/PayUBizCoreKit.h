@@ -60,5 +60,7 @@ FOUNDATION_EXPORT const unsigned char PayUBizCoreKitVersionString[];
 #import "PayUModelTokenizedStoredCard.h"
 #import "PayUModelTokenDetails.h"
 #import "PayUModelTokenizedPaymentDetails.h"
+#import "PayUModelGetCheckoutAPIFilters.h"
 #import "PayUModelEMIType.h"
 #import "PayUModelSupportedApps.h"
+#import "PayUModelBNPL.h"

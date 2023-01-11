@@ -272,7 +272,7 @@
 #define SIGNIN_REQUEST_FOR_MOBILE                               @"/otp/send"
 #define VERIFY_MOBILE_OTP                                       @"/otp/verify"
 #define RESEND_REQUEST_FOR_OTP                                  @"/otp/resend"
-#define QUICK_PAY_FETCH_REQUEST                                 @"/quickpay/fetch"
+#define QUICK_PAY_FETCH_REQUEST                                 @"/recommendation/v1/fetch"
 // HTTP MEthods
 #define HTTP_METHOD_GET                                         @"GET"
 #define HTTP_METHOD_POST                                        @"POST"
@@ -419,6 +419,7 @@
 #define     KEY_USERCARDS                                       @"userCards"
 #define     KEY_NETBANKING                                      @"netbanking"
 #define     KEY_NEFT_RTGS                                       @"neftrtgs"
+#define     KEY_BNPL                                            @"bnpl"
 #define     KEY_MEAL_CARD                                       @"mealcard"
 #define     KEY_SODEXO                                          @"sodexo"
 #define     KEY_ENACH                                           @"enach"
@@ -615,6 +616,8 @@
 #define     PAYMENT_PG_UPISI                                    @"UPISI"
 #define     PAYMENT_PG_SODEXO                                   @"SODEXO"
 #define     PAYMENT_PG_EFTAXIS                                  @"EFTAXIS"
+#define     PAYMENT_PG_BNPL                                     @"BNPL"
+
 // PG Type
 
 #define     PG_NET_BANKING                                      @"NB"
@@ -649,6 +652,9 @@
 #define     KEY_PAYMENT_OPTIONS                                 @"paymentOptions"
 #define     KEY_MC                                              @"mc"
 #define     KEY_DOWN_INFO                                       @"downInfo"
+#define     KEY_MONTHLY_EMI                                     @"monthlyEmi"
+#define     KEY_INTREST_CHARGED                                 @"interestCharged"
+#define     KEY_INTREST_RATE                                    @"interestRate"
 
 // eligibleBinForEMI
 #define     KEY_DETAILS                                         @"details"

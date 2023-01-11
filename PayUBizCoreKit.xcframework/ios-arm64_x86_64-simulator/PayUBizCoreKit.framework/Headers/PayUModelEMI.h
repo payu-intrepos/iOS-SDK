@@ -19,6 +19,9 @@
 @property (strong, nonatomic) NSString * minAmount;
 @property (strong, nonatomic) NSString * maxAmount;
 @property (strong, nonatomic) NSString * paymentType;
+@property (strong, nonatomic) NSString *interestCharged;
+@property (strong, nonatomic) NSString *emiValue;
+@property (strong, nonatomic) NSString *interestRate;
 
 @property (strong, nonatomic) NSNumber * tenure;
 @property (strong, nonatomic) PayUEligibilityStatus * eligibility;

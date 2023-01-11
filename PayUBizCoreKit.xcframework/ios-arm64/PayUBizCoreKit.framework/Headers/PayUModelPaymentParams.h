@@ -13,6 +13,8 @@
 #import "PayUModelHashes.h"
 #import "PayUModelStoredCard.h"
 #import "PayUConstants.h"
+#import "PayUModelGetCheckoutAPIFilters.h"
+
 @import PayUParamsKit;
 
 @interface PayUModelPaymentParams : NSObject <NSCopying>
@@ -117,6 +119,7 @@
 
 // Param for NetBanking, StoredCard, CashCard, EMI
 @property (strong, nonatomic) NSString * bankCode;
+@property (assign, nonatomic) PayUCardDetailsType cardDetailsType;
 
 //This param is for GetTransactionInfo API
 @property (strong, nonatomic) NSString *startTime;
@@ -234,6 +237,9 @@
 @property (strong, nonatomic) NSString * payUId;
 @property (strong, nonatomic) NSString * phoneOtp;
 @property (strong, nonatomic) NSString * loginUuid;
+
+// Get Checkout API Filters
+@property (assign, nonatomic) PayUModelGetCheckoutAPIFilters * getCheckoutAPIFilters;
 
 @end
 
