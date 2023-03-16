@@ -64,3 +64,4 @@ FOUNDATION_EXPORT const unsigned char PayUBizCoreKitVersionString[];
 #import "PayUModelEMIType.h"
 #import "PayUModelSupportedApps.h"
 #import "PayUModelBNPL.h"
+#import "PayUModelCLW.h"

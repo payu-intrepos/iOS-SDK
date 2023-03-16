@@ -97,6 +97,8 @@
 
 #define ERROR_IS_INVALID                                        @"is invalid, "
 
+#define ERROR_INVALID_REQUEST                                   @"invalid request, "
+
 #define ERROR_HASH_IS_MISSING                                   @"hash is missing, "
 
 #define ERROR_EXPIRY_MONTH_IS_MISSING                           @"Expiry month is missing, "
@@ -298,6 +300,7 @@
 #define     PARAM_VAR15                                         @"var15"
 #define     PARAM_DEFAULT                                       @"default"
 #define     PARAM_SODEXO_SOURCE_ID                              @"sodexoSourceId"
+#define     PARAM_WALLET_IDENTIFIER                             @"walletIdentifier"
 #define     PARAM_GET                                           @"GET"
 #define     REQUEST_IDENTIFIER_1                                @"1"
 #define     REQUEST_IDENTIFIER_2                                @"2"
@@ -349,6 +352,7 @@
 #define     PARAM_LAST_NAME_V2                                  @"lastName"
 #define     PARAM_EMAIL                                         @"email"
 #define     PARAM_PHONE                                         @"phone"
+#define     PARAM_MOBILE                                        @"mobile"
 #define     PARAM_MOBILE_NUMBER                                 @"mobileNumber"
 #define     PARAM_ADDRESS_1                                     @"address1"
 #define     PARAM_ADDRESS_2                                     @"address2"
@@ -615,6 +619,7 @@
 #define     PAYMENT_PG_TEZOMNI                                  @"TEZOMNI"
 #define     PAYMENT_PG_UPISI                                    @"UPISI"
 #define     PAYMENT_PG_SODEXO                                   @"SODEXO"
+#define     PAYMENT_PG_PAY                                       @"PAY"
 #define     PAYMENT_PG_EFTAXIS                                  @"EFTAXIS"
 #define     PAYMENT_PG_BNPL                                     @"BNPL"
 
@@ -651,6 +656,7 @@
 #define     KEY_TRANSACTIONAMOUNT                               @"transactionAmount"
 #define     KEY_PAYMENT_OPTIONS                                 @"paymentOptions"
 #define     KEY_MC                                              @"mc"
+#define     KEY_CLW                                             @"clw"
 #define     KEY_DOWN_INFO                                       @"downInfo"
 #define     KEY_MONTHLY_EMI                                     @"monthlyEmi"
 #define     KEY_INTREST_CHARGED                                 @"interestCharged"

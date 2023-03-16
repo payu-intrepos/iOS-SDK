@@ -235,7 +235,7 @@ typedef void (^completionBlockForQuickPayOption)(PayUQuickPayResult *otpVerifyMo
 
 -(void)fetchIFSCDetails:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForIFSC) paramCompletionBlock;
 
--(void)fetchSodexoCardDetails:(PayUModelPaymentParams *) paymentParam
+-(void)checkBalance:(PayUModelPaymentParams *) paymentParam
       withCompletionBlock:(completionBlockForSodexoCardDetail) paramCompletionBlock;
 
 -(void)deleteTokenizedStoredCard:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForDeleteStoredCard) paramCompletionBlock;

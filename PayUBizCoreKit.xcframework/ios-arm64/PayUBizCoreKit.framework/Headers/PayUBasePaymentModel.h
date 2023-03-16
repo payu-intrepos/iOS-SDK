@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PayUBasePaymentModel : NSObject
-@property (strong, nonatomic) NSString * type;
+@property (strong, nonatomic) NSString * type; //category
 @property (strong, nonatomic) NSString * imageURL;
 @property (strong, nonatomic) NSString * title;
 @property (strong, nonatomic) NSString * bankID;

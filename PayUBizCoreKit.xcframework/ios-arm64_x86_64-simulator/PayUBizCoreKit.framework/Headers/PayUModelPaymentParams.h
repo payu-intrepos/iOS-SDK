@@ -37,7 +37,8 @@
 @property (strong, nonatomic) PayUModelHashes *hashes;
 @property (strong, nonatomic) NSString * lookupRequestId;
 
-
+@property (strong, nonatomic) NSString * walletIdentifier;
+@property (strong, nonatomic) NSString * walletURN;
 // Other Parameters
 @property (strong, nonatomic) NSString * userCredentials;
 

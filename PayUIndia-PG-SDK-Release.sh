@@ -50,7 +50,7 @@ podTrunkPush() {
 }
 
 podName="PayUIndia-PG-SDK"
-podVersion="9.0.0"
+podVersion="9.1.0"
 
 podSpec="${podName}.podspec"
 tag="${podVersion}"
