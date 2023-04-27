@@ -120,6 +120,7 @@
 
 // Param for NetBanking, StoredCard, CashCard, EMI
 @property (strong, nonatomic) NSString * bankCode;
+@property (strong, nonatomic) NSString * pan;
 @property (assign, nonatomic) PayUCardDetailsType cardDetailsType;
 
 //This param is for GetTransactionInfo API

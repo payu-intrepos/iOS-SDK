@@ -332,7 +332,7 @@
 #define     PARAM_MERCHANT                                      @"merchant_param"
 
 //Global vault
-#define     PARAM_CLIENT_SIMPL                                  @"simpl"
+#define     PARAM_CLIENT_PAYU                                   @"payu"
 #define     PARAM_CLIENT_TYPE                                   @"clientType"
 #define     PARAM_UUID                                          @"uuid"
 #define     PARAM_RESPONSE_CODE                                 @"responseCode"
