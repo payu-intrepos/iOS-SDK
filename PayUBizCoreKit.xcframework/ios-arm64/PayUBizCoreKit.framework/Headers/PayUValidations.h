@@ -45,7 +45,7 @@
  * @return [errorString]                    [NSMutableString type]
  * @see    [validateOneTapTokenDictionary]
  */
--(NSMutableString *)validateOneTapParam: (PayUModelPaymentParams *) paymentParam;
+//-(NSMutableString *)validateOneTapParam: (PayUModelPaymentParams *) paymentParam;
 
 /*!
  * This method validate stored card params and returns string value.
