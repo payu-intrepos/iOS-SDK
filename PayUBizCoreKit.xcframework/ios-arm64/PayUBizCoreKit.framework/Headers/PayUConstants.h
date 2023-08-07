@@ -853,6 +853,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 // Date Format Constant
 #define     DATE_FORMAT                                         @"yyyy-MM-dd"
 #define     FULL_DATE_FORMAT                                    @"EEE, dd MMM yyyy HH:mm:ss"
+#define     DATE_TIME_FORMAT                                    @"yyyy-MM-dd HH:mm:ss"
 
 // Offer Details Constants
 #define     PARAM_USER_TOKEN                                    @"userToken"

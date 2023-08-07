@@ -173,6 +173,8 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 + (NSString*)getFormattedDateString:(NSDate *) date;
 
++ (NSNumber *)getFormattedDateTimeStamp:(NSString *) dateString;
+
 + (BOOL)isDate:(NSString *) dateString greaterThan:(NSString *) minDateString;
 
 + (BOOL)isDate:(NSString *) dateString greaterThanEqual:(NSString *) minDateString;
