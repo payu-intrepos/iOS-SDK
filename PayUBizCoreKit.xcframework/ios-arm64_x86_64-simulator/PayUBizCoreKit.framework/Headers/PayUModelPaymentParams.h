@@ -41,7 +41,7 @@
 @property (strong, nonatomic) NSString * walletURN;
 // Other Parameters
 @property (strong, nonatomic) NSString * userCredentials;
-
+@property (strong, nonatomic) NSString * loadAmount;
 
 // Optional Parameters
 @property (strong, nonatomic) NSString * phoneNumber;
