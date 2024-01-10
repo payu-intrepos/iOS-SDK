@@ -17,6 +17,6 @@ Pod::Spec.new do |s|
 
   s.dependency            'PayUIndia-PayUParams', '~> 5.2'
   s.dependency            'PayUIndia-NetworkReachability', '~> 1.0'
-  s.dependency            'PayUIndia-CrashReporter', '~> '3.0'
+  s.dependency            'PayUIndia-CrashReporter', '~> 3.0'
 
 end
