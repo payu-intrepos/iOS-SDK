@@ -586,6 +586,7 @@
 #define     KEY_ADDITIONAL_CHARGES                              @"additional_charges"
 #define     KEY_ADDITIONAL_CHARGE                               @"additionalCharge"
 #define     KEY_IMAGE_UPDATE_ON                                 @"imageUpdatedOn"
+#define     KEY_SECURE_WEB_VIEW                                 @"secureWebview"
 #define     KEY_HAS_ELIGIBLE                                    @"hasEligible"
 #define     KEY_AMT                                             @"amt"
 #define     KEY_BANK_REF_NUM                                    @"bank_ref_num"

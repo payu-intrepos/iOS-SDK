@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/PayUBasePaymentModel.h</key>
 		<data>
-		Y4N0DhC35QtGZUv8LMGUU3/R4yQ=
+		4zDlk7fx7tcF8MTxdi3EhOzIrJ8=
 		</data>
 		<key>Headers/PayUBizCoreKit.h</key>
 		<data>
@@ -14,7 +14,7 @@
 		</data>
 		<key>Headers/PayUConstants.h</key>
 		<data>
-		AXdW3NKaXsJemLm4kVfrXuKV0qI=
+		orUSEx3Q/j5knEjJDlsXlmn5CM4=
 		</data>
 		<key>Headers/PayUCreatePostParam.h</key>
 		<data>
@@ -190,7 +190,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		xwvJBmjhrBvPDXTCwXFb1gp4D/M=
+		qsSHVqPsySs2tL2GbFRJ08qn96g=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -207,7 +207,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			swaXHAGng9+zDbvWAAlD84jsopXNlPuyCAJit8t3sxY=
+			LjRYItqa+vTjt3Y/fech9zjvL7SPglAjoYMUrbWw4SM=
 			</data>
 		</dict>
 		<key>Headers/PayUBizCoreKit.h</key>
@@ -221,7 +221,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			H7wGd0PnPd/s6NshMUBLzC4QqD4wFvUSwG/egManfm0=
+			/Gqx656vT0/fSvjzQSI8K/ZJ+uH9GL2ypV5dq9ou5/M=
 			</data>
 		</dict>
 		<key>Headers/PayUCreatePostParam.h</key>
