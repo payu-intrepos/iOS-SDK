@@ -181,6 +181,8 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 + (BOOL)isEmpty:(NSString *) string;
 
++ (BOOL)isValidObject:(id) object;
+
 + (NSString *)getJSONIndividualObjectForKey:(NSString *) key value:(NSString *) value;
 
 + (NSString *)siDetailsFromPaymentParam:(PayUModelPaymentParams *) paymentParam;

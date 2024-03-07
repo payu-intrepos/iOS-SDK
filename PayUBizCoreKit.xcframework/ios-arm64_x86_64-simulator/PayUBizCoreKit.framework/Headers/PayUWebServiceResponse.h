@@ -75,6 +75,7 @@ typedef void (^completionBlockForIFSC)(PayUModelIFSCInfo *isfcInfo , NSString *e
 typedef void (^completionBlockForAdsFetch)(PayUModelFetchAssets *assets ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForString)(NSString* responseString ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForQuickPayOption)(PayUQuickPayResult *otpVerifyModel ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetails*> *emiCalculatorModel ,NSString *errorMessage, id extraParam);
 //MARK:- initailizer
 -(id)init;
 //MARK:- This method is to start crash reporting
@@ -279,4 +280,6 @@ typedef void (^completionBlockForQuickPayOption)(PayUQuickPayResult *otpVerifyMo
 - (void)resendMobileVerificationCode:(PayUModelPaymentParams *)paymentParam withCompletionBlock:(completionBlockForString)responseCompletionBlock;
 - (void)fetchQuickPayOption:(PayUModelPaymentParams *)paymentParam
 completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForQuickPayOption)responseCompletionBlock;
+- (void)fetchEMICalculation:(PayUModelPaymentParams *)paymentParam
+completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForEmiCalculation)responseCompletionBlock;
 @end

@@ -10,11 +10,11 @@
 		</data>
 		<key>Headers/PayUBizCoreKit.h</key>
 		<data>
-		X/sJ04fVaqtyD6eOXItL8oSTy+s=
+		f2J3Bespc/GQ4M7QRqjAdiO5Vnw=
 		</data>
 		<key>Headers/PayUConstants.h</key>
 		<data>
-		orUSEx3Q/j5knEjJDlsXlmn5CM4=
+		4WJw7lBn1j4HffMjGV6U2r2kEIU=
 		</data>
 		<key>Headers/PayUCreatePostParam.h</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Headers/PayUJSONParser.h</key>
 		<data>
-		8vfpDKIKnEJT5GUVNrFFhBNRtts=
+		xo4Gz49edfbD8TaCG71GF1SdhSk=
 		</data>
 		<key>Headers/PayUModelAdminOffer.h</key>
 		<data>
@@ -72,6 +72,10 @@
 		<data>
 		qs/2/7tS4RJyOLQwXV/0mzOxtdk=
 		</data>
+		<key>Headers/PayUModelEmiCalculationParams.h</key>
+		<data>
+		kzCFYAjSWvbwe2FL9ZWLEComy0g=
+		</data>
 		<key>Headers/PayUModelEnach.h</key>
 		<data>
 		WQyEo0YboeHheaHrPR7bcLZiDiU=
@@ -108,13 +112,17 @@
 		<data>
 		gD8SV9pYFnnKr2bOfk+bstyVGyk=
 		</data>
+		<key>Headers/PayUModelOfferParams.h</key>
+		<data>
+		oZHftLQRxzi3vqlZuC9zopKnq2g=
+		</data>
 		<key>Headers/PayUModelOfferStatus.h</key>
 		<data>
 		VPn2jacxzfbL9jQ03D552mYxyOM=
 		</data>
 		<key>Headers/PayUModelPaymentParams.h</key>
 		<data>
-		Q6olNZ2fJIVRdv9uKFGjEYTd8Qo=
+		HNRDwW7zR5bqMUTrOIKKT/bRYuQ=
 		</data>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
 		<data>
@@ -174,7 +182,7 @@
 		</data>
 		<key>Headers/PayUUtils.h</key>
 		<data>
-		WPLnJvwug2nngwlZE7uQmmYFA7I=
+		M3C5CBIfTaWb33hkv/ZcOoNgqmw=
 		</data>
 		<key>Headers/PayUValidations.h</key>
 		<data>
@@ -186,15 +194,15 @@
 		</data>
 		<key>Headers/PayUWebServiceResponse.h</key>
 		<data>
-		UvCl35KzXmBq0q4eX6/yrGMOq5o=
+		kqEmk9nk9FHZL7dh7bcDDI9phqU=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		qsSHVqPsySs2tL2GbFRJ08qn96g=
+		48M+LFQCg6i9iR4r64K5zwSedd0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		b/pYfTi9wBVr88h+fWRy56WHe5s=
+		5+C6aYm7XVHfUh3qfHDK2u4AePQ=
 		</data>
 		<key>PayUSDKInfo.plist</key>
 		<data>
@@ -214,14 +222,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			lnMOjHX0bAQQ80MfTj6oP4OjEx/qTpsKX/5zWyHyeYk=
+			QrvWprK2VHPZSV9stX2J+0lTE3AYW45uWaytSjgkRl0=
 			</data>
 		</dict>
 		<key>Headers/PayUConstants.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/Gqx656vT0/fSvjzQSI8K/ZJ+uH9GL2ypV5dq9ou5/M=
+			1MENsoS0nRa0ucV4nsH8bCT0RG0rqTIjCoxmFv/DZBE=
 			</data>
 		</dict>
 		<key>Headers/PayUCreatePostParam.h</key>
@@ -256,7 +264,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			AUiGshy7T/v0cp+A9BaK/siqFdEJYetbayvhJbP1FJU=
+			J1qqmhW6+eDMai5PwIMvlZOXUdtTDkZg1jkkDTGHIWQ=
 			</data>
 		</dict>
 		<key>Headers/PayUModelAdminOffer.h</key>
@@ -322,6 +330,13 @@
 			Fpv6x2Sq2Re89EbdJM9n8azCAvYthevFPdlXGHWAh0Y=
 			</data>
 		</dict>
+		<key>Headers/PayUModelEmiCalculationParams.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			RcQir7pEXQL8nCri8rbG2Pj8ggkC2MOrd0W+8LW8p6U=
+			</data>
+		</dict>
 		<key>Headers/PayUModelEnach.h</key>
 		<dict>
 			<key>hash2</key>
@@ -385,6 +400,13 @@
 			PhyI2kTOfL5sHKorPX1Z54vj1/eL1Vbrzpkz1FMm3rM=
 			</data>
 		</dict>
+		<key>Headers/PayUModelOfferParams.h</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			p/4q8mhMTtjWiFZowEWMuwZ5p9cVgstAHw20OKGRa7I=
+			</data>
+		</dict>
 		<key>Headers/PayUModelOfferStatus.h</key>
 		<dict>
 			<key>hash2</key>
@@ -396,7 +418,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Pmku41XKAzvGMqf3YouIhnywyRyjlmBuZKp6AkQVm+I=
+			/srmz0HINcHr+eqI7++5EcVleXf/OqxPB6wOjhkdRog=
 			</data>
 		</dict>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
@@ -501,7 +523,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			cl9mj9kH1+DxFabl5O6eoeUkXGAJoW7BjmX8rQNDM1U=
+			kkA16sLcY1ggdQfMykcr29b+Wooun4OKeGY7ZplVTNc=
 			</data>
 		</dict>
 		<key>Headers/PayUValidations.h</key>
@@ -522,14 +544,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LkKo8ORj3+m+wfkymhqdPyoJ36RNWaI0mEFomYBmpnQ=
+			DglyXaxFiSeT8kwWd/gHcvNh+yDzcvoFnjRsXxYSnwY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HHmodhpCYuFfkFSbxpQzPVLNb1JLC1dCWpas0XVFHnw=
+			c+K+NROLdeNGv4MUwAr+qoO9d7ehBbmjBJvlFySrIKs=
 			</data>
 		</dict>
 		<key>PayUSDKInfo.plist</key>

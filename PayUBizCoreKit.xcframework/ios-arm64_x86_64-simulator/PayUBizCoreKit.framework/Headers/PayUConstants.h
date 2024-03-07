@@ -74,7 +74,6 @@
 #define ERROR_TRANSACTIONID_IS_MISSING                          @"Transaction ID is missing, "
 #define ERROR_TRANSACTIONID_GREATER_THAN_25                     @"Transaction ID greater than 25 character, "
 
-#define ERROR_AMOUNT_IS_MISSING                                 @"Amount is missing, "
 #define ERROR_AMOUNT_IS_NONNUMERIC                              @" is non-numeric, "
 #define ERROR_AMOUNT_CONTAIN_MORE_THAN_ONE_DECIMAL              @"Amount contain more than one decimal, "
 #define ERROR_AMOUNT_IS_LESS_THAN_MINIMUM_AMOUNT                @" is less than minimum amount, "
@@ -148,6 +147,7 @@
 #define ERROR_PAYMENT_CODE_IS_MISSING                           @"Payment code is missing, "
 #define ERROR_CATEGORY_IS_MISSING                               @"Category is missing, "
 #define ERROR_OFFER_KEYS_ARE_MISSING                            @"Offer keys are missing, "
+#define ERROR_OFFER_PARAMS_ARE_MISSING                          @"Offer params are missing, "
 
 #define ERROR_ONE_TAP_STORED_CARD_TOKEN_MISSING                 @"Stored card Dictionary missing, "
 #define ERROR_ONE_TAP_MERCHANY_HASH_IS_MISSING                  @"Merchant hash is missing, "
@@ -258,6 +258,7 @@
 #define COMMAND_VERIFY_SIGN_IN_OTP                              @"verify_sign_in_otp"
 #define COMMAND_RESEND_SIGN_IN_OTP                              @"resend_sign_in_otp"
 #define COMMAND_FETCH_QUICK_PAY_OPTION                          @"fetch_quick_pay_option"
+#define COMMAND_FETCH_EMI_CALCULATOR                            @"fetch_emi_calculator"
 
 // Endpoints for webservice
 
@@ -275,6 +276,7 @@
 #define VERIFY_MOBILE_OTP                                       @"/otp/verify"
 #define RESEND_REQUEST_FOR_OTP                                  @"/otp/resend"
 #define QUICK_PAY_FETCH_REQUEST                                 @"/recommendation/v1/fetch"
+#define EMI_CALCULATOR                                          @"/calculateEmi/v3"
 // HTTP MEthods
 #define HTTP_METHOD_GET                                         @"GET"
 #define HTTP_METHOD_POST                                        @"POST"
@@ -539,6 +541,8 @@
 #define     KEY_OWNERNAME                                       @"ownerName"
 #define     KEY_VALIDTHROUGH                                    @"validThrough"
 #define     KEY_USERCREDENTIAL                                  @"userCredential"
+#define     KEY_SKU_ID                                          @"skuId"
+#define     KEY_SKU_AMOUNT                                      @"skuAmount"
 
 #define     NO_NETBANKING                                       @"NetBanking is unavailable"
 #define     NO_STORED_CARDS                                     @"No Stored cards available"
@@ -867,9 +871,23 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     PARAM_PLATFORM_ID                                   @"platformId"
 #define     PARAM_USER_DETAILS                                  @"userDetail"
 #define     PARAM_PHONE_NO                                      @"phoneNo"
+#define     PARAM_SKU_DETAILS                                   @"skusDetail"
 
 // Has String Constants
 #define     KEY_HASH_NAME                                       @"hashName"
 #define     KEY_HASH_STRING                                     @"hashString"
+
+//EMI calculator
+#define     PARAM_TXN_AMOUNT                                    @"txnAmount"
+#define     PARAM_AUTO_APPLY                                    @"autoApply"
+#define     PARAM_AUTO_APPLY_OFFER                              @"autoApplyOffer"
+#define     PARAM_EMI_CODES                                     @"emiCodes"
+#define     PARAM_ADDITIONAL_CHARGES                            @"additionalCharges"
+#define     PARAM_BANK_CODES                                    @"bankCodes"
+#define     PARAM_DISABLE_OVERRIDE_NCE_CONFIG                   @"disableOverrideNceConfig"
+#define     PARAM_SKUS                                          @"skus"
+
+#define     VALUE_TRUE                                          @"true"
+#define     VALUE_FALSE                                         @"false"
 
 #endif /* PayUConstants_h */
