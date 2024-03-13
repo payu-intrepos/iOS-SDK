@@ -328,7 +328,7 @@
 #define     PARAM_MOBILE_FOOTER                                 @"mobile_footer"
 #define     PARAM_ASSETS                                        @"assets"
 //merchant param
-
+#define     PARAM_IS_OFFER_ENABLE                               @"isOfferEnabled"
 #define     PARAM_IS_AD_ENABLE                                  @"isAdsEnabled"
 #define     PARAM_IS_QUICKPAY_ENABLE                            @"isQuickPayEnabled"
 #define     PARAM_MERCHANT                                      @"merchant_param"
