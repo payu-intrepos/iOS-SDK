@@ -13,10 +13,6 @@
 @property (nonatomic, strong) NSString *displayName;
 @property (nonatomic, strong) NSString *logo;
 @property (nonatomic) NSInteger retryCount;
-@property (nonatomic) BOOL isAdsEnabled;
-@property (nonatomic) BOOL isQuickPayEnabled;
-@property (nonatomic) BOOL isOfferEnabled;
-@property (nonatomic, strong) NSString *walletIdentifier;
 
 +(PayUModelMerchantInfo *)prepareMerchantInfo:(NSDictionary *)JSON;
 

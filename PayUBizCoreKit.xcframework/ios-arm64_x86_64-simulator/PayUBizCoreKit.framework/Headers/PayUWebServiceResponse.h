@@ -23,7 +23,6 @@
 #import "PayUModelVAS.h"
 #import "PayUModelSodexoCardDetail.h"
 #import "PayUModelTokenizedPaymentDetails.h"
-
 @import PayUParamsKit;
 
 @interface PayUWebServiceResponse : NSObject
@@ -72,10 +71,6 @@ typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCar
 typedef void (^completionBlockForMCPLookup)(PayUModelMultiCurrencyPayment *mcpInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForIFSC)(PayUModelIFSCInfo *isfcInfo , NSString *errorMessage, id extraParam);
 
-typedef void (^completionBlockForAdsFetch)(PayUModelFetchAssets *assets ,NSString *errorMessage, id extraParam);
-typedef void (^completionBlockForString)(NSString* responseString ,NSString *errorMessage, id extraParam);
-typedef void (^completionBlockForQuickPayOption)(PayUQuickPayResult *otpVerifyModel ,NSString *errorMessage, id extraParam);
-typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetails*> *emiCalculatorModel ,NSString *errorMessage, id extraParam);
 //MARK:- initailizer
 -(id)init;
 //MARK:- This method is to start crash reporting
@@ -236,7 +231,7 @@ typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetai
 
 -(void)fetchIFSCDetails:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForIFSC) paramCompletionBlock;
 
--(void)checkBalance:(PayUModelPaymentParams *) paymentParam
+-(void)fetchSodexoCardDetails:(PayUModelPaymentParams *) paymentParam
       withCompletionBlock:(completionBlockForSodexoCardDetail) paramCompletionBlock;
 
 -(void)deleteTokenizedStoredCard:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForDeleteStoredCard) paramCompletionBlock;
@@ -267,19 +262,4 @@ typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetai
  */
 -(void)validateOfferDetails:(PayUModelPaymentParams *) paymentParam completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForValidateOfferDetails) responseCompletionBlock;
 
-
--(void)fetchAdsDetails:(PayUModelPaymentParams *) paymentParam
-   withCompletionBlock:(completionBlockForAdsFetch) responseCompletionBlock;
-
--(void)postAdsImpressionEvent:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
-
--(void)updateAdsPayUId:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
-
--(void)sendMobileVerificationCode:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
--(void)verifyOtp:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
-- (void)resendMobileVerificationCode:(PayUModelPaymentParams *)paymentParam withCompletionBlock:(completionBlockForString)responseCompletionBlock;
-- (void)fetchQuickPayOption:(PayUModelPaymentParams *)paymentParam
-completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForQuickPayOption)responseCompletionBlock;
-- (void)fetchEMICalculation:(PayUModelPaymentParams *)paymentParam
-completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForEmiCalculation)responseCompletionBlock;
 @end

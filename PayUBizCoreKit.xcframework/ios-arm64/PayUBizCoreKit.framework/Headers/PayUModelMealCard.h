@@ -18,6 +18,5 @@
  */
 + (NSArray *)prepareMealCardArrayFromDict:(id)JSON;
 + (NSArray *)prepareMealCardArrayForCFFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
-+ (NSArray *)prepareMealCardArrayForCFDynamicFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
 @end
 

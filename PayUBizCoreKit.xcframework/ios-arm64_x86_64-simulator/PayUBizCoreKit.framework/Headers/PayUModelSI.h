@@ -24,14 +24,11 @@
  * @param  [Json]      [NSDictionary type]
  */
 + (NSArray *)prepareSIArrayFromDict:(id)JSON;
-+ (NSArray *)prepareSIArrayForCFFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
-+ (NSArray *)prepareSIArrayForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
++ (NSArray *)prepareSIArrayForCFFromDict:(id)JSON;
 + (BOOL) checkDCSI:(id)JSON;
 + (BOOL) checkCCSI:(id)JSON;
 + (BOOL) checkDCSIForCF:(id)JSON;
 + (BOOL) checkCCSIForCF:(id)JSON;
-+ (BOOL) checkDCSIForCFDynamic:(id)JSON;
-+ (BOOL) checkCCSIForCFDynamic:(id)JSON;
 
 @end
 /*

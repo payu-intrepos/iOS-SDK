@@ -6,13 +6,13 @@
 //  Copyright © 2021 PayU. All rights reserved.
 //
 
+
+
 #import <Foundation/Foundation.h>
 
 @interface PayUEligibilityStatus: NSObject
-
-@property (strong, nonatomic) NSString * reason;
-@property (nonatomic) BOOL status;
-
+    @property (strong, nonatomic) NSString * reason;
+    @property (nonatomic) BOOL status;
 @end
 
 

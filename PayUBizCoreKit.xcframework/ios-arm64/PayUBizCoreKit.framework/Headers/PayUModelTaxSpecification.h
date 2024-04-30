@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+//cc,dc,nb,emi,cash,upi,lazypay,enach
 @interface PayUModelTaxSpecification : NSObject
-
 @property (nonatomic, strong) NSNumber *ccTaxValue;
 @property (nonatomic, strong) NSNumber *dcTaxValue;
 @property (nonatomic, strong) NSNumber *nbTaxValue;
@@ -20,9 +20,7 @@
 @property (nonatomic, strong) NSNumber *enachTaxValue;
 @property (nonatomic, strong) NSNumber *lazypayTaxValue;
 @property (nonatomic, strong) NSNumber *mcTaxValue;
-@property (nonatomic, strong) NSNumber *bnplTaxValue;
 
 + (PayUModelTaxSpecification *)prepareTaxInfoFromDict:(NSDictionary *)JSON;
 + (NSNumber *)checkContainTaxValue:(id)taxValue withDefaultValue:(id)defaultValue;
-
 @end

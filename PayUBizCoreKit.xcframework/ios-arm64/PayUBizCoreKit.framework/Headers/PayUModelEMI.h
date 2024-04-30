@@ -17,12 +17,7 @@
 @property (strong, nonatomic) NSString * bankName;
 @property (strong, nonatomic) NSString * emiTitle;
 @property (strong, nonatomic) NSString * minAmount;
-@property (strong, nonatomic) NSString * maxAmount;
 @property (strong, nonatomic) NSString * paymentType;
-@property (strong, nonatomic) NSString *interestCharged;
-@property (strong, nonatomic) NSString *emiValue;
-@property (strong, nonatomic) NSString *interestRate;
-
 @property (strong, nonatomic) NSNumber * tenure;
 @property (strong, nonatomic) PayUEligibilityStatus * eligibility;
 /*!
@@ -47,7 +42,5 @@
 +(NSDictionary *)getEMIDictFromEMIModelArray:(NSArray *)emiArray;
 
 +(NSDictionary *)getEligibleNoCostEMIDictFromEMIModelArray:(NSArray *)emiArray WRTToAmount:(NSString *) amount;
-
-+(NSDictionary *)getEMIDictionaryForCFDynamicFromDict:(NSDictionary *) JSON withDownStaus:(NSDictionary *)downJSON;
 
 @end

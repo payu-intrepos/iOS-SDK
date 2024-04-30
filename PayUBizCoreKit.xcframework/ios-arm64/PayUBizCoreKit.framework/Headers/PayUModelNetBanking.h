@@ -24,7 +24,6 @@
  */
 + (NSArray *)prepareNBArrayFromDict:(id)JSON;
 + (NSArray *)prepareNBArrayForCFFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
-+ (NSArray *)prepareNBArrayForCFDynamicFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON;
 @end
 /*
  {

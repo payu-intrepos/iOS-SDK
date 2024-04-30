@@ -13,10 +13,6 @@
 #import "PayUModelHashes.h"
 #import "PayUModelStoredCard.h"
 #import "PayUConstants.h"
-#import "PayUModelGetCheckoutAPIFilters.h"
-#import "PayUModelEmiCalculationParams.h"
-#import "PayUModelOfferParams.h"
-
 @import PayUParamsKit;
 
 @interface PayUModelPaymentParams : NSObject <NSCopying>
@@ -39,11 +35,10 @@
 @property (strong, nonatomic) PayUModelHashes *hashes;
 @property (strong, nonatomic) NSString * lookupRequestId;
 
-@property (strong, nonatomic) NSString * walletIdentifier;
-@property (strong, nonatomic) NSString * walletURN;
+
 // Other Parameters
 @property (strong, nonatomic) NSString * userCredentials;
-@property (strong, nonatomic) NSString * loadAmount;
+
 
 // Optional Parameters
 @property (strong, nonatomic) NSString * phoneNumber;
@@ -76,14 +71,12 @@
 @property (strong, nonatomic) NSString * shippingCountry;
 @property (strong, nonatomic) NSString * shippingZipcode;
 @property (strong, nonatomic) NSString * shippingPhone;
-@property (strong, nonatomic) NSString * offerKey DEPRECATED_ATTRIBUTE;
+@property (strong, nonatomic) NSString * offerKey;
 @property BOOL isSIInfo;
 @property BOOL checkAdditionalCharges;
-@property BOOL getSdkDetails;
 @property BOOL getMerchantDetails;
-@property BOOL getPaymentDetailsWithExtraFields;
 @property BOOL checkDownStatus;
-@property BOOL checkOfferDetails DEPRECATED_ATTRIBUTE;
+@property BOOL checkOfferDetails;
 @property BOOL checkTaxSpecification;
 @property BOOL getExtendedPaymentDetails;
 @property BOOL getPgIdForEachOption;
@@ -122,11 +115,6 @@
 
 // Param for NetBanking, StoredCard, CashCard, EMI
 @property (strong, nonatomic) NSString * bankCode;
-@property (strong, nonatomic) NSString * pan;
-@property (assign, nonatomic) PayUCardDetailsType cardDetailsType;
-
-// Param for EMI Calculator
-@property (strong, nonatomic) PayUModelEmiCalculationParams* emiCalculatorParams;
 
 //This param is for GetTransactionInfo API
 @property (strong, nonatomic) NSString *startTime;
@@ -147,11 +135,14 @@
 @property (strong, nonatomic) NSString *beneficiaryAccountNumbers;
 @property (strong, nonatomic) NSString *beneficiaryAccountIFSC;
 
+
+
 //API v2 properties
 @property (strong, nonatomic) NSString *paymentId;
 @property (strong, nonatomic) NSString *paymentStatus;
 @property (strong, nonatomic) NSString *currency;
 @property (strong, nonatomic) NSString *date;
+@property (strong, nonatomic) NSString *digest;
 @property (strong, nonatomic) NSString *authorization;
 
 @property (strong, nonatomic) NSString * ownerName;
@@ -183,10 +174,10 @@
  "amount": null
  }
  */
-@property (strong, nonatomic) NSArray * appliedOffers DEPRECATED_ATTRIBUTE;
-@property (strong, nonatomic) NSArray * availedOffers DEPRECATED_ATTRIBUTE;
+@property (strong, nonatomic) NSArray * appliedOffers;
+@property (strong, nonatomic) NSArray * availedOffers;
 
-@property (strong, nonatomic) NSString * offerType DEPRECATED_ATTRIBUTE;
+@property (strong, nonatomic) NSString * offerType;
 @property (strong, nonatomic) NSString * failureReason;
 @property (strong, nonatomic) NSString * si;
 @property (strong, nonatomic) NSString * forcePgid;
@@ -229,20 +220,12 @@
 @property (strong, nonatomic) NSString * merchantResponseTimeout;
 @property BOOL isRetryPayment;
 
-// Offer Parameters
-@property (strong, nonatomic) PayUModelOfferParams *offerParams;
-
-//Ads impression paramters
-@property (strong, nonatomic) NSString * requestId;
-@property (strong, nonatomic) NSString * payUId;
-@property (strong, nonatomic) NSString * phoneOtp;
-@property (strong, nonatomic) NSString * loginUuid;
-
-//GV
-@property (strong, nonatomic) NSString * gvUserToken;
-
-// Get Checkout API Filters
-@property (strong, nonatomic) PayUModelGetCheckoutAPIFilters * getCheckoutAPIFilters;
+// Get Offer Detail Parameters
+@property (strong, nonatomic) NSString * userToken;
+@property (strong, nonatomic) NSString * clientId;
+@property (strong, nonatomic) NSString * paymentCode;
+@property (strong, nonatomic) NSString * platformId;
+@property (strong, nonatomic) NSArray<NSString *>  * offerKeys;
 
 @end
 

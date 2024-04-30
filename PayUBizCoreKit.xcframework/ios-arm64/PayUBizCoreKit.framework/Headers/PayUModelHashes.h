@@ -38,4 +38,16 @@
 @property (strong, nonatomic) NSString * getTokenizedPaymentDetailHash;
 @property (strong, nonatomic) NSString * getSDKConfigurationHash;
 
+/*
+ get_merchant_ibibo_codes_hash"
+ payment_hash"
+ vas_for_mobile_sdk_hash"
+ delete_user_card_hash"
+ edit_user_card_hash"
+ save_user_card_hash"
+ payment_related_details_for_mobile_sdk_hash"
+ get_user_cards_hash"
+ check_offer_status_hash"
+ */
+
 @end

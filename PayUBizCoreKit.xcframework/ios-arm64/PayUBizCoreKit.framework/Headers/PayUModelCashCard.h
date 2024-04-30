@@ -23,6 +23,5 @@
  */
 + (NSArray *)prepareCashCardArrayFromDict:(id)JSON;
 + (NSArray *)prepareCashCardArrayForCFFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
-+ (NSArray *)prepareCashCardArrayForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
 
 @end

@@ -17,7 +17,6 @@
 #import "PayUModelEMI.h"
 #import "PayUModelTaxSpecification.h"
 #import "PayUModelMerchantInfo.h"
-#import "PayUModelBNPL.h"
 
 @interface PayUModelPaymentRelatedDetail : NSObject
 
@@ -26,13 +25,10 @@
 @property (nonatomic, strong) NSArray *netBankingArray;
 @property (nonatomic, strong) NSArray *neftrtgsArray;
 @property (nonatomic, strong) NSArray *mealCardArray;
-@property (nonatomic, strong) NSArray *clwArray;
 @property (nonatomic, strong) NSArray *enachArray;
 @property (nonatomic, strong) NSArray *siArray;
 @property (nonatomic, strong) NSArray *cashCardArray;
 @property (nonatomic, strong) NSArray *upiArray;
-@property (nonatomic, strong) NSArray *upiSiApps;
-@property (nonatomic, strong) NSArray *upiSiHandles;
 @property (nonatomic, strong) NSArray *EMIArray;
 @property (nonatomic, strong) NSDictionary *EMIDictionary;
 @property (nonatomic, strong) NSArray *ccArray;
@@ -46,7 +42,6 @@
 @property (nonatomic, strong) PayUModelTaxSpecification *taxSpecification;
 @property (nonatomic, strong) NSArray *offers;
 @property (nonatomic, strong) PayUModelMerchantInfo *merchantInfo;
-@property (nonatomic, strong) NSArray *bnplArray;
 
 @end
 
