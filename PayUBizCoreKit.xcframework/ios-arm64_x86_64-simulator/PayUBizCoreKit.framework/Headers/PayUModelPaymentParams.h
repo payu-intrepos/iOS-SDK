@@ -242,7 +242,7 @@
 @property (strong, nonatomic) NSString * gvUserToken;
 
 // Get Checkout API Filters
-@property (assign, nonatomic) PayUModelGetCheckoutAPIFilters * getCheckoutAPIFilters;
+@property (strong, nonatomic) PayUModelGetCheckoutAPIFilters * getCheckoutAPIFilters;
 
 @end
 

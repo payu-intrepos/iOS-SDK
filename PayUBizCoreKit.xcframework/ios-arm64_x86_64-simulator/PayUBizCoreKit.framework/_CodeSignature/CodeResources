@@ -122,7 +122,7 @@
 		</data>
 		<key>Headers/PayUModelPaymentParams.h</key>
 		<data>
-		HNRDwW7zR5bqMUTrOIKKT/bRYuQ=
+		NUdLMyaDB7Z4+zd4aayf7CHUx2M=
 		</data>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
 		<data>
@@ -198,7 +198,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		k4lmR1kbuBP7vU2hzGCxWajZYTY=
+		rGxWOdnK7WU4OIkqXDQTDNjUAQ8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -207,6 +207,10 @@
 		<key>PayUSDKInfo.plist</key>
 		<data>
 		UwDhNeAPGnvtgp0yuJNY42OlnXc=
+		</data>
+		<key>PrivacyInfo.xcprivacy</key>
+		<data>
+		GqeAMkwbcNQeG0K4qQhQh2vHhHo=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -418,7 +422,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/srmz0HINcHr+eqI7++5EcVleXf/OqxPB6wOjhkdRog=
+			ETq+weEy7CC19SzzcnVH0bbB0K2IYmFa+4nZ8Ku2RD8=
 			</data>
 		</dict>
 		<key>Headers/PayUModelPaymentRelatedDetail.h</key>
@@ -559,6 +563,13 @@
 			<key>hash2</key>
 			<data>
 			gCKSlpzijLN79ZH9OqcyeWSvMKZN+qnzGtMg4iZ7sMI=
+			</data>
+		</dict>
+		<key>PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			PkqTy+hqzvfdfgY6KMhJmS9Vbn9SytxfN8HosOG1RoY=
 			</data>
 		</dict>
 	</dict>
