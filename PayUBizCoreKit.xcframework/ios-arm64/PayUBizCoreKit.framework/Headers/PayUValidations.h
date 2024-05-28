@@ -150,8 +150,6 @@
  */
 -(NSString *)validateEMIParams: (PayUModelPaymentParams *) paymentParam;
 
--(NSString *)validateNoCostEMIParams:(PayUModelPaymentParams *) paymentParam;
-
 /*!
  * This method validates user credentials.
  * @param  [userCredentials]               [NSString type]
@@ -334,12 +332,6 @@
  */
 -(NSMutableString *)validateGetBinInfo:(PayUModelPaymentParams *) paymentParam;
 
--(NSString *)validateLazyPayParams:(PayUModelPaymentParams *) paymentParam;
-
--(NSString *)validateUPIParams: (PayUModelPaymentParams *) paymentParam;
-
--(BOOL)isValidVPA:(NSString *) vpa;
-
 /*!
  * This method validate SI params and returns string value.
  * @param  [paymentParam]                   [PayUModelPaymentParams type]
@@ -350,7 +342,6 @@
  */
 -(NSString *)validateSIParams:(PayUModelPaymentParams *) paymentParam;
 
--(NSString *)validateBeneficiaryParams:(PayUModelPaymentParams *) paymentParam;
 // * This method validate MCP lookup params and returns string value.
 - (NSMutableString *)validateMCPLookupParams:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateMCPLookup:(PayUModelPaymentParams *) paymentParam;
@@ -364,10 +355,7 @@
 - (NSMutableString *)validateRefundParams:(PayUModelPaymentParams *) paymentParam ;
 - (NSMutableString *)validateRefund:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateIFSCParams:(PayUModelPaymentParams *) paymentParam;
-- (NSString *)validateNeftParams: (PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateCheckBalanceParams:(PayUModelPaymentParams *) paymentParam;
-- (NSMutableString *)validateSodexoStoredCardParams:(PayUModelPaymentParams *) paymentParam;
-- (NSMutableString *)validateSodexoNewCardParams: (PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateDeleteTokenizedStoredCard: (PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateGetTokenizedStoredCardsParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateGetTokenizedPaymentDetailParams:(PayUModelPaymentParams *) paymentParam;
@@ -380,4 +368,5 @@
 - (NSMutableString *)validatePhoneNumberInParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateOtpParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateFetchPaymentOptionInParam:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateDeleteQuickPayOptionParam:(PayUModelPaymentParams *) paymentParam;
 @end

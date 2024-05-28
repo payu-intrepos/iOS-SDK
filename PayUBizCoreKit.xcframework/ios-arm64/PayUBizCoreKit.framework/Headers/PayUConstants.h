@@ -50,7 +50,7 @@
 #define CITRUS_WEBSERVICE_PRODUCTION_URL                        @"https://mercury.citruspay.com/"
 #define CITRUS_WEBSERVICE_TEST_URL                              @"https://sboxmercury.citruspay.com/"
 #define CITRUS_MCP_LOOKUP_URL                                   @"multi-currency-pricing/mcp/lookup"
-#define CHECKOUTX_IFSC_URL                                      @"checkoutx/verifyIFSC"
+#define CHECKOUTX_IFSC_URL                                      @"sdk/verifyIFSC"
 #define PAYU_WEBSERVICE_V2_PRODUCTION_URL                       @"https://api.payu.in"
 #define PAYU_WEBSERVICE_V2_SANDBOX_URL                          @"https://sandbox.payu.in"
 
@@ -65,6 +65,13 @@
 #define ERROR                                                   @"Error"
 
 //Mandatory params error list
+#define ERROR_SUPPORTED_PAYMENT_OPTION_IS_MISSING               @"supportedPaymentOptions param is missing, "
+#define ERROR_PAYMENT_MODE_IS_MISSING                           @"paymentMode is missing, "
+#define ERROR_PG_TITLE_IS_MISSING                               @"pgTitle is missing, "
+#define ERROR_PG_DETAIL_IS_MISSING                              @"pgDetails is missing, "
+#define ERROR_IBIBO_CODE_IS_MISSING                             @"ibiboCode is missing, "
+#define ERROR_USER_CREDENTAIL_IS_MISSING                        @"userCredential is missing, "
+
 #define ERROR_PAYU_ID_IS_MISSING                                @"PayU id is missing, "
 #define ERROR_REQUEST_ID_IS_MISSING                             @"Request id is missing, "
 #define ERROR_OTP_IS_MISSING                                    @"OTP is missing, "
@@ -244,7 +251,7 @@
 #define COMMAND_CANCEL_REFUND_TRANSACTION                       @"cancel_refund_transaction"
 #define COMMAND_GET_TRANSACTION_INFO                            @"get_transaction_info"
 #define COMMAND_GET_CHECKOUT_DETAILS                            @"get_checkout_details"
-#define COMMAND_CHECKOUTX_IFSC                                  @"checkoutx_IFSC"
+#define COMMAND_CHECKOUTX_IFSC                                  @"fetch_IFSC"
 #define COMMAND_CHECK_BALANCE                                   @"check_balance"
 #define COMMAND_GET_PAYMENT_INSTRUMENT                          @"get_payment_instrument"
 #define COMMAND_DELETE_PAYMENT_INSTRUMENT                       @"delete_payment_instrument"
@@ -258,6 +265,7 @@
 #define COMMAND_VERIFY_SIGN_IN_OTP                              @"verify_sign_in_otp"
 #define COMMAND_RESEND_SIGN_IN_OTP                              @"resend_sign_in_otp"
 #define COMMAND_FETCH_QUICK_PAY_OPTION                          @"fetch_quick_pay_option"
+#define COMMAND_DELETE_QUICK_PAY_OPTION                         @"delete_quick_pay_option"
 #define COMMAND_FETCH_EMI_CALCULATOR                            @"fetch_emi_calculator"
 
 // Endpoints for webservice
@@ -272,10 +280,11 @@
 #define FETCH_ASSETS                                            @"/ads/FetchAssets"
 #define POST_ADS_IMPRESSION                                     @"/ads/impression"
 #define UPDATE_PAYU_ID                                          @"/ads/update_payuId"
-#define SIGNIN_REQUEST_FOR_MOBILE                               @"/otp/send"
-#define VERIFY_MOBILE_OTP                                       @"/otp/verify"
-#define RESEND_REQUEST_FOR_OTP                                  @"/otp/resend"
+#define SIGNIN_REQUEST_FOR_MOBILE                               @"/otp/sdk/send"
+#define VERIFY_MOBILE_OTP                                       @"/otp/sdk/verify"
+#define RESEND_REQUEST_FOR_OTP                                  @"/otp/sdk/resend"
 #define QUICK_PAY_FETCH_REQUEST                                 @"/recommendation/v1/fetch"
+#define QUICK_PAY_UPDATE_CONSENT_REQUEST                        @"/sdk/instrumentDetail/consent"
 #define EMI_CALCULATOR                                          @"/calculateEmi/v3"
 // HTTP MEthods
 #define HTTP_METHOD_GET                                         @"GET"
@@ -331,6 +340,7 @@
 #define     PARAM_IS_OFFER_ENABLE                               @"isOfferEnabled"
 #define     PARAM_IS_AD_ENABLE                                  @"isAdsEnabled"
 #define     PARAM_IS_QUICKPAY_ENABLE                            @"isQuickPayEnabled"
+#define     PARAM_IS_QUICKPAY_BOTTOMSHEET_ENABLE                @"isQuickPayBottomSheetEnabled"
 #define     PARAM_MERCHANT                                      @"merchant_param"
 
 //Global vault
@@ -392,6 +402,7 @@
 #define     PARAM_SUBVENTION_AMOUNT                             @"subvention_amount"
 #define     PARAM_NOTIFYURL                                     @"notifyurl"
 
+#define     PARAM_DEVICE_ID                                     @"deviceId"
 #define     PARAM_DEVICE_TYPE                                   @"device_type"
 #define     PARAM_INSTRUMENT_TYPE                               @"instrument_type"
 #define     PARAM_INSTRUMENT_ID                                 @"instrument_id"
@@ -889,5 +900,10 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 
 #define     VALUE_TRUE                                          @"true"
 #define     VALUE_FALSE                                         @"false"
+
+#define     PARAM_CONSENT                                       @"consent"
+#define     PARAM_PAYMENT_MODE                                  @"paymentMode"
+#define     PARAM_PG_TITLE                                      @"pgTitle"
+#define     PARAM_PG_DETAILS                                    @"pgDetails"
 
 #endif /* PayUConstants_h */

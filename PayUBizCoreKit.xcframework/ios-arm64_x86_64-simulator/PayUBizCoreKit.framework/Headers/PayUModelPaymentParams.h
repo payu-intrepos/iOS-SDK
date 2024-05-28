@@ -125,6 +125,8 @@
 @property (strong, nonatomic) NSString * pan;
 @property (assign, nonatomic) PayUCardDetailsType cardDetailsType;
 
+@property (assign, nonatomic) PayUSupportedPaymentOptions *supportedPaymentOptions;
+
 // Param for EMI Calculator
 @property (strong, nonatomic) PayUModelEmiCalculationParams* emiCalculatorParams;
 
@@ -222,6 +224,15 @@
 
 - (NSString *)getValidThrough;
 - (BOOL)isCardToBeStored;
+
++(BOOL)isValidPayUModelPaymentParams:(PayUModelPaymentParams *)paymentParam;
++(BOOL)isValidPayUSIParams:(PayUModelPaymentParams*)paymentParam;
++(BOOL)isValidPayUBeneficiaryParams:(PayUModelPaymentParams*)paymentParam;
++(BOOL)isValidPayUModelOfferParams:(PayUModelPaymentParams*)paymentParam;
++(BOOL)isValidPayUModelEmiCalculationParams:(PayUModelPaymentParams*)paymentParam;
++(BOOL)isValidPayUAdditionalInfo:(PayUModelPaymentParams*)paymentParam;
++(BOOL)isValidPayUModelHashes:(PayUModelPaymentParams*)paymentParam;
++(BOOL)isValidPayUModelGetCheckoutAPIFilters:(PayUModelPaymentParams*)paymentParam;
 
 @property (strong, nonatomic) PayUSIParams *siParams;
 @property (strong, nonatomic) PayUBeneficiaryParams *beneficiaryParams;

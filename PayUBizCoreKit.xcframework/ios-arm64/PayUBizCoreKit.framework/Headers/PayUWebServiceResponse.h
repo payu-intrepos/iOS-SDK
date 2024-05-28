@@ -75,6 +75,7 @@ typedef void (^completionBlockForIFSC)(PayUModelIFSCInfo *isfcInfo , NSString *e
 typedef void (^completionBlockForAdsFetch)(PayUModelFetchAssets *assets ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForString)(NSString* responseString ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForQuickPayOption)(PayUQuickPayResult *otpVerifyModel ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForDeleteQuickPayOption)(PayUDeleteQuickPayResponse *response ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetails*> *emiCalculatorModel ,NSString *errorMessage, id extraParam);
 //MARK:- initailizer
 -(id)init;
@@ -234,7 +235,7 @@ typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetai
 
 -(void)getSDKConfiguration:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForGetSDKConfigurations) paramCompletionBlock;
 
--(void)fetchIFSCDetails:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForIFSC) paramCompletionBlock;
+-(void)fetchIFSCDetails:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForIFSC) paramCompletionBlock completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock;
 
 -(void)checkBalance:(PayUModelPaymentParams *) paymentParam
       withCompletionBlock:(completionBlockForSodexoCardDetail) paramCompletionBlock;
@@ -275,11 +276,13 @@ typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetai
 
 -(void)updateAdsPayUId:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
 
--(void)sendMobileVerificationCode:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
--(void)verifyOtp:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock;
-- (void)resendMobileVerificationCode:(PayUModelPaymentParams *)paymentParam withCompletionBlock:(completionBlockForString)responseCompletionBlock;
+-(void)sendMobileVerificationCode:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock;
+-(void)verifyOtp:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForString) responseCompletionBlock completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock;
+- (void)resendMobileVerificationCode:(PayUModelPaymentParams *)paymentParam withCompletionBlock:(completionBlockForString)responseCompletionBlock completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock;
 - (void)fetchQuickPayOption:(PayUModelPaymentParams *)paymentParam
 completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForQuickPayOption)responseCompletionBlock;
+- (void)deleteQuickPayOption:(PayUModelPaymentParams *)paymentParam
+completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForDeleteQuickPayOption)responseCompletionBlock;
 - (void)fetchEMICalculation:(PayUModelPaymentParams *)paymentParam
 completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForEmiCalculation)responseCompletionBlock;
 @end
