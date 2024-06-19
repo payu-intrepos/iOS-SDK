@@ -14,7 +14,7 @@
 		</data>
 		<key>Headers/PayUConstants.h</key>
 		<data>
-		xVoDFi7MNbgzkGsYm8VDXjSb2t4=
+		GbQ7e5CfcvkCkckgOvUMlcK54tA=
 		</data>
 		<key>Headers/PayUCreatePostParam.h</key>
 		<data>
@@ -142,7 +142,7 @@
 		</data>
 		<key>Headers/PayUModelSupportedApps.h</key>
 		<data>
-		u5wiv0NCzmp6Yk4FyHLQqqpM+Eg=
+		WnqIHAYVHuOrJKSEg6SFWblrjKM=
 		</data>
 		<key>Headers/PayUModelTaxSpecification.h</key>
 		<data>
@@ -198,7 +198,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		giUyT+Q+/lPqIDq6sDswdvYz4d8=
+		uyBhQ9sydattbNuqN1mHYC9KOvQ=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -233,7 +233,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			7Ki/f8uHcbiohk7wp0WIXO7Vg1y9KlDVStcJAy5nCJw=
+			iJIDIa6auJFamL88JywkXxF8xF2vS287MFwvF/mIas8=
 			</data>
 		</dict>
 		<key>Headers/PayUCreatePostParam.h</key>
@@ -457,7 +457,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ge9mPXTc+93cgzJs3bxz8qcQc1DkVQa/MVZBsHPOlM8=
+			BApZzEKMwaBIoBYCcDDDzRCIBbmTx7gXtODw2gjRROo=
 			</data>
 		</dict>
 		<key>Headers/PayUModelTaxSpecification.h</key>

@@ -471,6 +471,7 @@
 #define     KEY_VERIFICATION_MODE                               @"verificationMode"
 #define     KEY_IBIBOCODE                                       @"ibiboCode"
 #define     KEY_IMAGE_URL                                       @"imageURL"
+#define     KEY_PAYMENT_CODE                                    @"paymentCode"
 #define     KEY_UPI_APP_NAME                                    @"upiAppName"
 
 //EMI parsing elements
@@ -638,6 +639,7 @@
 #define     PAYMENT_PG_PAY                                       @"PAY"
 #define     PAYMENT_PG_EFTAXIS                                  @"EFTAXIS"
 #define     PAYMENT_PG_BNPL                                     @"BNPL"
+#define     PAYMENT_PG_GPAY                                     @"googlepay"
 
 // PG Type
 
@@ -711,6 +713,7 @@
 #define     KEY_MERCHANT_SUBVENTION_AMOUNT                      @"merchant_subvention_amount"
 // SaveUserCard & EditUserCard API parsing elements
 #define     KEY_CARDTOKEN                                       @"cardToken"
+#define     KEY_CARDTOKENTYPE                                   @"cardTokenType"
 #define     KEY_CARD_LABEL                                      @"card_label"
 #define     KEY_CARD_NUMBER                                     @"card_number"
 

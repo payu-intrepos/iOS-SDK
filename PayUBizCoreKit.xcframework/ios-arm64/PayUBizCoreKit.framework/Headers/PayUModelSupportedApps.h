@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString * bankCode;
 @property (strong, nonatomic) NSString * imageCode;
 @property (strong, nonatomic) NSString * imageURL;
+@property (strong, nonatomic) NSString * paymentCode;
 @property (strong, nonatomic) NSNumber * _Nullable imageUpdatedOn;
 @end
 
