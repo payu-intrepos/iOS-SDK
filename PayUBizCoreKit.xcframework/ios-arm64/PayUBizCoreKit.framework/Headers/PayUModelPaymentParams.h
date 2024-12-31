@@ -148,7 +148,6 @@
 //This param is for TPV transactions
 @property (strong, nonatomic) NSString *beneficiaryAccountNumbers;
 @property (strong, nonatomic) NSString *beneficiaryAccountIFSC;
-
 //API v2 properties
 @property (strong, nonatomic) NSString *paymentId;
 @property (strong, nonatomic) NSString *paymentStatus;

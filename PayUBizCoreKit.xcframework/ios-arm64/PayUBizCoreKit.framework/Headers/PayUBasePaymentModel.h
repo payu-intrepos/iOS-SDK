@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSArray *verificationModes;
 @property BOOL isDown;
 @property BOOL isSecureWebViewTxn;
+@property (strong, nonatomic) NSString * ifscCode;
 
 + (NSArray *)prepareArrayFromDict:(id)JSON withKey:(NSString *)key ;
 + (NSArray *)prepareArrayForCFFromDict:(NSDictionary *)JSON withDownStaus:(NSDictionary *)downJSON withCFKey:(NSString*) cfKey withDownKey:(NSString*) downKey;

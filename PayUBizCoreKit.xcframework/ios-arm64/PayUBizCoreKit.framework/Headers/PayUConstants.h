@@ -510,6 +510,7 @@
 #define     KEY_RETRY_ALLOWED                                 @"retryAllowed"
 #define     KEY_DISPLAY_NAME                                  @"displayName"
 #define     KEY_LOGO                                          @"logo"
+#define     KEY_IFSC_BANK_NAME_MAPPING                        @"ifscBankNameMapping"
 
 // OfferStatus parsing elements
 #define     KEY_CATEGORY                                        @"category"
@@ -640,6 +641,8 @@
 #define     PAYMENT_PG_EFTAXIS                                  @"EFTAXIS"
 #define     PAYMENT_PG_BNPL                                     @"BNPL"
 #define     PAYMENT_PG_GPAY                                     @"googlepay"
+#define     PAYMENT_PG_UPI_TPV                                  @"UPITPV"
+#define     PAYMENT_PG_UPI_INTENT_TPV                           @"INTTPV"
 
 // PG Type
 

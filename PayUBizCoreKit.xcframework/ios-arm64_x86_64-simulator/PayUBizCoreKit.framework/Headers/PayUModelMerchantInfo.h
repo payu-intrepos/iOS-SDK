@@ -18,6 +18,7 @@
 @property (nonatomic) BOOL isOfferEnabled;
 @property (nonatomic) BOOL isQuickPayBottomSheetEnabled;
 @property (nonatomic, strong) NSString *walletIdentifier;
+@property (nonatomic, strong) NSDictionary *ifscBankNameMapping;
 
 +(PayUModelMerchantInfo *)prepareMerchantInfo:(NSDictionary *)JSON;
 
