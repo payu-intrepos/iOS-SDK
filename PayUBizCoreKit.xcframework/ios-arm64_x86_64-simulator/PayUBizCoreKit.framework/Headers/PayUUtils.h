@@ -155,6 +155,8 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 +(id)getValue:(NSDictionary *) dict forKey:(NSString *)key;
 
++(NSDictionary *)getDictionaryValue:(NSDictionary *) dict forKey:(NSString *)key;
+    
 +(NSString *)getStringValue:(NSDictionary *) dict forKey:(NSString *)key;
 
 +(NSArray *)getArrayValue:(NSDictionary *) dict forKey:(NSString *)key ;
