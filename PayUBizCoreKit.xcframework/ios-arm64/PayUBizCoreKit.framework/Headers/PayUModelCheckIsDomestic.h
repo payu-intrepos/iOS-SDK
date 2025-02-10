@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSString * isAtmPinCard;
 @property (nonatomic, strong) NSNumber * isSISupported;
 @property (nonatomic, strong) NSNumber * isZeroRedirectSupported;
+@property (nonatomic, strong) NSDictionary * convenienceFeeData;
 + (instancetype)prepareGetBinInfoObejctFromDict:(NSDictionary *)JSON;
 
 + (instancetype)prepareCheckIsDomesticObejctFromDict:(NSDictionary *)JSON;

@@ -161,7 +161,9 @@
 @property (strong, nonatomic) NSString * last4Digits;
 @property (strong, nonatomic) NSString * cardHash;
 @property (strong, nonatomic) NSString * twidCustomerHash;
-
+//For CF
+@property (strong, nonatomic) NSString * additionalCharges;
+@property (strong, nonatomic) NSString * percentageAdditionalCharges;
 /*
  //In array of orderItem, the array contains objects. Each object has this format
  {

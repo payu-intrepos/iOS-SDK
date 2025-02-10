@@ -772,6 +772,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_BRAND                                           @"brand"
 #define     KEY_ISSUER                                          @"issuer"
 #define     KEY_BIN                                             @"bin"
+#define     KEY_CONVENIENCE_FEE_DATA                            @"convenienceFeeData"
 #define     KEY_LAST4DIGITS                                     @"last4Digits"
 #define     KEY_CARD_HASH                                       @"cardHash"
 #define     KEY_ORDERED_ITEM                                    @"orderedItem"

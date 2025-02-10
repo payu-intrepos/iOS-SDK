@@ -219,4 +219,6 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 + (PayURequestHeaderParams *)getV2APIHeaderParams:(NSString *)body;
 
++ (NSString*)removeWhiteSpaceNewline:(NSString*) originalString;
+
 @end
