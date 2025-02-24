@@ -16,6 +16,8 @@
 @property (strong, nonatomic) NSString * platformId;
 @property (strong, nonatomic) NSArray<NSString *>  * offerKeys;
 @property (strong, nonatomic) NSString * skuOfferDetails;
-@property  BOOL autoApplyOffer;
+@property BOOL autoApplyOffer;
+@property BOOL isConsentAllowedByUser;
+@property (strong, nonatomic) NSString *consentPhoneNumber;
 
 @end

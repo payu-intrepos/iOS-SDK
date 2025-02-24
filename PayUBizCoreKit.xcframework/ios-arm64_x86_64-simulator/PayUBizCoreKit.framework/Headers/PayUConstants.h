@@ -150,7 +150,6 @@
 #define ERROR_STORED_CARD_TYPE_IS_MISSING                       @"Stored card type is missing, "
 #define ERROR_STORED_CARD_MODE_IS_MISSING                       @"Stored card mode is missing, "
 
-#define ERROR_USER_TOKEN_IS_MISSING                             @"User token is missing, "
 #define ERROR_PAYMENT_CODE_IS_MISSING                           @"Payment code is missing, "
 #define ERROR_CATEGORY_IS_MISSING                               @"Category is missing, "
 #define ERROR_OFFER_KEYS_ARE_MISSING                            @"Offer keys are missing, "
@@ -889,6 +888,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     PARAM_PLATFORM_ID                                   @"platformId"
 #define     PARAM_USER_DETAILS                                  @"userDetail"
 #define     PARAM_PHONE_NO                                      @"phoneNo"
+#define     PARAM_LOGGED_IN_PHONE_NO                            @"loggedInPhoneNumber"
 #define     PARAM_SKU_DETAILS                                   @"skusDetail"
 
 // Has String Constants
@@ -907,6 +907,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 
 #define     VALUE_TRUE                                          @"true"
 #define     VALUE_FALSE                                         @"false"
+#define     VALUE_SOURCE                                        @"iOS_SDK"
 
 #define     PARAM_CONSENT                                       @"consent"
 #define     PARAM_PAYMENT_MODE                                  @"paymentMode"
