@@ -171,6 +171,8 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 +(BOOL)isSITxn:(PayUModelPaymentParams *) paymentParam;
 
++(BOOL)isOTMTxn:(PayUModelPaymentParams *) paymentParam;
+
 + (NSDate*)getFormattedDate:(NSString *) dateString;
 
 + (NSString*)getFormattedDateString:(NSDate *) date;

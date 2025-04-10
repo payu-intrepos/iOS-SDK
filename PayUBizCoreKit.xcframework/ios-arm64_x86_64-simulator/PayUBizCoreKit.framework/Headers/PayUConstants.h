@@ -193,7 +193,9 @@
 #define ERROR_INVALID_BILLING_CYCLE                             @"Invalid billing cycle value passed, "
 #define ERROR_INVALID_BILLING_AMOUNT_FOR_ADHOC                  @"Billing amount should not be greater than amount passed in subscription call."
 #define ERROR_INVALID_START_DATE                                @"Invalid SI start date, "
+#define ERROR_INVALID_OTM_START_DATE                            @"Invalid OTM start date, "
 #define ERROR_INVALID_END_DATE                                  @"Invalid SI end date, "
+#define ERROR_INVALID_OTM_END_DATE                              @"Invalid OTM end date, "
 
 #define ERROR_BENFECIARY_DETAIL_PARAM_MISSING                   @"Beneficiary details missing, "
 #define ERROR_BENFECIARY_ACCOUNT_NAME_PARAM_MISSING             @"Beneficiary account holder name is missing, "
@@ -211,6 +213,9 @@
 #define MIN_TXN_AMOUNT                                          @"Min transaction amount"
 #define TRANSACTION_AMOUNT                                      @"Transaction Amount"
 #define ERROR_IFSC_IS_MISSING                                   @"IFSC is missing, "
+
+// OTM Errors
+#define ERROR_OTM_PARAM_MISSING                                  @"OTM Param missing, "
 
 // Regex
 
@@ -455,6 +460,7 @@
 #define     KEY_LAZYPAY                                         @"lazypay"
 #define     KEY_NO_COST_EMI                                     @"no_cost_emi"
 #define     KEY_UPI                                             @"upi"
+#define     KEY_UPI_OTM                                         @"upiotm"
 #define     KEY_ALL                                             @"all"
 #define     KEY_TENURE_OPTIONS                                  @"tenureOptions"
 #define     KEY_SUPPORTED_APPS                                  @"supportedApps"
@@ -641,7 +647,9 @@
 #define     PAYMENT_PG_BNPL                                     @"BNPL"
 #define     PAYMENT_PG_GPAY                                     @"googlepay"
 #define     PAYMENT_PG_UPI_TPV                                  @"UPITPV"
+#define     PAYMENT_PG_UPI_OTM                                  @"UPIOTM"
 #define     PAYMENT_PG_UPI_INTENT_TPV                           @"INTTPV"
+#define     PAYMENT_PG_UPI_INTENT_OTM                           @"INTOTM"
 
 // PG Type
 

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PayUBasePaymentModel.h"
+#import "PayUModelPaymentRelatedDetail.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -25,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray *)prepareUPISIAppsForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
 
 + (NSArray *)prepareUPISIHandlesForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
+
++ (void )prepareUPIArrayForOTM:(id)JSON withDownStaus:(NSDictionary *)downJSON updateModel: (PayUModelPaymentRelatedDetail *) model;
 
 @end
 

@@ -341,6 +341,7 @@
  * @see    [validateDate]
  */
 -(NSString *)validateSIParams:(PayUModelPaymentParams *) paymentParam;
+-(NSString *)validateOTMParams:(PayUModelPaymentParams *) paymentParam;
 
 // * This method validate MCP lookup params and returns string value.
 - (NSMutableString *)validateMCPLookupParams:(PayUModelPaymentParams *) paymentParam;
