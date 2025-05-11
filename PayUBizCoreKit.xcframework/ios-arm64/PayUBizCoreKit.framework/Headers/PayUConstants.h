@@ -80,6 +80,7 @@
 #define ERROR_SODEXO_SOURCE_ID_IS_MISSING                       @"Sodexo sourde id is missing, "
 #define ERROR_TRANSACTIONID_IS_MISSING                          @"Transaction ID is missing, "
 #define ERROR_TRANSACTIONID_GREATER_THAN_25                     @"Transaction ID greater than 25 character, "
+#define ERROR_PAYMENT_OBJECT_IS_INVALID                         @"Payment Object is not valid."
 
 #define ERROR_AMOUNT_IS_NONNUMERIC                              @" is non-numeric, "
 #define ERROR_AMOUNT_CONTAIN_MORE_THAN_ONE_DECIMAL              @"Amount contain more than one decimal, "
@@ -198,7 +199,9 @@
 #define ERROR_INVALID_OTM_END_DATE                              @"Invalid OTM end date, "
 
 #define ERROR_BENFECIARY_DETAIL_PARAM_MISSING                   @"Beneficiary details missing, "
+#define ERROR_CONVENIENCE_FEE_DETAIL_PARAM_MISSING              @"convenienceFee details missing, "
 #define ERROR_BENFECIARY_ACCOUNT_NAME_PARAM_MISSING             @"Beneficiary account holder name is missing, "
+#define ERROR_CONVENIENCE_FEE_MERCHANT_NAME_PARAM_MISSING       @"convenienceFee merchant name is missing, "
 #define ERROR_ACCOUNT_NAME_PARAM_MISSING                        @"Account holder name is missing, "
 #define ERROR_BENFECIARY_ACCOUNT_NUMBER_PARAM_MISSING           @"Beneficiary account holder number is missing, "
 #define ERROR_INVALID_ACCOUNT_NUMBER                            @"Please enter atleast 8 digit account number, "
@@ -271,6 +274,8 @@
 #define COMMAND_FETCH_QUICK_PAY_OPTION                          @"fetch_quick_pay_option"
 #define COMMAND_DELETE_QUICK_PAY_OPTION                         @"delete_quick_pay_option"
 #define COMMAND_FETCH_EMI_CALCULATOR                            @"fetch_emi_calculator"
+#define COMMAND_GET_BIN_BASED_DETAILS                           @"getBinBasedDetails"
+#define COMMAND_GET_CONVENIENCE_FEE                             @"getConvenienceFee"
 
 // Endpoints for webservice
 
@@ -290,6 +295,8 @@
 #define QUICK_PAY_FETCH_REQUEST                                 @"/recommendation/v1/fetch"
 #define QUICK_PAY_UPDATE_CONSENT_REQUEST                        @"/sdk/instrumentDetail/consent"
 #define EMI_CALCULATOR                                          @"/calculateEmi/v3"
+#define BIN_DETAILS                                             @"/sdk/card/binDetails"
+#define FETCH_CONVENIENCE                                       @"/sdk/checkoutx/fetchConvenienceFee"
 // HTTP MEthods
 #define HTTP_METHOD_GET                                         @"GET"
 #define HTTP_METHOD_POST                                        @"POST"
@@ -346,6 +353,7 @@
 #define     PARAM_IS_QUICKPAY_ENABLE                            @"isQuickPayEnabled"
 #define     PARAM_IS_QUICKPAY_BOTTOMSHEET_ENABLE                @"isQuickPayBottomSheetEnabled"
 #define     PARAM_MERCHANT                                      @"merchant_param"
+#define     PARAM_CUSTOMER_REVENUE_ENABLED                      @"customerRevenueEnabled"
 
 //Global vault
 #define     PARAM_CLIENT_PAYU                                   @"payu"
@@ -515,6 +523,7 @@
 #define     KEY_RETRY_ALLOWED                                 @"retryAllowed"
 #define     KEY_DISPLAY_NAME                                  @"displayName"
 #define     KEY_LOGO                                          @"logo"
+#define     KEY_OPGSP_MERCHANT                                @"opgsp_merchant"
 #define     KEY_IFSC_BANK_NAME_MAPPING                        @"ifscBankNameMapping"
 
 // OfferStatus parsing elements
@@ -533,7 +542,8 @@
 #define     KEY_ALLOWED_ON                                      @"allowed_on"
 #define     KEY_DATA                                            @"data"
 #define     KEY_BINS_DATA                                       @"bins_data"
-#define     KEY_OFFER_DATA                                      @"offer_data"
+#define     KEY_OFFER_DATA                                      @"validate_offer_data"
+#define     KEY_PRICING_CF_DATA                                 @"pricing_cf_data"
 #define     KEY_CARD_DATA                                       @"card_data"
 #define     KEY_CARD_TOKENS                                     @"card_tokens"
 #define     KEY_HTTP_STATUS                                     @"http_status"
@@ -622,6 +632,16 @@
 #define     KEY_REQUEST_ID                                      @"request_id"
 #define     KEY_TRANSACTION_AMOUNT                              @"transaction_amount"
 #define     KEY_UNMAPPEDSTATUS                                  @"unmappedstatus"
+
+// Keys for Bin Info V2
+#define     KEY_INSTRUMENT_ID                                   @"instrument_id"
+#define     KEY_INSTRUMENT_TYPE                                 @"instrument_type"
+#define     KEY_DEVICE_TYPE                                     @"device_type"
+#define     KEY_DEVICE_TYPE                                     @"device_type"
+#define     KEY_TXN_ID                                          @"txnId"
+#define     KEY_IS_PRICING_CF_ENABLE                            @"isPricingCFEnable"
+#define     KEY_VALIDATE_OFFER_REQUEST                          @"validateOfferRequest"
+#define     KEY_IS_SI_TXN                                       @"isSITxn"
 
 // Available Payment Option
 
@@ -909,17 +929,36 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     PARAM_AUTO_APPLY_OFFER                              @"autoApplyOffer"
 #define     PARAM_EMI_CODES                                     @"emiCodes"
 #define     PARAM_ADDITIONAL_CHARGES                            @"additionalCharges"
+#define     PARAM_PERCENTAGE_ADDITIONAL_CHARGES                 @"percentageAdditionalCharges"
 #define     PARAM_BANK_CODES                                    @"bankCodes"
 #define     PARAM_DISABLE_OVERRIDE_NCE_CONFIG                   @"disableOverrideNceConfig"
 #define     PARAM_SKUS                                          @"skus"
 
 #define     VALUE_TRUE                                          @"true"
 #define     VALUE_FALSE                                         @"false"
-#define     VALUE_SOURCE                                        @"iOS_SDK"
+#define     VALUE_SOURCE                                        @"IOS_SDK"
 
 #define     PARAM_CONSENT                                       @"consent"
 #define     PARAM_PAYMENT_MODE                                  @"paymentMode"
 #define     PARAM_PG_TITLE                                      @"pgTitle"
 #define     PARAM_PG_DETAILS                                    @"pgDetails"
+
+//Convenience FEE
+#define     PARAM_SUB_CLIENT_ID                                 @"subClientId"
+#define     PARAM_ENTITY_ID                                     @"entityId"
+#define     PARAM_TIME_STAMP                                    @"timeStamp"
+#define     PARAM_FETCH_TYPE                                    @"fetchType"
+#define     PARAM_COMMON_DYNAMIC_ATTRIBUTES                     @"commonDynamicAttributes"
+#define     PARAM_VARIABLE_DYNAMIC_ATTRIBUTES                   @"variableDynamicAttributes"
+#define     PARAM_COMBINATION_KEY                               @"combinationKey"
+#define     KEY_COMBINATIONS                                    @"combinations"
+#define     KEY_CHARGES                                         @"charges"
+#define     KEY_CHARGES_UUID                                    @"chargeUuid"
+#define     KEY_CHARGE_NAME                                     @"chargeName"
+#define     KEY_BASE_FEE                                        @"baseFee"
+#define     KEY_TAX_AMOUNT                                      @"taxAmount"
+#define     KEY_RULE_ID                                         @"ruleId"
+#define     KEY_COMBINATION_UUID                                @"combinationUUID"
+#define     KEY_REQUEST_UUID                                    @"requestUUID"
 
 #endif /* PayUConstants_h */

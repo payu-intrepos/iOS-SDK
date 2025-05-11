@@ -43,6 +43,8 @@ typedef void (^completionBlockForJSONParserForVerifyPayment)(NSDictionary *dictV
 typedef void (^completionBlockForJSONParserForDeleteOneTapToken)(NSString *deleteOneTapTokenMsg ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForCheckIsDomestic)(PayUModelCheckIsDomestic *checkIsDomestic , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForGetBinInfo)(NSArray<PayUModelCheckIsDomestic*> *arrAllBin , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForGetBinBased)(PayUModelCheckIsDomestic *binBased , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForConvenienceFee)( NSMutableDictionary<NSString *, NSMutableArray<PayUCharges *> *> *cfJSON, NSString *errorMessage, id extraParam);
 
 typedef void (^completionBlockForJSONParserForGetTransactionInfo)(NSArray *arrOfGetTxnInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
@@ -112,6 +114,8 @@ typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetai
 
 -(void)JSONParserForGetBinInfo:(id) JSON of: (BOOL) isAllBin withCompletionBlock:(completionBlockForJSONParserForGetBinInfo) paramCompletionBlock;
 
+-(void)JSONParserForGetBinBased:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGetBinBased) paramCompletionBlock;
+
 -(void)JSONParserForGetTransactionInfo:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGetTransactionInfo) paramCompletionBlock;
 
 -(void)JSONParserForSaveUserCard:(id) JSON withCompletionBlock:(completionBlockForJSONParserForSaveUserCard) paramCompletionBlock;
@@ -127,6 +131,8 @@ typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetai
 -(void)JSONParserForGetTokenizedPaymentDetails:(id) JSON withCompletionBlock:(completionBlockForJSONParserForGetTokenizedPaymentDetails) paramCompletionBlock;
 
 -(void)JSONParserforAllOfferDetails:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForAllOfferDetails) paramCompletionBlock;
+
+-(void)JSONParserforConvenienceFee:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForConvenienceFee) paramCompletionBlock;
 
 -(void)JSONParserforValidateOfferDetails:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForValidateOfferDetails) paramCompletionBlock;
 

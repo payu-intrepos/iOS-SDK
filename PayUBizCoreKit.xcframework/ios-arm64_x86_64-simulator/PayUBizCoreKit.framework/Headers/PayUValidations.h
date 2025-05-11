@@ -323,6 +323,10 @@
 
 -(NSMutableString *)validateGetBinInfoParam:(PayUModelPaymentParams *) paymentParam;
 
+-(NSMutableString *)validateGetBinBasedParam:(PayUModelPaymentParams *) paymentParam;
+
+-(NSMutableString *)validateConvenienceFeeParam:(PayUModelPaymentParams *) paymentParam;
+
 /*!
  * This method validate get Bin Info params and returns string value.
  * @param  [paymentParam]                   [PayUModelPaymentParams type]
@@ -361,7 +365,7 @@
 - (NSMutableString *)validateGetTokenizedStoredCardsParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateGetTokenizedPaymentDetailParams:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateGetAllOfferParams:(PayUModelPaymentParams *) paymentParam;
-- (NSMutableString *)validateValidateOfferParams:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateValidateOfferParams:(PayUModelPaymentParams *) paymentParam with:(BOOL) isValidateOfferAPI;
 - (NSMutableString *)validateGetSDKConfigurationParams:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateFetchAssetsParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateImpressionParam:(PayUModelPaymentParams *) paymentParam;

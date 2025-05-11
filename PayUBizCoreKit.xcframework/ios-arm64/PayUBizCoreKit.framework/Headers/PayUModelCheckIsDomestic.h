@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@import PayUParamsKit;
 
 @interface PayUModelCheckIsDomestic : NSObject
 
@@ -19,6 +20,9 @@
 @property (nonatomic, strong) NSNumber * isSISupported;
 @property (nonatomic, strong) NSNumber * isZeroRedirectSupported;
 @property (nonatomic, strong) NSDictionary * convenienceFeeData;
+@property (nonatomic, strong) NSString * bankCode;
+@property (nonatomic, strong) PayUModelOfferDetail * offerDetails;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray<PayUCharges *> *> *cfJSON;
 + (instancetype)prepareGetBinInfoObejctFromDict:(NSDictionary *)JSON;
 
 + (instancetype)prepareCheckIsDomesticObejctFromDict:(NSDictionary *)JSON;

@@ -51,4 +51,10 @@ typedef void (^completionBlockForCreateRequestWithPaymentParam)(NSMutableURLRequ
 
 -(void)createCheckoutXRequestWithPaymentParam:(PayUModelPaymentParams *) paymentParam forServiceType: (NSString *)serviceType withCompletionBlock:(completionBlockForCreateRequestWithPaymentParam) paramCompletionBlock;
 
+- (void)paymentURLForPaymentParams:(PayUModelPaymentParams*)paymentParam
+                      isWebService:(BOOL)isWebService
+                     forPaymentTye:(NSString*)paymentType withCompletion:(void (^)(NSURL* paymentURL,
+                                                                                   NSString* httpMethod,
+                                                                                   NSDictionary *httpHeaders)) completion;
+
 @end
