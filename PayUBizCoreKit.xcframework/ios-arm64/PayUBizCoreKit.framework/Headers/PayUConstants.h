@@ -594,6 +594,7 @@
 #define     PARAM_BILLING_RULE                                  @"billingRule"
 #define     PARAM_BILLING_LIMIT                                 @"billingLimit"
 #define     PARAM_REMARKS                                       @"remarks"
+#define     PARAM_BILLING_DATE                                  @"billingDate"
 #define     PARAM_FREE_TRIAL                                    @"free_trial"
 #define     PARAM_IFSC_CODE                                     @"ifscCode"
 
@@ -930,6 +931,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     PARAM_EMI_CODES                                     @"emiCodes"
 #define     PARAM_ADDITIONAL_CHARGES                            @"additionalCharges"
 #define     PARAM_PERCENTAGE_ADDITIONAL_CHARGES                 @"percentageAdditionalCharges"
+#define     PARAM_MERCHANT_ADDITIONAL_CHARGES                   @"merchantAdditionalCharges"
 #define     PARAM_BANK_CODES                                    @"bankCodes"
 #define     PARAM_DISABLE_OVERRIDE_NCE_CONFIG                   @"disableOverrideNceConfig"
 #define     PARAM_SKUS                                          @"skus"
