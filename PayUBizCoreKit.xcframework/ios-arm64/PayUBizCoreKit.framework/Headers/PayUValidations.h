@@ -374,4 +374,9 @@
 - (NSMutableString *)validateOtpParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateFetchPaymentOptionInParam:(PayUModelPaymentParams *) paymentParam;
 - (NSMutableString *)validateDeleteQuickPayOptionParam:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateOLWRefundParam:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateOLWSendOtpParam:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateOLWSetResetMpinParam:(PayUModelPaymentParams *) paymentParam;
+- (NSMutableString *)validateVerifyOLWMpinDeviceIdTokenParam:(PayUModelPaymentParams *) paymentParam;
+
 @end

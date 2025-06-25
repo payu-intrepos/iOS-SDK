@@ -52,6 +52,8 @@ typedef void (^completionBlockForJSONParserForMCPLookup)(PayUModelMultiCurrencyP
 typedef void (^completionBlockForJSONParserForRefund)(NSString *message , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForJSONParserForVerifyIFSC)(PayUModelIFSCInfo *ifscInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetails*> *emiCalculatorModel ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForJSONParserForOLWMpinOtp)(PayUOLWMpinOtpResponse *olwMpinOtpResponse, NSString *errorMessage, id extraParam);
+
 
 /*!
  * This method parse the JSON for CCDC/NetBanking Offer.
@@ -142,4 +144,5 @@ typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetai
 -(void)JSONParserforAdPostImpression:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForAddImpression) paramCompletionBlock;
 -(void)JSONParserforUpdatePayUId:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForUpdatePayUId) paramCompletionBlock ;
 -(void)JSONParserforEmiCalculator:(id) JSON andCompletionBlock:(completionBlockForEmiCalculation) paramCompletionBlock ;
+-(void)JSONParserforOLWMpinOtp:(id) JSON withPaymentType:(NSString *) paymentType andCompletionBlock:(completionBlockForJSONParserForOLWMpinOtp) paramCompletionBlock;
 @end

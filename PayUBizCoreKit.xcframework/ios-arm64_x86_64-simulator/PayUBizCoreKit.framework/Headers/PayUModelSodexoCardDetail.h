@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSString * cardBalance;
 @property (nonatomic, strong) NSString * cardName;
 @property (nonatomic, strong) NSString * msg;
-
+@property (nonatomic, strong) NSDictionary * olwData;
 + (BOOL) checkSodexo:(id)JSON;
 
 @end

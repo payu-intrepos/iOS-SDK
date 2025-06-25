@@ -216,10 +216,10 @@
 #define MIN_TXN_AMOUNT                                          @"Min transaction amount"
 #define TRANSACTION_AMOUNT                                      @"Transaction Amount"
 #define ERROR_IFSC_IS_MISSING                                   @"IFSC is missing, "
-
+//OLW
+#define ERROR_OLW_DETAIL_PARAM_MISSING                          @"OLW details missing"
 // OTM Errors
 #define ERROR_OTM_PARAM_MISSING                                  @"OTM Param missing, "
-
 // Regex
 
 #define EMAIL_REGEX                                             @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
@@ -274,6 +274,9 @@
 #define COMMAND_FETCH_QUICK_PAY_OPTION                          @"fetch_quick_pay_option"
 #define COMMAND_DELETE_QUICK_PAY_OPTION                         @"delete_quick_pay_option"
 #define COMMAND_FETCH_EMI_CALCULATOR                            @"fetch_emi_calculator"
+#define COMMAND_SEND_OLW_OTP                                    @"sendOLWOtp"
+#define COMMAND_SET_RESET_OLW_MPIN                              @"setResetOLWMpin"
+#define COMMAND_VERIFY_OLW_MPIN_DEVICEID_TOKEN                  @"verifyOLWMpinDeviceIdToken"
 #define COMMAND_GET_BIN_BASED_DETAILS                           @"getBinBasedDetails"
 #define COMMAND_GET_CONVENIENCE_FEE                             @"getConvenienceFee"
 
@@ -295,6 +298,10 @@
 #define QUICK_PAY_FETCH_REQUEST                                 @"/recommendation/v1/fetch"
 #define QUICK_PAY_UPDATE_CONSENT_REQUEST                        @"/sdk/instrumentDetail/consent"
 #define EMI_CALCULATOR                                          @"/calculateEmi/v3"
+// OLW
+#define SEND_OTP                                                @"/loyalty-points/ppi/v1/otp/send"
+#define SET_RESET_MPIN                                          @"/loyalty-points/ppi/v1/set-reset/mpin"
+#define VERIFY_MPIN_DEVICEID_TOKEN                              @"/loyalty-points/ppi/v1/verifyMpinDeviceIdToken"
 #define BIN_DETAILS                                             @"/sdk/card/binDetails"
 #define FETCH_CONVENIENCE                                       @"/sdk/checkoutx/fetchConvenienceFee"
 // HTTP MEthods
@@ -413,6 +420,7 @@
 #define     PARAM_USER_CREDENTIALS                              @"user_credentials"
 #define     PARAM_SUBVENTION_AMOUNT                             @"subvention_amount"
 #define     PARAM_NOTIFYURL                                     @"notifyurl"
+#define     PARAM_OLW_WALLET_IDENTIFIER                         @"OLW"
 
 #define     PARAM_DEVICE_ID                                     @"deviceId"
 #define     PARAM_DEVICE_TYPE                                   @"device_type"
@@ -554,6 +562,7 @@
 #define     KEY_NETWORK_TOKEN                                   @"network_token"
 #define     KEY_CARD_PAR                                        @"card_PAR"
 #define     KEY_CRYPTOGRAM                                      @"cryptogram"
+#define     KEY_ERROR_MSG                                       @"errorMessage"
 
 // Payment Param for Stored Card
 #define     KEY_STORE_CARD_TOKEN                                @"store_card_token"
@@ -801,6 +810,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     KEY_ISSUER                                          @"issuer"
 #define     KEY_BIN                                             @"bin"
 #define     KEY_CONVENIENCE_FEE_DATA                            @"convenienceFeeData"
+#define     KEY_OLW                                             @"olw"
 #define     KEY_LAST4DIGITS                                     @"last4Digits"
 #define     KEY_CARD_HASH                                       @"cardHash"
 #define     KEY_ORDERED_ITEM                                    @"orderedItem"
@@ -944,6 +954,13 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     PARAM_PAYMENT_MODE                                  @"paymentMode"
 #define     PARAM_PG_TITLE                                      @"pgTitle"
 #define     PARAM_PG_DETAILS                                    @"pgDetails"
+// OLW
+#define     PARAM_CLIENT_TXN_ID                                 @"clientTxnId"
+#define     PARAM_ORIGINAL_CLIENT_TXN_ID                        @"originalClientTxnId"
+#define     PARAM_REQUEST_DATE_TIME                             @"requestDateTime"
+#define     PARAM_CUSTOMER_MOBILE                               @"customerMobile"
+#define     PARAM_MPIN                                          @"mpin"
+#define     PARAM_NEW_MPIN                                      @"newMpin"
 
 //Convenience FEE
 #define     PARAM_SUB_CLIENT_ID                                 @"subClientId"

@@ -78,6 +78,7 @@ typedef void (^completionBlockForString)(NSString* responseString ,NSString *err
 typedef void (^completionBlockForQuickPayOption)(PayUQuickPayResult *otpVerifyModel ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForDeleteQuickPayOption)(PayUDeleteQuickPayResponse *response ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForEmiCalculation)(NSArray<PayUEmiCalculationDetails*> *emiCalculatorModel ,NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForOLWMpinOtp)(PayUOLWMpinOtpResponse *olwMpinOTPResponse, NSString *errorMessage, id extraParam);
 //MARK:- initailizer
 -(id)init;
 //MARK:- This method is to start crash reporting
@@ -290,4 +291,6 @@ completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompleti
 completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForDeleteQuickPayOption)responseCompletionBlock;
 - (void)fetchEMICalculation:(PayUModelPaymentParams *)paymentParam
 completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForEmiCalculation)responseCompletionBlock;
+-(void)fetchOLWDetailForActionType:(NSString *)actionType paymentParam:(PayUModelPaymentParams *) paymentParam  completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForOLWMpinOtp) responseCompletionBlock;
+
 @end

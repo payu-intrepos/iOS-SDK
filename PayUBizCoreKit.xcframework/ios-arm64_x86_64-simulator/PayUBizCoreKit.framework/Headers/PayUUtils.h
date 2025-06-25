@@ -201,6 +201,12 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 + (NSString *)getCurrentTimeMiliSecond;
 
++ (NSString *)getCurrentTimeFormatYYYYMMDDHHMMSS;
+
++ (NSString *)mobileNumberWithCountryCode: (NSString *)phone;
+
++ (NSString *)generateUniqueValue;
+
 +(BOOL)isKindOfNSNumber:(id) value;
 
 + (NSMutableDictionary *)getMCPRequestDict:(PayUModelPaymentParams *)paymentParam;

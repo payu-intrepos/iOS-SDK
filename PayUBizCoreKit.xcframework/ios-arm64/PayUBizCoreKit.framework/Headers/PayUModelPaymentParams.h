@@ -240,6 +240,7 @@
 +(BOOL)isValidPayUAdditionalInfo:(PayUModelPaymentParams*)paymentParam;
 +(BOOL)isValidPayUModelHashes:(PayUModelPaymentParams*)paymentParam;
 +(BOOL)isValidPayUModelGetCheckoutAPIFilters:(PayUModelPaymentParams*)paymentParam;
++(BOOL)isValidPayUModelOLWParams:(PayUModelPaymentParams*)paymentParam;
 
 @property (strong, nonatomic) PayUSIParams *siParams;
 @property (strong, nonatomic) PayUBeneficiaryParams *beneficiaryParams;
@@ -265,6 +266,10 @@
 
 // Get Checkout API Filters
 @property (strong, nonatomic) PayUModelGetCheckoutAPIFilters * getCheckoutAPIFilters;
+
+// OLW
+@property (strong, nonatomic) PayUModelOLWParams * olwParams;
+@property (strong, nonatomic) NSString * flowType;
 
 @end
 
