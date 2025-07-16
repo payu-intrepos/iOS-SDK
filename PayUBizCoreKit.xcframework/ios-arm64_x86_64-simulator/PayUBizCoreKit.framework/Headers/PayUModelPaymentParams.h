@@ -166,6 +166,7 @@
 @property (strong, nonatomic) NSString * additionalCharges;
 @property (strong, nonatomic) NSString * percentageAdditionalCharges;
 @property (strong, nonatomic) NSArray<PayUCharges *> *charges;
+@property (strong, nonatomic) NSArray<PayUWealthProducts *> *products;
 @property (strong, nonatomic) NSString *dateTime;
 
 
