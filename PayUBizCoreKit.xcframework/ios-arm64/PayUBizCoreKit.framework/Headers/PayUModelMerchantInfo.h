@@ -21,6 +21,7 @@
 @property (nonatomic) BOOL customerRevenueEnabled;
 @property (nonatomic, strong) NSString *walletIdentifier;
 @property (nonatomic, strong) NSDictionary *ifscBankNameMapping;
+@property (nonatomic) BOOL isInsuranceMerchant;
 
 +(PayUModelMerchantInfo *)prepareMerchantInfo:(NSDictionary *)JSON;
 

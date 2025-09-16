@@ -532,6 +532,7 @@
 #define     KEY_DISPLAY_NAME                                  @"displayName"
 #define     KEY_LOGO                                          @"logo"
 #define     KEY_OPGSP_MERCHANT                                @"opgsp_merchant"
+#define     KEY_IS_INSURANCE_MERCHANT                         @"isInsuranceMerchant"
 #define     KEY_IFSC_BANK_NAME_MAPPING                        @"ifscBankNameMapping"
 
 // OfferStatus parsing elements
