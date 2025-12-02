@@ -252,9 +252,12 @@
 
 // Offer Parameters
 @property (strong, nonatomic) PayUModelOfferParams *offerParams;
+@property (nonatomic, assign) BOOL shouldIncludeOfferRequest;
 
 // Updated Bin Info Request // need to check / remove
-@property BOOL isPricingCFEnable;
+@property (nonatomic, assign) BOOL isPricingCFEnable;
+@property (nonatomic, assign) BOOL disableConvFeeCompounding;
+@property (nonatomic, strong) NSString *compoundingPercentage;
 
 //Ads impression paramters
 @property (strong, nonatomic) NSString * requestId;

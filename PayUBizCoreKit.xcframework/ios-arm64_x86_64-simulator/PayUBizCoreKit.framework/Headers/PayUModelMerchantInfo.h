@@ -22,6 +22,8 @@
 @property (nonatomic, strong) NSString *walletIdentifier;
 @property (nonatomic, strong) NSDictionary *ifscBankNameMapping;
 @property (nonatomic) BOOL isInsuranceMerchant;
+@property (nonatomic) BOOL isTimerEnabled;
+@property (nonatomic) NSInteger timerDuration;
 
 +(PayUModelMerchantInfo *)prepareMerchantInfo:(NSDictionary *)JSON;
 

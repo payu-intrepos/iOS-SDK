@@ -65,8 +65,8 @@ typedef void (^completionBlockForGetUserCards)(NSDictionary *dictStoredCard ,NSS
 typedef void (^completionBlockForVerifyPayment)(NSDictionary *dictVerifyPayment ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForDeleteOneTapToken)(NSString *deleteOneTapTokenMsg ,NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForCheckIsDomestic)(PayUModelCheckIsDomestic *checkIsDomestic , NSString *errorMessage, id extraParam);
+typedef void (^completionBlockForOnDemandConvenienceFee)(OnDemandConvenienceFeeResponse *convenienceFeeResonse, NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForGetBinInfo)(NSArray<PayUModelCheckIsDomestic*> *allBin , NSString *errorMessage, id extraParam);
-typedef void (^completionBlockForConvenienceFee)(NSMutableDictionary<NSString *, NSMutableArray<PayUCharges *> *> *cfJSON, NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForRefund)(NSString *message , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForGetTransactionInfo)(NSArray *arrOfGetTxnInfo , NSString *errorMessage, id extraParam);
 typedef void (^completionBlockForSaveUserCard)(PayUModelStoredCard *objStoredCard , NSString *errorMessage, id extraParam);
@@ -223,6 +223,8 @@ typedef void (^completionBlockForOLWMpinOtp)(PayUOLWMpinOtpResponse *olwMpinOTPR
 -(void)getBinBasedDetail:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForCheckIsDomestic) paramCompletionBlock
     completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock;
 
+-(void)getOnDemandConvenienceFeeDetail:(PayUModelPaymentParams *) paymentParam completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForOnDemandConvenienceFee) responseCompletionBlock;
+
 -(void)getTransactionInfo:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForGetTransactionInfo) paramCompletionBlock;
 
 -(void)saveUserCard:(PayUModelPaymentParams *) paymentParam withCompletionBlock:(completionBlockForSaveUserCard) paramCompletionBlock DEPRECATED_MSG_ATTRIBUTE("The \"saveUserCard:withCompletionBlock\" method is not supported because of RBI guidelines, in order to save or edit the card, please save card by authenticating it doing an actual payment.");
@@ -262,7 +264,6 @@ typedef void (^completionBlockForOLWMpinOtp)(PayUOLWMpinOtpResponse *olwMpinOTPR
  */
 -(void)getAllOfferDetails:(PayUModelPaymentParams *) paymentParam completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForAllOfferDetails) responseCompletionBlock;
 
--(void)getConvenienceFee:(PayUModelPaymentParams *) paymentParam completionBlockForHashGeneration:(completionBlockForHashGeneration) hashCompletionBlock completionBlockForAPIResponse:(completionBlockForConvenienceFee) responseCompletionBlock;
 /*!
  * This method gives webService response callback for ValidateOfferDetails.
  * @param paymentParam PayUModelPaymentParams

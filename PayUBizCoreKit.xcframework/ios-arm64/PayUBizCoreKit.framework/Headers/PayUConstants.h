@@ -278,7 +278,7 @@
 #define COMMAND_SET_RESET_OLW_MPIN                              @"setResetOLWMpin"
 #define COMMAND_VERIFY_OLW_MPIN_DEVICEID_TOKEN                  @"verifyOLWMpinDeviceIdToken"
 #define COMMAND_GET_BIN_BASED_DETAILS                           @"getBinBasedDetails"
-#define COMMAND_GET_CONVENIENCE_FEE                             @"getConvenienceFee"
+#define COMMAND_GET_ON_DEMAND_CONVENIENCE_FEE                   @"getOnDemandConvenienceFee"
 
 // Endpoints for webservice
 
@@ -297,13 +297,13 @@
 #define RESEND_REQUEST_FOR_OTP                                  @"/otp/sdk/resend"
 #define QUICK_PAY_FETCH_REQUEST                                 @"/recommendation/v1/fetch"
 #define QUICK_PAY_UPDATE_CONSENT_REQUEST                        @"/sdk/instrumentDetail/consent"
-#define EMI_CALCULATOR                                          @"/calculateEmi/v3"
+#define EMI_CALCULATOR                                          @"/sdk/calculateEmi" //@"/calculateEmi/v3"
 // OLW
 #define SEND_OTP                                                @"/loyalty-points/ppi/v1/otp/send"
 #define SET_RESET_MPIN                                          @"/loyalty-points/ppi/v1/set-reset/mpin"
 #define VERIFY_MPIN_DEVICEID_TOKEN                              @"/loyalty-points/ppi/v1/verifyMpinDeviceIdToken"
 #define BIN_DETAILS                                             @"/sdk/card/binDetails"
-#define FETCH_CONVENIENCE                                       @"/sdk/checkoutx/fetchConvenienceFee"
+#define FETCH_CONVENIENCE                                       @"/v2/checkoutx/fetchConvenienceFee"
 // HTTP MEthods
 #define HTTP_METHOD_GET                                         @"GET"
 #define HTTP_METHOD_POST                                        @"POST"
@@ -375,6 +375,7 @@
 #define     PARAM_KEY                                           @"key"
 #define     PARAM_TXNID                                         @"txnid"
 #define     PARAM_AMOUNT                                        @"amount"
+#define     PARAM_RECURRING_AMOUNT                              @"recurringAmount"
 #define     PARAM_PRODUCT_INFO                                  @"productinfo"
 #define     PARAM_PRODUCT_INFO_V2                               @"productInfo"
 #define     PARAM_FIRST_NAME                                    @"firstname"
@@ -534,6 +535,9 @@
 #define     KEY_OPGSP_MERCHANT                                @"opgsp_merchant"
 #define     KEY_IS_INSURANCE_MERCHANT                         @"isInsuranceMerchant"
 #define     KEY_IFSC_BANK_NAME_MAPPING                        @"ifscBankNameMapping"
+#define     KEY_OPGSP_MERCHANT                                @"opgsp_merchant"
+#define     KEY_CHECKOUT_TIMER                                @"checkout_timer"
+#define     KEY_CHECKOUT_TIMER_DURATION                       @"checkout_timer_duration"
 
 // OfferStatus parsing elements
 #define     KEY_CATEGORY                                        @"category"
@@ -553,6 +557,7 @@
 #define     KEY_BINS_DATA                                       @"bins_data"
 #define     KEY_OFFER_DATA                                      @"validate_offer_data"
 #define     KEY_PRICING_CF_DATA                                 @"pricing_cf_data"
+#define     KEY_EMI_CALCULATOR_DATA                             @"emi_sdk_data"
 #define     KEY_CARD_DATA                                       @"card_data"
 #define     KEY_CARD_TOKENS                                     @"card_tokens"
 #define     KEY_HTTP_STATUS                                     @"http_status"
@@ -713,7 +718,13 @@
 #define     KEY_MINIMUM_AMOUNT                                  @"minimumAmount"
 #define     KEY_MAXIMUM_AMOUNT                                  @"maximumAmount"
 #define     KEY_TRANSACTIONAMOUNT                               @"transactionAmount"
+#define     KEY_TRANSACTIONDETAILS                              @"transactionDetails"
 #define     KEY_PAYMENT_OPTIONS                                 @"paymentOptions"
+#define     KEY_REGISTERED_CONVENIENCE_FEE                      @"registeredAmtConvFee"
+#define     KEY_RECURRING_CONVENIENCE_FEE                       @"recurringAmtConvFee"
+#define     KEY_TOP_CONV_FEE_IBIBO_CODES                        @"pricingLiveMode"
+#define     KEY_COMPOUNDING_PERCENTAGE                          @"compoundingPercentage"
+#define     KEY_DISABLE_CONV_FEE_COMPOUNDING                    @"disableConvFeeCompounding"
 #define     KEY_MC                                              @"mc"
 #define     KEY_CLW                                             @"clw"
 #define     KEY_DOWN_INFO                                       @"downInfo"
@@ -965,7 +976,6 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 
 //Convenience FEE
 #define     PARAM_SUB_CLIENT_ID                                 @"subClientId"
-#define     PARAM_ENTITY_ID                                     @"entityId"
 #define     PARAM_TIME_STAMP                                    @"timeStamp"
 #define     PARAM_FETCH_TYPE                                    @"fetchType"
 #define     PARAM_COMMON_DYNAMIC_ATTRIBUTES                     @"commonDynamicAttributes"
@@ -973,7 +983,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 #define     PARAM_COMBINATION_KEY                               @"combinationKey"
 #define     KEY_COMBINATIONS                                    @"combinations"
 #define     KEY_CHARGES                                         @"charges"
-#define     KEY_CHARGES_UUID                                    @"chargeUuid"
+#define     KEY_CHARGES_UUID                                    @"chargeUUID"
 #define     KEY_CHARGE_NAME                                     @"chargeName"
 #define     KEY_BASE_FEE                                        @"baseFee"
 #define     KEY_TAX_AMOUNT                                      @"taxAmount"

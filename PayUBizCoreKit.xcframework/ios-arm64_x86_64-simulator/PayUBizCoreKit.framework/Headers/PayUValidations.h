@@ -327,6 +327,8 @@
 
 -(NSMutableString *)validateConvenienceFeeParam:(PayUModelPaymentParams *) paymentParam;
 
+-(NSMutableString *)validateOnDemeandConvenienceFeeParam:(PayUModelPaymentParams *) paymentParam;
+
 /*!
  * This method validate get Bin Info params and returns string value.
  * @param  [paymentParam]                   [PayUModelPaymentParams type]

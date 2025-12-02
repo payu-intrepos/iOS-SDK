@@ -18,6 +18,7 @@
 #import "PayUModelTaxSpecification.h"
 #import "PayUModelMerchantInfo.h"
 #import "PayUModelBNPL.h"
+#import "PayUGCDTopBanksConvFee.h"
 
 @interface PayUModelPaymentRelatedDetail : NSObject
 
@@ -47,6 +48,11 @@
 @property (nonatomic, strong) NSArray *offers;
 @property (nonatomic, strong) PayUModelMerchantInfo *merchantInfo;
 @property (nonatomic, strong) NSArray *bnplArray;
+@property (nonatomic, assign) BOOL disableConvFeeCompounding;
+@property (nonatomic, strong) NSString *compoundingPercentage;
+@property (nonatomic, strong) NSArray *pricingLiveModes;
+@property (nonatomic, strong) PayUGCDTopBanksConvFee *topIbiboConvFee;
+@property (nonatomic, strong) PayUGCDTopBanksConvFee *topIbiboRecurringConvFee;
 
 @end
 
