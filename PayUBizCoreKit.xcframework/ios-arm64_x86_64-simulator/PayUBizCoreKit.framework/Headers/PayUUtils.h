@@ -209,7 +209,13 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 +(BOOL)isKindOfNSNumber:(id) value;
 
++(BOOL)isKindOfNSString:(id) value;
+
++(BOOL)isKindOfNSArray:(id) value;
+
 + (NSMutableDictionary *)getMCPRequestDict:(PayUModelPaymentParams *)paymentParam;
+
++(NSString *)siParamFromPaymentParam:(PayUModelPaymentParams *) paymentParam;
 
 + (NSString *)getMCPRequestString:(PayUModelPaymentParams *)paymentParam;
 

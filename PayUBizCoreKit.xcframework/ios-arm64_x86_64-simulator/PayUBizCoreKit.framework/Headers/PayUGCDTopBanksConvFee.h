@@ -14,6 +14,6 @@
 @property (strong, nonatomic) NSString *requestUUID;
 @property (strong, nonatomic) NSDictionary<NSString *, NSArray<PayUCharges *> *> *combinations;
 
-+ (PayUGCDTopBanksConvFee *)prepareConvFeeChargesForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
++ (NSMutableDictionary *)prepareConvFeeChargesForCFDynamicFromDict:(id)JSON withDownStaus:(NSDictionary *)downJSON;
 
 @end

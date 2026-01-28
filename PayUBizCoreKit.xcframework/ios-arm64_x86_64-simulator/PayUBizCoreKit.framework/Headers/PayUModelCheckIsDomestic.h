@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSString * bankCode;
 @property (nonatomic, strong) PayUModelOfferDetail * offerDetails;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray<PayUCharges *> *> *cfJSON;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, NSMutableArray<PayUCharges *> *> *cfJSONSI;
 + (instancetype)prepareGetBinInfoObejctFromDict:(NSDictionary *)JSON;
 
 + (instancetype)prepareCheckIsDomesticObejctFromDict:(NSDictionary *)JSON;

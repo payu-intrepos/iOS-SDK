@@ -557,6 +557,7 @@
 #define     KEY_BINS_DATA                                       @"bins_data"
 #define     KEY_OFFER_DATA                                      @"validate_offer_data"
 #define     KEY_PRICING_CF_DATA                                 @"pricing_cf_data"
+#define     KEY_PRICING_SI_CF_DATA                              @"pricing_si_cf_data"
 #define     KEY_EMI_CALCULATOR_DATA                             @"emi_sdk_data"
 #define     KEY_CARD_DATA                                       @"card_data"
 #define     KEY_CARD_TOKENS                                     @"card_tokens"
@@ -608,6 +609,8 @@
 #define     PARAM_PAYMENT_END_DATE                              @"paymentEndDate"
 #define     PARAM_BILLING_RULE                                  @"billingRule"
 #define     PARAM_BILLING_LIMIT                                 @"billingLimit"
+#define     PARAM_SI_FREE_TRAIL_AMOUNTS                         @"freeTrialAmounts"
+#define     PARAM_SI_BUFFER_AMOUNT                              @"bufferAmount"
 #define     PARAM_REMARKS                                       @"remarks"
 #define     PARAM_BILLING_DATE                                  @"billingDate"
 #define     PARAM_FREE_TRIAL                                    @"free_trial"
@@ -960,6 +963,8 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 
 #define     VALUE_TRUE                                          @"true"
 #define     VALUE_FALSE                                         @"false"
+#define     VALUE_TRUE_ONE                                      @"1"
+#define     VALUE_FALSE_ZERO                                    @"0"
 #define     VALUE_SOURCE                                        @"IOS_SDK"
 
 #define     PARAM_CONSENT                                       @"consent"
