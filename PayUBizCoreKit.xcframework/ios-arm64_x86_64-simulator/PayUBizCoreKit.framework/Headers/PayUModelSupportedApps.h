@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PayUModelSupportedApps : NSObject
 @property (strong, nonatomic) NSString * upiAppName;
 @property (strong, nonatomic) NSString * uri;
+@property (strong, nonatomic, nullable) NSString * mandateUri;
 @property (strong, nonatomic) NSString * bankCode;
 @property (strong, nonatomic) NSString * imageCode;
 @property (strong, nonatomic) NSString * imageURL;
