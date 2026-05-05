@@ -31,6 +31,8 @@
 @property (strong, nonatomic) NSString * transactionID;
 @property (strong, nonatomic) NSString * SURL;
 @property (strong, nonatomic) NSString * FURL;
+@property (strong, nonatomic) NSString * partnerWebhookSuccess;
+@property (strong, nonatomic) NSString * partnerWebhookFailure;
 @property (strong, nonatomic) NSString * merchantAccessKey;
 // For setting Environment
 //  ENVIRONMENT_PRODUCTION   is for Production
