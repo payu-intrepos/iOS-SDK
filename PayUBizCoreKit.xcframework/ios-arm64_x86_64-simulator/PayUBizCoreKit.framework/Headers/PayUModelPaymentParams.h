@@ -24,6 +24,7 @@
 
 // Mandatory Parameters
 @property (strong, nonatomic) NSString * key;
+@property (nonatomic, assign) BOOL enableEncryption;
 @property (strong, nonatomic) NSString * amount;
 @property (strong, nonatomic) NSString * productInfo;
 @property (strong, nonatomic) NSString * firstName;

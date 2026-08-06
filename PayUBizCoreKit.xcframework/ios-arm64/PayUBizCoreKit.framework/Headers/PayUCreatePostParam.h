@@ -24,7 +24,7 @@
  * @see    [passEmptyStringFornilValues - PayUUtils]
  * @see    [getCardName]
  */
--(NSString *)createPostParam:(PayUModelPaymentParams *) paramPaymentParam withType:(NSString *) type;
+-(NSMutableString *)createPostParam:(PayUModelPaymentParams *) paramPaymentParam withType:(NSString *) type;
 
 -(NSString *)createCitrusPostParam:(PayUModelPaymentParams *)paramPaymentParam
                     withType:(NSString *)type;

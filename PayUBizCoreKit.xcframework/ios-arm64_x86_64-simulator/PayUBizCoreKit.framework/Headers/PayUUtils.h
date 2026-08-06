@@ -235,4 +235,6 @@ typedef void (^completionBlockForWebServiceResponse)(id JSON ,NSString *errorMes
 
 + (NSString*)removeWhiteSpaceNewline:(NSString*) originalString;
 
++ (NSString *)getNcryptionKey:(BOOL)isProd;
+
 @end

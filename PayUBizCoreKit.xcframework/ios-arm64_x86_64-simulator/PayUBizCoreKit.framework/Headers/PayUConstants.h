@@ -951,6 +951,7 @@ typedef NS_ENUM(NSUInteger, PayUAPIVersion) {
 // Has String Constants
 #define     KEY_HASH_NAME                                       @"hashName"
 #define     KEY_HASH_STRING                                     @"hashString"
+#define     KEY_ENCRYPTION_STRING                               @"x-payu-encryption-key"
 
 //EMI calculator
 #define     PARAM_TXN_AMOUNT                                    @"txnAmount"
