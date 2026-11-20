@@ -28,31 +28,3 @@
 +(instancetype)prepareTokenizedPaymentDetailsFromResponse:(NSDictionary *) JSON;
 
 @end
-
-/*
-
- {
-    "status":"1",
-    "msg":"Instrument details",
-    "details":{
-       "one_click_status":"",
-       "one_click_flow":"",
-       "card_type":"VISA",
-       "network_token":{
-          "token_exp_yr":"2022",
-          "token_exp_mon":"12",
-          "token_value":"4489682380061439"
-       },
-       "trid":"400000340044",
-       "card_mode":"",
-       "token_refernce_id":"534160269c59eb67f84f19681cb7f501",
-       "card_PAR":"V0010013021320427651459792018",
-       "card_no":"XXXXXXXXXXXX0005",
-       "one_click_card_alias":"",
-       "card_token":"ef4bb7fe505e18ebf12b",
-       "card_name":"",
-       "cryptogram":"AgAAAGQBdCZtW8sAmbHTg0UAAAA="
-    }
- }
- 
- */

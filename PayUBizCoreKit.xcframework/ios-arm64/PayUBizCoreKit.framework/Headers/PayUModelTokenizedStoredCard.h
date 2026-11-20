@@ -26,20 +26,3 @@
 +(NSDictionary *)prepareTokenizedStoredCardFromResponse:(NSDictionary *) JSON;
 
 @end
-
-
-/*
- {
- "card_mode":"DC",
- "card_no":"459150XXXXXX0006",
- "one_click_status":"",
- "one_click_card_alias":"",
- "card_token":"4f752359940f34b3d0ab",
- "one_click_flow":"",
- "card_name":"",
- "card_type":"VISA",
- "card_brand":"VISA",
- "card_bin":"",
- "isDomestic":"Y",
- "PAR":"4f752354242334b3d0ab"
- */

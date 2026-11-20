@@ -38,6 +38,7 @@ FOUNDATION_EXPORT const unsigned char PayUBizCoreKitVersionString[];
 #import "PayUModelCashCard.h"
 #import "PayUModelOfferDetails.h"
 #import "PayUModelUPI.h"
+#import "PayUModelDBQR.h"
 #import "PayUModelCheckIsDomestic.h"
 #import "PayUModelEnach.h"
 #import "PayUModelAdminOffer.h"

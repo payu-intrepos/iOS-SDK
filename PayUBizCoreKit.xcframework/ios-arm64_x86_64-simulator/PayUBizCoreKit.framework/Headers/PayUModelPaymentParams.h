@@ -126,6 +126,7 @@
 
 // Param for NetBanking, StoredCard, CashCard, EMI
 @property (strong, nonatomic) NSString * bankCode;
+@property (strong, nonatomic) NSString * pgCode;
 @property (strong, nonatomic) NSString * pan;
 @property (assign, nonatomic) PayUCardDetailsType cardDetailsType;
 
@@ -216,6 +217,7 @@
 @property (strong, nonatomic) NSString * gender;
 @property (strong, nonatomic) NSString * oneClickCheckout;
 @property (strong, nonatomic) NSString * txnS2SFlow;
+@property (nonatomic) NSInteger qrUpiPaymentType; // 1 = offline DBQR, 2 = online MQR.
 
 @property (strong, nonatomic) NSString * cancelAction;
 @property (strong, nonatomic) NSString * codAction;

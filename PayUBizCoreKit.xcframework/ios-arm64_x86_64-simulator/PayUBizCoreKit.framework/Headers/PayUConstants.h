@@ -477,6 +477,8 @@
 #define     KEY_LAZYPAY                                         @"lazypay"
 #define     KEY_NO_COST_EMI                                     @"no_cost_emi"
 #define     KEY_UPI                                             @"upi"
+#define     KEY_APPLE_PAY                                       @"applepay"
+#define     KEY_DBQR                                            @"dbqr"
 #define     KEY_UPI_OTM                                         @"upiotm"
 #define     KEY_ALL                                             @"all"
 #define     KEY_TENURE_OPTIONS                                  @"tenureOptions"

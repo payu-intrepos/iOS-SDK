@@ -29,11 +29,14 @@
 @property (nonatomic, strong) NSArray *neftrtgsArray;
 @property (nonatomic, strong) NSArray *mealCardArray;
 @property (nonatomic, strong) NSArray *clwArray;
+@property (nonatomic, strong) NSArray *applePayArray;
 @property (nonatomic, strong) NSArray *enachArray;
 @property (nonatomic, strong) NSArray *siArray;
 @property (nonatomic, strong) NSArray *cashCardArray;
 @property (nonatomic, strong) NSArray *upiArray;
+@property (nonatomic, strong) NSArray *dbqrArray;
 @property (nonatomic, strong) NSArray *upiSiApps;
+@property (nonatomic) NSInteger qrUpiPaymentType;
 @property (nonatomic, strong) NSArray *upiSiHandles;
 @property (nonatomic, strong) NSArray *EMIArray;
 @property (nonatomic, strong) NSDictionary *EMIDictionary;
